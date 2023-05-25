@@ -1,0 +1,14 @@
+{
+	"Collections": {
+		"nanotrasen_station": [
+			{
+				"GroupDir": "command",
+				"GroupName": "Command",
+				"Forms": [
+					"cmd_cc_srt"
+				]
+			}
+		]
+		"nanotrasen_central_command": []
+	}
+}

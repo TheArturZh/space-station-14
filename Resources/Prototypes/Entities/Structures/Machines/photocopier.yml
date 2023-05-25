@@ -1,0 +1,58 @@
+- type: entity
+  id: PhotocopierBase
+  parent: BaseMachinePowered
+  name: photocopier
+  description: Can be used to print a variety of forms or photocopy whatever ((document)) you put on it.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/photocopier.rsi
+    netsync: false
+    layers:
+    - state: "off"
+      map: ["enum.PhotocopierVisualLayers.Base"]
+    - state: "led_powered"
+      map: ["enum.PhotocopierVisualLayers.Led"]
+      shader: unshaded
+    - state: "top_powered"
+      map: ["enum.PhotocopierVisualLayers.Top"]
+      shader: unshaded
+    - state: "top_paper"
+      map: ["enum.PhotocopierVisualLayers.TopPaper"]
+    - state: "printing_paper"
+      map: ["enum.PhotocopierVisualLayers.PrintAnim"]
+  - type: Appearance
+  - type: Climbable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Anchorable
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: Photocopier
+    formCollections: [ "nanotrasen_station" ]
+    paperSlot:
+      insertSound: /Audio/Machines/scanning.ogg
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+  - type: ActivatableUI
+    key: enum.PhotocopierUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      - key: enum.PhotocopierUiKey.Key
+        type: PhotocopierBoundUi
+
+- type: entity
+  id: PhotocopierCentralCommand
+  parent: PhotocopierBase
+  name: central command photocopier
+  components:
+    - type: Photocopier
+      formCollections: [ "nanotrasen_station", "nanotrasen_central_command" ]

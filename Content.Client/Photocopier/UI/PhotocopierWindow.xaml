@@ -1,0 +1,102 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
+                Title="{Loc 'photocopier-ui-window'}"
+                Resizable="True"
+                MinSize="550 353"
+                SetSize="550 353">
+
+    <BoxContainer Orientation="Vertical">
+        <SplitContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Name="Split">
+            <!-- Tree of form templates -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Name="TreeBox" MinWidth="100">
+                <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
+                <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
+            </BoxContainer>
+
+            <!-- Controls and status -->
+            <BoxContainer Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          MinWidth="350"
+                          Margin="0 3 7 0">
+                <!-- Toner Progress Bar -->
+                <Label Text="{Loc 'photocopier-ui-toner'}" />
+                <ProgressBar Name="TonerBar"
+                             HorizontalExpand="True"
+                             MinValue="0"
+                             MaxValue="1"
+                             MinHeight="25"
+                             Page="0"
+                             Margin="0 10"
+                             Value="0.5">
+                    <Label Name="ChargePercentage" Margin="4 0" Text="0 %" />
+                </ProgressBar>
+
+                <!-- Status -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'photocopier-ui-status'}" />
+                    <Control MinWidth="4" />
+                    <RichTextLabel Name="StatusLabel" VerticalAlignment="Center" />
+                    <Button Name="StopButton"
+                            Text="{Loc 'photocopier-ui-stop-button'}"
+                            HorizontalExpand="True"
+                            Disabled="True"
+                            HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <cc:HSeparator Margin="-2 10"/>
+
+                <!-- Changing copy amount -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 20">
+                    <Label Text="{Loc 'photocopier-ui-amount'}" />
+                    <Control MinWidth="4" />
+                    <LineEdit
+                        Name="AmountLineEdit"
+                        PlaceHolder="0"
+                        Text="1"
+                        HorizontalExpand="True" />
+                </BoxContainer>
+
+                <!-- Scanning/Copying -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'photocopier-ui-scan-surface'}" />
+                    <Control MinWidth="4" />
+                    <RichTextLabel Name="PaperStatusLabel" VerticalAlignment="Center" />
+                    <Button Name="EjectButton"
+                            Text="{Loc 'photocopier-ui-eject-button'}"
+                            HorizontalExpand="True"
+                            Disabled="True"
+                            HorizontalAlignment="Right" />
+                </BoxContainer>
+                <Button Name="CopyButton"
+                        Text="{Loc 'photocopier-ui-copy-button'}"
+                        HorizontalExpand="True"
+                        Disabled="True"
+                        HorizontalAlignment="Left"
+                        Margin="0 0 0 10" />
+
+                <!-- Printing templates -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'photocopier-ui-selected'}" />
+                    <Control MinWidth="4" />
+                    <Label Name="SelectedFormLabel" />
+                </BoxContainer>
+                <Button Name="PrintButton"
+                        Text="{Loc 'photocopier-ui-print-button'}"
+                        HorizontalExpand="True"
+                        Disabled="True"
+                        HorizontalAlignment="Left" />
+            </BoxContainer>
+        </SplitContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'photocopier-flavor-left'}" StyleClasses="WindowFooterText" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
