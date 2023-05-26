@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Photocopier;
+namespace Content.Shared.SS220.Photocopier;
 
 [Serializable, NetSerializable]
 public enum PhotocopierUiKey : byte

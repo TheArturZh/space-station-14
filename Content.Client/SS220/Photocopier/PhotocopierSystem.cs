@@ -1,7 +1,7 @@
-﻿using Content.Shared.Photocopier;
+﻿using Content.Shared.SS220.Photocopier;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Photocopier;
+namespace Content.Client.SS220.Photocopier;
 
 public sealed class PhotocopierSystem : EntitySystem
 {

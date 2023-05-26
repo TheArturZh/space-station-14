@@ -1,4 +1,4 @@
-using Content.Shared.Photocopier;
+using Content.Shared.SS220.Photocopier;
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.UserInterface;
 using Content.Server.Power.Components;
@@ -11,7 +11,7 @@ using Robust.Server.GameObjects;
 TODO: Implement visuals - printing animation, powered off state
 */
 
-namespace Content.Server.Photocopier;
+namespace Content.Server.SS220.Photocopier;
 
 public sealed class PhotocopierSystem : EntitySystem
 {

@@ -1,10 +1,10 @@
-using Content.Client.Photocopier.UI;
+using Content.Shared.SS220.Photocopier;
+using Content.Client.SS220.Photocopier.UI;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Photocopier;
-using Content.Shared.Xenoarchaeology.Equipment;
+
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Photocopier;
+namespace Content.Client.SS220.Photocopier;
 
 public sealed class PhotocopierBoundUi : BoundUserInterface
 {
