@@ -10,7 +10,7 @@ photocopier-ui-scan-surface = Scanning table:
 photocopier-ui-scan-surface-empty = [color=red]empty[/color]
 photocopier-ui-scan-surface-item = [color=green]got an item[/color]
 
-photocopier-ui-stop-button = Cacnel
+photocopier-ui-stop-button = Cancel
 photocopier-ui-eject-button = Eject
 photocopier-ui-copy-button = Copy
 photocopier-ui-print-button = Print
