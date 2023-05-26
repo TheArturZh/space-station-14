@@ -8,6 +8,9 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
+    private readonly PhotocopierCombinedVisualState _fallbackVisualState =
+        new PhotocopierCombinedVisualState(PhotocopierVisualState.Off, false);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -24,7 +27,7 @@ public sealed class PhotocopierSystem : EntitySystem
         if (!args.AppearanceData.TryGetValue(PhotocopierVisuals.VisualState, out var visualStateObject) ||
             visualStateObject is not PhotocopierCombinedVisualState visualState)
         {
-            visualState = new PhotocopierCombinedVisualState(PhotocopierVisualState.Off, false);
+            visualState = _fallbackVisualState;
         }
 
         UpdateAppearance(uid, visualState, component, args.Sprite);
@@ -38,7 +41,7 @@ public sealed class PhotocopierSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
             !_appearanceSystem.TryGetData<PhotocopierCombinedVisualState>(uid, PhotocopierVisuals.VisualState, out var visualState, appearance))
         {
-            visualState = new PhotocopierCombinedVisualState(PhotocopierVisualState.Off, false);
+            visualState = _fallbackVisualState;
         }
 
         UpdateAppearance(uid, visualState, component, sprite);

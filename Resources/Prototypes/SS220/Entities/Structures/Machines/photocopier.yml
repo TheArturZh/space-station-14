@@ -36,7 +36,7 @@
   - type: Photocopier
     formCollections: [ "nanotrasen_station" ]
     paperSlot:
-      insertSound: /Audio/Machines/scanning.ogg
+      insertSound: null #Is handled by PhotocopierBase component, use paperInsertSound field of PhotocopierBase
       ejectSound: /Audio/Machines/tray_eject.ogg
       whitelist:
         components:

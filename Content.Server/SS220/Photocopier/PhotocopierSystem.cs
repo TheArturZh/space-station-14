@@ -7,10 +7,6 @@ using Content.Server.Power.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Server.GameObjects;
 
-/*
-TODO: Implement visuals - printing animation, powered off state
-*/
-
 namespace Content.Server.SS220.Photocopier;
 
 public sealed class PhotocopierSystem : EntitySystem
@@ -71,6 +67,9 @@ public sealed class PhotocopierSystem : EntitySystem
     {
         UpdateUserInterface(uid, component);
         TryUpdateVisualState(uid, component);
+
+        if (component.PaperSlot.Item != null && this.IsPowered(uid, EntityManager))
+            _audioSystem.PlayPvs(component.PaperInsertSound, uid);
     }
 
     private void OnPowerChanged(EntityUid uid, PhotocopierComponent component, ref PowerChangedEvent args)
@@ -101,6 +100,7 @@ public sealed class PhotocopierSystem : EntitySystem
 
         component.DataToCopy = new DataToCopy(paper.Content, metadata.EntityName, metadata.EntityPrototype?.ID, paper.StampState, paper.StampedBy);
         component.CopiesQueued = Math.Min(args.Amount, component.MaxQueueLength);
+        component.IsScanning = true;
     }
 
     private void OnStopButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierStopMessage args)
@@ -111,15 +111,16 @@ public sealed class PhotocopierSystem : EntitySystem
 
     private void StopPrinting(EntityUid uid, PhotocopierComponent component)
     {
-        var uiUpdateNeeded = component.CopiesQueued > 0;
+        if (component.CopiesQueued == 0)
+            return;
 
         component.CopiesQueued = 0;
         component.PrintingTimeRemaining = 0;
         component.DataToCopy = null;
-        _itemSlotsSystem.SetLock(uid, component.PaperSlot, false);
 
-        if (uiUpdateNeeded)
-            UpdateUserInterface(uid, component);
+        _itemSlotsSystem.SetLock(uid, component.PaperSlot, false);
+        StopPrintingSound(component);
+        UpdateUserInterface(uid, component);
     }
 
     private void SpawnPaperCopy(EntityUid uid, PhotocopierComponent? component = null)
@@ -160,7 +161,7 @@ public sealed class PhotocopierSystem : EntitySystem
         {
             component.PrintingTimeRemaining -= frameTime;
 
-            bool isPrinted = component.PrintingTimeRemaining <= 0;
+            var isPrinted = component.PrintingTimeRemaining <= 0;
             if (isPrinted)
             {
                 SpawnPaperCopy(uid, component);
@@ -180,8 +181,11 @@ public sealed class PhotocopierSystem : EntitySystem
         if (component.CopiesQueued > 0)
         {
             component.PrintingTimeRemaining = component.PrintingTime;
-            _itemSlotsSystem.SetLock(uid, component.PaperSlot, true);
-            _audioSystem.PlayPvs(component.PrintSound, uid);
+            component.PrintAudioStream = _audioSystem.PlayPvs(component.PrintSound, uid);
+
+            if (component.IsScanning)
+                _itemSlotsSystem.SetLock(uid, component.PaperSlot, true);
+
             UpdateUserInterface(uid, component);
             TryUpdateVisualState(uid, component);
         }
@@ -195,7 +199,7 @@ public sealed class PhotocopierSystem : EntitySystem
         var state = PhotocopierVisualState.Powered;
 
         if (component.CopiesQueued > 0)
-            state = PhotocopierVisualState.Printing;
+            state = component.IsScanning? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
         else if (!this.IsPowered(uid, EntityManager))
             state = PhotocopierVisualState.Off;
 
@@ -204,6 +208,12 @@ public sealed class PhotocopierSystem : EntitySystem
         var combinedState = new PhotocopierCombinedVisualState(state, gotItem);
 
         _appearanceSystem.SetData(uid, PhotocopierVisuals.VisualState, combinedState);
+    }
+
+    private static void StopPrintingSound(PhotocopierComponent component)
+    {
+        component.PrintAudioStream?.Stop();
+        component.PrintAudioStream = null;
     }
 
     private void UpdateUserInterface(EntityUid uid, PhotocopierComponent? component = null)
@@ -219,11 +229,5 @@ public sealed class PhotocopierSystem : EntitySystem
             component.CopiesQueued);
 
         _userInterface.TrySetUiState(uid, PhotocopierUiKey.Key, state);
-    }
-
-    private void UpdateVisuals(EntityUid uid, PhotocopierComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
     }
 }
