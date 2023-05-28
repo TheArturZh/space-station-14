@@ -8,18 +8,23 @@
                 SetSize="550 353">
 
     <BoxContainer Orientation="Vertical">
-        <SplitContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Name="Split">
+
+        <!-- 28.05.2023 TheArturZh
+        Кому-то может захотеться ебануть сюда сплит, но он сломан внахуй и крашит игру при ресайзе -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
             <!-- Tree of form templates -->
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Name="TreeBox" MinWidth="100">
-                <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
-                <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="2 0 0 0">
+                    <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
+                </ScrollContainer>
+                <cc:VSeparator StyleClasses="LowDivider" Margin="4 0"/>
             </BoxContainer>
 
             <!-- Controls and status -->
             <BoxContainer Orientation="Vertical"
                           VerticalExpand="True"
-                          HorizontalExpand="True"
-                          MinWidth="350"
+                          HorizontalExpand="False"
+                          SetWidth="350"
                           Margin="0 3 7 0">
                 <!-- Toner Progress Bar -->
                 <Label Text="{Loc 'photocopier-ui-toner'}" />
@@ -81,7 +86,7 @@
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <Label Text="{Loc 'photocopier-ui-selected'}" />
                     <Control MinWidth="4" />
-                    <Label Name="SelectedFormLabel" />
+                    <RichTextLabel Name="SelectedFormLabel" VerticalAlignment="Center"/>
                 </BoxContainer>
                 <Button Name="PrintButton"
                         Text="{Loc 'photocopier-ui-print-button'}"
@@ -89,7 +94,7 @@
                         Disabled="True"
                         HorizontalAlignment="Left" />
             </BoxContainer>
-        </SplitContainer>
+        </BoxContainer>
 
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">

@@ -5,12 +5,12 @@ namespace Content.Client.SS220.Photocopier;
 
 public sealed class PhotocopierSystem : EntitySystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     private readonly PhotocopierCombinedVisualState _fallbackVisualState =
         new PhotocopierCombinedVisualState(PhotocopierVisualState.Off, false);
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();

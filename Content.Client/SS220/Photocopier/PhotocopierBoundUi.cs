@@ -1,7 +1,8 @@
 using Content.Shared.SS220.Photocopier;
+using Content.Shared.SS220.Photocopier.Forms;
 using Content.Client.SS220.Photocopier.UI;
 using Content.Shared.Containers.ItemSlots;
-
+using Content.Shared.SS220.Photocopier.Forms.FormManagerShared;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.SS220.Photocopier;
@@ -28,9 +29,9 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
         _window.StopButtonPressed += OnStopButtonPressed;
     }
 
-    private void OnPrintButtonPressed(int amount, string collection, string group, string formName)
+    private void OnPrintButtonPressed(int amount, FormDescriptor descriptor)
     {
-
+        SendMessage(new PhotocopierPrintMessage(amount, descriptor));
     }
 
     private void OnCopyButtonPressed(int amount)

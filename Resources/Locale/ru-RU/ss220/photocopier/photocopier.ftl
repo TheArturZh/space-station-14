@@ -5,6 +5,7 @@ photocopier-ui-amount = Количество:
 
 photocopier-ui-selected = Выбранный документ:
 photocopier-ui-no-doc = [color=red]отсутствует[/color]
+photocopier-ui-no-doc-title = [color=orange]заголовок отсутствует[/color]
 
 photocopier-ui-scan-surface = Окно сканера:
 photocopier-ui-scan-surface-empty = [color=red]пусто[/color]

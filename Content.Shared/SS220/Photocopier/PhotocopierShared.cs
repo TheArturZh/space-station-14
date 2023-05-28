@@ -1,3 +1,4 @@
+using Content.Shared.SS220.Photocopier.Forms.FormManagerShared;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SS220.Photocopier;
@@ -14,18 +15,21 @@ public sealed class PhotocopierUiState : BoundUserInterfaceState
     public bool IsPaperInserted { get; }
     public float TonerRemaining { get; }
     public int PrintQueueLength { get; }
-    public bool IsSlotLocked { get;  }
+    public bool IsSlotLocked { get; }
+    public HashSet<string> AvailableFormCollections { get; }
 
     public PhotocopierUiState(
         bool isSlotLocked,
         bool isPaperInserted,
         float tonerRemaining,
-        int printQueueLength)
+        int printQueueLength ,
+        HashSet<string> availableFormCollections)
     {
         IsSlotLocked = isSlotLocked;
         IsPaperInserted = isPaperInserted;
         TonerRemaining = tonerRemaining;
         PrintQueueLength = printQueueLength;
+        AvailableFormCollections = availableFormCollections;
     }
 }
 
@@ -33,16 +37,12 @@ public sealed class PhotocopierUiState : BoundUserInterfaceState
 public sealed class PhotocopierPrintMessage : BoundUserInterfaceMessage
 {
     public int Amount { get; }
-    public string Collection { get; }
-    public string Group { get; }
-    public string FormName { get; }
+    public FormDescriptor Descriptor { get; }
 
-    public PhotocopierPrintMessage(int amount, string collection, string group, string formName)
+    public PhotocopierPrintMessage(int amount, FormDescriptor descriptor)
     {
         Amount = amount;
-        Collection = collection;
-        Group = group;
-        FormName = formName;
+        Descriptor = descriptor;
     }
 }
 

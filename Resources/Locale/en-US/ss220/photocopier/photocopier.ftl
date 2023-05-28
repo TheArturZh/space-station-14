@@ -5,6 +5,7 @@ photocopier-ui-amount = Amount:
 
 photocopier-ui-selected = Selected form:
 photocopier-ui-no-doc = [color=red]none[/color]
+photocopier-ui-no-doc-title = [color=orange]title is missing[/color]
 
 photocopier-ui-scan-surface = Scanning table:
 photocopier-ui-scan-surface-empty = [color=red]empty[/color]

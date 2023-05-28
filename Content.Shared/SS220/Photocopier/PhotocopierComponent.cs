@@ -1,6 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Prototypes;
+using Content.Shared.SS220.Photocopier.Forms;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
@@ -89,45 +88,13 @@ public sealed class PhotocopierComponent : Component
     /// 	A content that is cached for copying.
     /// </summary>
     [ViewVariables]
-    [DataField("contentToCopy", serverOnly: true)]
-    public DataToCopy? DataToCopy;
+    [DataField("dataToCopy", serverOnly: true)]
+    public Form? DataToCopy;
 
     /// <summary>
     /// 	A content that is cached for copying.
     /// </summary>
     [DataField("printAudioStream", serverOnly: true)]
     public IPlayingAudioStream? PrintAudioStream;
-}
-
-[Serializable][DataDefinition]
-public sealed class DataToCopy
-{
-    [DataField("name", required: true)]
-    public string Name { get; } = default!;
-
-    [DataField("content", required: true)]
-    public string Content { get; } = default!;
-
-    [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string PrototypeId { get; } = default!;
-
-    [DataField("stampState")]
-    public string? StampState { get; }
-
-    [DataField("stampedBy")]
-    public List<string> StampedBy { get; } = new();
-
-    private DataToCopy()
-    {
-    }
-
-    public DataToCopy(string content, string name, string? prototypeId = null, string? stampState = null, List<string>? stampedBy = null)
-    {
-        Content = content;
-        Name = name;
-        PrototypeId = prototypeId ?? "";
-        StampState = stampState;
-        StampedBy = stampedBy ?? new List<string>();
-    }
 }
 

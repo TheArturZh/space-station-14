@@ -1,9 +1,11 @@
 using Content.Shared.SS220.Photocopier;
+using Content.Shared.SS220.Photocopier.Forms;
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.UserInterface;
 using Content.Server.Power.Components;
 using Content.Server.Paper;
 using Content.Server.Power.EntitySystems;
+using Content.Server.SS220.Photocopier.Forms;
 using Robust.Shared.Containers;
 using Robust.Server.GameObjects;
 
@@ -11,15 +13,20 @@ namespace Content.Server.SS220.Photocopier;
 
 public sealed class PhotocopierSystem : EntitySystem
 {
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    private FormManager? _specificFormManager;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
+        _specificFormManager = _sysMan.GetEntitySystem<FormManager>();
 
         SubscribeLocalEvent<PhotocopierComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PhotocopierComponent, ComponentRemove>(OnComponentRemove);
@@ -29,10 +36,12 @@ public sealed class PhotocopierSystem : EntitySystem
 
         // UI
         SubscribeLocalEvent<PhotocopierComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
+        SubscribeLocalEvent<PhotocopierComponent, PhotocopierPrintMessage>(OnPrintButtonPressed);
         SubscribeLocalEvent<PhotocopierComponent, PhotocopierCopyMessage>(OnCopyButtonPressed);
         SubscribeLocalEvent<PhotocopierComponent, PhotocopierStopMessage>(OnStopButtonPressed);
     }
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -98,9 +107,33 @@ public sealed class PhotocopierSystem : EntitySystem
             !TryComp<PaperComponent>(copyEntity, out var paper))
             return;
 
-        component.DataToCopy = new DataToCopy(paper.Content, metadata.EntityName, metadata.EntityPrototype?.ID, paper.StampState, paper.StampedBy);
+        component.DataToCopy = new Form(
+            metadata.EntityName,
+            paper.Content,
+            prototypeId: metadata.EntityPrototype?.ID,
+            stampState: paper.StampState,
+            stampedBy: paper.StampedBy);
+
         component.CopiesQueued = Math.Min(args.Amount, component.MaxQueueLength);
         component.IsScanning = true;
+    }
+
+    private void OnPrintButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierPrintMessage args)
+    {
+        if (!component.Initialized)
+            return;
+
+        if(_specificFormManager == null)
+            return;
+
+        if (component.CopiesQueued > 0)
+            return;
+
+        component.DataToCopy = _specificFormManager.TryGetFormFromDescriptor(args.Descriptor);
+        if (component.DataToCopy == null)
+            return;
+
+        component.CopiesQueued = Math.Min(args.Amount, component.MaxQueueLength);
     }
 
     private void OnStopButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierStopMessage args)
@@ -109,6 +142,9 @@ public sealed class PhotocopierSystem : EntitySystem
         TryUpdateVisualState(uid, component);
     }
 
+    /// <summary>
+    /// Stops PhotocopierComponent from printing and clears queue, effectively resetting it into normal state.
+    /// </summary>
     private void StopPrinting(EntityUid uid, PhotocopierComponent component)
     {
         if (component.CopiesQueued == 0)
@@ -117,12 +153,16 @@ public sealed class PhotocopierSystem : EntitySystem
         component.CopiesQueued = 0;
         component.PrintingTimeRemaining = 0;
         component.DataToCopy = null;
+        component.IsScanning = false;
 
         _itemSlotsSystem.SetLock(uid, component.PaperSlot, false);
         StopPrintingSound(component);
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// Spawns paper copy from a queue.
+    /// </summary>
     private void SpawnPaperCopy(EntityUid uid, PhotocopierComponent? component = null)
     {
         if (!Resolve(uid, ref component) || component.CopiesQueued == 0)
@@ -133,7 +173,7 @@ public sealed class PhotocopierSystem : EntitySystem
         var printout = component.DataToCopy;
         if (printout != null)
         {
-            var entityToSpawn = printout.PrototypeId.Length == 0 ? "Paper" : printout.PrototypeId;
+            var entityToSpawn = string.IsNullOrEmpty(printout.PrototypeId) ? "Paper" : printout.PrototypeId;
             var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
 
             if (TryComp<PaperComponent>(printed, out var paper))
@@ -151,7 +191,10 @@ public sealed class PhotocopierSystem : EntitySystem
             }
 
             if (TryComp<MetaDataComponent>(printed, out var metadata))
-                metadata.EntityName = printout.Name;
+            {
+                if (!string.IsNullOrEmpty(printout.EntityName))
+                    metadata.EntityName = printout.EntityName;
+            }
         }
     }
 
@@ -169,6 +212,7 @@ public sealed class PhotocopierSystem : EntitySystem
                 if (component.CopiesQueued <= 0)
                 {
                     _itemSlotsSystem.SetLock(uid, component.PaperSlot, false);
+                    component.IsScanning = false;
                 }
 
                 UpdateUserInterface(uid, component);
@@ -191,7 +235,7 @@ public sealed class PhotocopierSystem : EntitySystem
         }
     }
 
-    public void TryUpdateVisualState(EntityUid uid, PhotocopierComponent? component = null)
+    private void TryUpdateVisualState(EntityUid uid, PhotocopierComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -210,6 +254,9 @@ public sealed class PhotocopierSystem : EntitySystem
         _appearanceSystem.SetData(uid, PhotocopierVisuals.VisualState, combinedState);
     }
 
+    /// <summary>
+    /// Stops audio stream of a printing sound, dereferences it
+    /// </summary>
     private static void StopPrintingSound(PhotocopierComponent component)
     {
         component.PrintAudioStream?.Stop();
@@ -226,7 +273,8 @@ public sealed class PhotocopierSystem : EntitySystem
             component.PaperSlot.Locked,
             isPaperInserted,
             1.0f,
-            component.CopiesQueued);
+            component.CopiesQueued,
+            component.FormCollections);
 
         _userInterface.TrySetUiState(uid, PhotocopierUiKey.Key, state);
     }

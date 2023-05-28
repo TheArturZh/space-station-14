@@ -1,0 +1,10 @@
+nanotrasen_central_command:
+  main:
+    Name: ЦентКом
+    Forms:
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_evac.xml
+nanotrasen_station:
+  command:
+    Name: Командование
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/command/cmd_cc_srt.xml
