@@ -15,7 +15,7 @@ namespace Content.Client.SS220.Photocopier.UI;
 [GenerateTypedNameReferences]
 public sealed partial class PhotocopierWindow : FancyWindow
 {
-    private const int SelectedLabelCharLimit = 21;
+    private const int SelectedLabelCharLimit = 20;
 
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     private readonly FormManager _specificFormManager;
