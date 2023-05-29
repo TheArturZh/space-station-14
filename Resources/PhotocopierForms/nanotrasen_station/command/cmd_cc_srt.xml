@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_cc_srt</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
   <EntityName>НТ-КМД-ЦК-ОТЧ</EntityName>
   <PhotocopierTitle>Отчёт о ситуации на станции</PhotocopierTitle>
   <Content>Форма НТ-КМД-ЦК-ОТЧ
