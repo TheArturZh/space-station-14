@@ -79,8 +79,8 @@
     size: 20
     sprite: SS220/Objects/Misc/toner_cartridge.rsi
   - type: TonerCartridge
-    capacity: 10
-    charges: 10
+    capacity: 60
+    charges: 60
   - type: StaticPrice
     price: 10
   
