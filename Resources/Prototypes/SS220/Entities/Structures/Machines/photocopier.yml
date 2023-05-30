@@ -42,8 +42,8 @@
         components:
           - Paper
     tonerSlot:
-      insertSound: /Audio/Machines/screwdriverclose.ogg
-      ejectSound: /Audio/Machines/screwdriveropen.ogg
+      insertSound: /Audio/Machines/screwdriveropen.ogg
+      ejectSound: /Audio/Machines/screwdriverclose.ogg
       startingItem: TonerCartridge
       whitelist: 
         components:
