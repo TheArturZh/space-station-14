@@ -61,6 +61,8 @@ nanotrasen_station:
     Name: Инженерный отдел
     Forms:
     - /PhotocopierForms/nanotrasen_station/engineering/eng_permit.xml
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_permit_2.xml
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_req_tw.xml
   science:
     Name: Научный отдел
     Forms:
