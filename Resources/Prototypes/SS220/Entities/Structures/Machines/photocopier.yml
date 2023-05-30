@@ -37,7 +37,7 @@
     formCollections: [ "nanotrasen_station" ]
     paperSlot:
       insertSound: null #Is handled by Photocopier component, use paperInsertSound field of Photocopier
-      ejectSound: /Audio/Machines/tray_eject.ogg
+      ejectSound: /Audio/SS220/Effects/paper_pick_up.ogg
       whitelist:
         components:
           - Paper
