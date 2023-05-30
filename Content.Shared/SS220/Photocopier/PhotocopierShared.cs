@@ -13,23 +13,26 @@ public enum PhotocopierUiKey : byte
 public sealed class PhotocopierUiState : BoundUserInterfaceState
 {
     public bool IsPaperInserted { get; }
-    public float TonerRemaining { get; }
     public int PrintQueueLength { get; }
     public bool IsSlotLocked { get; }
     public HashSet<string> AvailableFormCollections { get; }
+    public int TonerAvailable { get; }
+    public int TonerCapacity { get; }
 
     public PhotocopierUiState(
         bool isSlotLocked,
         bool isPaperInserted,
-        float tonerRemaining,
         int printQueueLength ,
-        HashSet<string> availableFormCollections)
+        HashSet<string> availableFormCollections,
+        int tonerAvailable,
+        int tonerCapacity)
     {
         IsSlotLocked = isSlotLocked;
         IsPaperInserted = isPaperInserted;
-        TonerRemaining = tonerRemaining;
         PrintQueueLength = printQueueLength;
         AvailableFormCollections = availableFormCollections;
+        TonerAvailable = tonerAvailable;
+        TonerCapacity = tonerCapacity;
     }
 }
 

@@ -15,7 +15,7 @@ public sealed class Form
     public string? FormId;
 
     [DataField("entityName")]
-    public string? EntityName;
+    public string EntityName = "";
 
     [DataField("photocopierTitle")]
     public string PhotocopierTitle = "Untitled";

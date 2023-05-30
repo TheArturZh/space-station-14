@@ -9,6 +9,7 @@ namespace Content.Shared.SS220.Photocopier;
 public sealed class PhotocopierComponent : Component
 {
     public const string PaperSlotId = "Paper";
+    public const string TonerSlotId = "TonerCartridge";
 
     /// <summary>
     /// 	Used by the server to determine how long the photocopier stays in the "Printing" state.
@@ -44,10 +45,16 @@ public sealed class PhotocopierComponent : Component
         };
 
     /// <summary>
-    /// 	Contains the item to be copied, assumes it's paper
+    /// 	Contains an item to be copied, assumes it's paper
     /// </summary>
     [DataField("paperSlot", required: true)]
     public ItemSlot PaperSlot = new();
+
+    /// <summary>
+    /// 	Contains a toner cartridge
+    /// </summary>
+    [DataField("tonerSlot", required: true)]
+    public ItemSlot TonerSlot = new();
 
     /// <summary>
     /// 	Remaining time of printing

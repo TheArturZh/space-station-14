@@ -41,6 +41,13 @@
       whitelist:
         components:
           - Paper
+    tonerSlot:
+      insertSound: /Audio/Machines/screwdriverclose.ogg
+      ejectSound: /Audio/Machines/screwdriveropen.ogg
+      startingItem: TonerCartridge
+      whitelist: 
+        components:
+          - TonerCartridge
   - type: ActivatableUI
     key: enum.PhotocopierUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -56,3 +63,24 @@
   components:
     - type: Photocopier
       formCollections: [ "nanotrasen_station", "nanotrasen_central_command" ]
+
+- type: entity
+  name: toner cartridge
+  parent: BaseItem
+  id: TonerCartridge
+  description: A cartridge that contains toner. Meant to be used in a photocopier.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: SS220/Objects/Misc/toner_cartridge.rsi
+    layers:
+    - state: "icon"
+  - type: Item
+    size: 20
+    sprite: SS220/Objects/Misc/toner_cartridge.rsi
+  - type: TonerCartridge
+    capacity: 10
+    charges: 10
+  - type: StaticPrice
+    price: 10
+  
