@@ -1,0 +1,9 @@
+﻿<Button xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.SS220.Photocopier.UI">
+    <AnimatedTextureRect
+        Visible="False"
+        Name="Icon"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        HorizontalExpand="True"
+        VerticalExpand="True"/>
+</Button>

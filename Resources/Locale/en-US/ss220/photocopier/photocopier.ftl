@@ -10,16 +10,18 @@ photocopier-ui-no-doc-title = [color=orange]title is missing[/color]
 
 photocopier-ui-scan-surface = Scanner:
 photocopier-ui-scan-surface-empty = [color=red]empty[/color]
-photocopier-ui-scan-surface-item = [color=green]got an item[/color]
+photocopier-ui-scan-surface-item = [color=lime]got an item[/color]
+photocopier-ui-scan-surface-posterior = [color=orange]got an... item?[/color]
 photocopier-examine-scan-got-item = There is something on the scanner.
 
 photocopier-ui-stop-button = Cancel
 photocopier-ui-eject-button = Eject
 photocopier-ui-copy-button = Copy
 photocopier-ui-print-button = Print
+photocopier-ui-refresh-button = Refresh
 
 photocopier-ui-status = Status:
-photocopier-ui-status-idle = [color=green]Idle[/color]
+photocopier-ui-status-idle = [color=lime]Idle[/color]
 photocopier-ui-status-printing = [color=orange]Printing ({ $queue } queued)[/color]
 photocopier-ui-status-out = [color=red]Out of toner[/color]
 

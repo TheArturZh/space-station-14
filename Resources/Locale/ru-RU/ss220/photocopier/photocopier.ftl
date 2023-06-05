@@ -10,16 +10,18 @@ photocopier-ui-no-doc-title = [color=orange]заголовок отсутств�
 
 photocopier-ui-scan-surface = Окно сканера:
 photocopier-ui-scan-surface-empty = [color=red]пусто[/color]
-photocopier-ui-scan-surface-item = [color=green]есть предмет[/color]
+photocopier-ui-scan-surface-item = [color=lime]есть предмет[/color]
+photocopier-ui-scan-surface-posterior = [color=orange]есть... предмет?[/color]
 photocopier-examine-scan-got-item = На нём что-то лежит.
 
 photocopier-ui-stop-button = Отмена
 photocopier-ui-eject-button = Извлечь
 photocopier-ui-copy-button = Копия
 photocopier-ui-print-button = Печать
+photocopier-ui-refresh-button = Обновить
 
 photocopier-ui-status = Статус:
-photocopier-ui-status-idle = [color=green]Ожидание[/color]
+photocopier-ui-status-idle = [color=lime]Ожидание[/color]
 photocopier-ui-status-printing = [color=orange]Печать ({ $queue } в очереди)[/color]
 photocopier-ui-status-out = [color=red]Закончился тонер[/color]
 

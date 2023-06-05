@@ -47,7 +47,7 @@ public sealed class PhotocopierSystem : EntitySystem
         UpdateAppearance(uid, visualState, component, sprite);
     }
 
-    private void UpdateAppearance(EntityUid uid, PhotocopierCombinedVisualState visualState, PhotocopierComponent component, SpriteComponent sprite)
+    private static void UpdateAppearance(EntityUid uid, PhotocopierCombinedVisualState visualState, PhotocopierComponent component, SpriteComponent sprite)
     {
         SetLayerState(PhotocopierVisualLayers.Base, "off", sprite);
 

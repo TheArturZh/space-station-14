@@ -7,6 +7,7 @@
   - type: Sprite
     sprite: SS220/Structures/Machines/photocopier.rsi
     netsync: false
+    noRot: true
     layers:
     - state: "off"
       map: ["enum.PhotocopierVisualLayers.Base"]
@@ -22,6 +23,20 @@
       map: ["enum.PhotocopierVisualLayers.PrintAnim"]
   - type: Appearance
   - type: Climbable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.4
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -45,7 +60,7 @@
       insertSound: /Audio/Machines/screwdriveropen.ogg
       ejectSound: /Audio/Machines/screwdriverclose.ogg
       startingItem: TonerCartridge
-      whitelist: 
+      whitelist:
         components:
           - TonerCartridge
   - type: ActivatableUI
@@ -83,4 +98,3 @@
     charges: 60
   - type: StaticPrice
     price: 10
-  

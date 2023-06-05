@@ -1,14 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.SS220.Photocopier;
 using Content.Shared.SS220.Photocopier.Forms;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Server.UserInterface;
 using Content.Server.Power.Components;
 using Content.Server.Paper;
 using Content.Server.Power.EntitySystems;
 using Content.Server.SS220.Photocopier.Forms;
-using Content.Shared.Examine;
+using Content.Shared.Humanoid;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.SS220.Photocopier;
@@ -21,6 +24,8 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     private FormManager? _specificFormManager;
 
     /// <inheritdoc/>
@@ -42,6 +47,7 @@ public sealed class PhotocopierSystem : EntitySystem
         SubscribeLocalEvent<PhotocopierComponent, PhotocopierCopyMessage>(OnCopyButtonPressed);
         SubscribeLocalEvent<PhotocopierComponent, PhotocopierStopMessage>(OnStopButtonPressed);
         SubscribeLocalEvent<PhotocopierComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<PhotocopierComponent, PhotocopierRefreshUiMessage>(OnRefreshUiMessage);
     }
 
     /// <inheritdoc/>
@@ -58,6 +64,36 @@ public sealed class PhotocopierSystem : EntitySystem
             ProcessPrinting(uid, frameTime, photocopier);
         }
     }
+
+    /// <summary>
+    /// Try to get a HumanoidAppearanceComponent of one of the creatures that are on top of the photocopier at the moment.
+    /// Returns null if there are none.
+    /// </summary>
+    private HumanoidAppearanceComponent? GetCreatureOnTop(EntityUid uid, PhotocopierComponent? component, TransformComponent? xform)
+    {
+        if (!Resolve(uid, ref component, ref xform, false))
+            return null;
+
+        var map = xform.MapID;
+
+        var bounds = _physics.GetWorldAABB(uid);
+
+        // We shrink the box greatly to ensure it only intersects with the objects that are on top of the photocopier.
+        // May be a hack, but at least it works reliably (on my computer)
+        // lerp alpha (effective alpha will be twice as big since we perform lerp on both corners)
+        var shrinkCoefficient = 0.4f;
+        // lerp corners towards each other
+        var boundsTR = new Vector2(bounds.TopRight.X, bounds.TopRight.Y);
+        var boundsBL = new Vector2(bounds.BottomLeft.X, bounds.BottomLeft.Y);
+        bounds.TopRight = (boundsBL - boundsTR) * shrinkCoefficient + boundsTR;
+        bounds.BottomLeft = (boundsTR - boundsBL) * shrinkCoefficient + boundsBL;
+
+        var intersecting = _entityLookup.GetComponentsIntersecting<HumanoidAppearanceComponent>(
+            map, bounds, LookupFlags.Dynamic | LookupFlags.Sundries);
+
+        return intersecting.Count > 0 ? intersecting.ElementAt(0) : null;
+    }
+
     private bool TryGetTonerCartridge(
         EntityUid uid,
         PhotocopierComponent component,
@@ -151,8 +187,11 @@ public sealed class PhotocopierSystem : EntitySystem
             stampState: paper.StampState,
             stampedBy: paper.StampedBy);
 
-        component.CopiesQueued = Math.Min(args.Amount, component.MaxQueueLength);
         component.IsScanning = true;
+        component.CopiesQueued = Math.Min(args.Amount, component.MaxQueueLength);
+        // Do it even if max queue length is <1
+        if (component.CopiesQueued <= 0)
+            component.CopiesQueued = 1;
     }
 
     private void OnPrintButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierPrintMessage args)
@@ -174,6 +213,9 @@ public sealed class PhotocopierSystem : EntitySystem
             return;
 
         component.CopiesQueued = Math.Min(args.Amount, component.MaxQueueLength);
+        // Do it even if max queue length is <1
+        if (component.CopiesQueued <= 0)
+            component.CopiesQueued = 1;
     }
 
     private void OnStopButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierStopMessage args)
@@ -313,6 +355,11 @@ public sealed class PhotocopierSystem : EntitySystem
         _appearanceSystem.SetData(uid, PhotocopierVisuals.VisualState, combinedState);
     }
 
+    private void OnRefreshUiMessage(EntityUid uid, PhotocopierComponent component, PhotocopierRefreshUiMessage args)
+    {
+        UpdateUserInterface(uid, component);
+    }
+
     /// <summary>
     /// Stops audio stream of a printing sound, dereferences it
     /// </summary>
@@ -342,13 +389,18 @@ public sealed class PhotocopierSystem : EntitySystem
 
         var isPaperInserted = component.PaperSlot.Item != null;
 
+        TryComp<TransformComponent>(uid, out var xform);
+        var assOnScanner = GetCreatureOnTop(uid, component, xform) != null;
+
         var state = new PhotocopierUiState(
             component.PaperSlot.Locked,
             isPaperInserted,
             component.CopiesQueued,
             component.FormCollections,
             tonerAvailable,
-            tonerCapacity);
+            tonerCapacity,
+            assOnScanner,
+            component.MaxQueueLength);
 
         _userInterface.TrySetUiState(uid, PhotocopierUiKey.Key, state);
     }

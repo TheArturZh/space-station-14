@@ -18,6 +18,8 @@ public sealed class PhotocopierUiState : BoundUserInterfaceState
     public HashSet<string> AvailableFormCollections { get; }
     public int TonerAvailable { get; }
     public int TonerCapacity { get; }
+    public bool AssIsOnScanner { get; }
+    public int MaxQueueLength { get; }
 
     public PhotocopierUiState(
         bool isSlotLocked,
@@ -25,7 +27,9 @@ public sealed class PhotocopierUiState : BoundUserInterfaceState
         int printQueueLength ,
         HashSet<string> availableFormCollections,
         int tonerAvailable,
-        int tonerCapacity)
+        int tonerCapacity,
+        bool assIsOnScanner,
+        int maxQueueLength)
     {
         IsSlotLocked = isSlotLocked;
         IsPaperInserted = isPaperInserted;
@@ -33,6 +37,8 @@ public sealed class PhotocopierUiState : BoundUserInterfaceState
         AvailableFormCollections = availableFormCollections;
         TonerAvailable = tonerAvailable;
         TonerCapacity = tonerCapacity;
+        AssIsOnScanner = assIsOnScanner;
+        MaxQueueLength = maxQueueLength;
     }
 }
 
@@ -62,5 +68,10 @@ public sealed class PhotocopierCopyMessage : BoundUserInterfaceMessage
 
 [Serializable, NetSerializable]
 public sealed class PhotocopierStopMessage : BoundUserInterfaceMessage
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class PhotocopierRefreshUiMessage : BoundUserInterfaceMessage
 {
 }

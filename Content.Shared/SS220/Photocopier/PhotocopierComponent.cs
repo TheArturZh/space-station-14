@@ -89,7 +89,18 @@ public sealed class PhotocopierComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxQueueLength")]
-    public int MaxQueueLength = 10;
+    public int MaxQueueLength
+    {
+        get => _maxQueueLength;
+        set
+        {
+            if (value < 1)
+                throw new Exception("MaxQueueLength can't be less than 1.");
+
+            _maxQueueLength = value;
+        }
+    }
+    private int _maxQueueLength = 10;
 
     /// <summary>
     /// 	A content that is cached for copying.
