@@ -21,4 +21,10 @@ public sealed partial class ButtScanWindow : BaseWindow
         ContentsImage.TexturePath = scan.ButtTexturePath;
         ContentsImage.MinSize = ContentsImage.TextureNormal?.Size ?? Vector2.Zero;
     }
+
+    // Drag by grabbing anywhere
+    protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
+    {
+        return DragMode.Move;
+    }
 }
