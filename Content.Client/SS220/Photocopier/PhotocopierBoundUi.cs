@@ -1,5 +1,4 @@
 using Content.Shared.SS220.Photocopier;
-using Content.Shared.SS220.Photocopier.Forms;
 using Content.Client.SS220.Photocopier.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.SS220.Photocopier.Forms.FormManagerShared;
@@ -15,6 +14,7 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
     {
     }
 
+    /// <inheritdoc/>
     protected override void Open()
     {
         base.Open();
@@ -59,7 +59,7 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
     {
         base.UpdateState(state);
 
-        if (_window == null || state is not PhotocopierUiState cast)
+        if (_window is null || state is not PhotocopierUiState cast)
             return;
 
         _window.UpdateState(cast);

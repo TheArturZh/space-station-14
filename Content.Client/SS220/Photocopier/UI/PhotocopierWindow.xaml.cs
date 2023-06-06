@@ -29,7 +29,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
     private int _copyAmount = 1;
     private int _maxCopyAmount = 10;
-    private bool _canPrint = false;
+    private bool _canPrint;
 
     private const float TonerBarColorValue = 50.2f / 100;
     private const float TonerBarColorSaturation = 48.44f / 100;
@@ -75,8 +75,6 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
     private void MakeCopyAmountValid()
     {
-        var oldCopyAmount = _copyAmount;
-
         if (_copyAmount > _maxCopyAmount)
             _copyAmount = _maxCopyAmount;
 
@@ -120,7 +118,8 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
         var isPrinting = state.PrintQueueLength > 0;
         _canPrint = state is { TonerAvailable: > 0 } && !isPrinting;
-        CopyButton.Disabled = !_canPrint || !state.IsPaperInserted;
+        var thereIsSomethingToCopy = state.IsPaperInserted || state.ButtIsOnScanner;
+        CopyButton.Disabled = !_canPrint || !thereIsSomethingToCopy;
         StopButton.Disabled = !isPrinting;
         UpdatePrintButton();
 
@@ -133,15 +132,13 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
         // Update scanner status
         EjectButton.Disabled = !state.IsPaperInserted || state.IsSlotLocked;
-        if (state.AssIsOnScanner)
-            PaperStatusLabel.SetMarkup(Loc.GetString("photocopier-ui-scan-surface-posterior"));
-        else
+        var stateMarkupLocId = state switch
         {
-            PaperStatusLabel.SetMarkup(Loc.GetString(
-                state.IsPaperInserted
-                    ?"photocopier-ui-scan-surface-item"
-                    :"photocopier-ui-scan-surface-empty"));
-        }
+            { IsPaperInserted: true } => "photocopier-ui-scan-surface-item",
+            { ButtIsOnScanner: true } => "photocopier-ui-scan-surface-posterior",
+            _ => "photocopier-ui-scan-surface-empty"
+        };
+        PaperStatusLabel.SetMarkup(Loc.GetString(stateMarkupLocId));
 
         // Update printer status
         string statusLabelText;
@@ -195,7 +192,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
         Tree.SetAllExpanded(false);
     }
 
-    private TreeItem? AddEntry(TreeItem? parent, FormGroup group, string collectionId)
+    private void AddEntry(TreeItem? parent, FormGroup group, string collectionId)
     {
         var item = Tree.AddItem(parent);
         item.Label.Text = group.Name;
@@ -209,17 +206,13 @@ public sealed partial class PhotocopierWindow : FancyWindow
             );
             AddEntry(item, form.Value, descriptor);
         }
-
-        return item;
     }
 
-    private TreeItem? AddEntry(TreeItem? parent, Form entry, FormDescriptor descriptor)
+    private void AddEntry(TreeItem? parent, Form entry, FormDescriptor descriptor)
     {
         var item = Tree.AddItem(parent);
         item.Label.Text = entry.PhotocopierTitle;
         item.Metadata = descriptor;
-
-        return item;
     }
 
     private void OnTreeSelectionChanged(TreeItem? item)

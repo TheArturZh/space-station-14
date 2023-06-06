@@ -12,14 +12,14 @@ public sealed class PhotocopierComponent : Component
     public const string TonerSlotId = "TonerCartridge";
 
     /// <summary>
-    /// 	Used by the server to determine how long the photocopier stays in the "Printing" state.
+    /// Used by the server to determine how long the photocopier stays in the "Printing" state.
     /// </summary>
     [DataField("printingTime")]
     public float PrintingTime = 2.0f;
 
     /// <summary>
-    ///     Sound that plays when inserting paper.
-    ///     Whether it plays or not depends on power availability.
+    /// Sound that plays when inserting paper.
+    /// Whether it plays or not depends on power availability.
     /// </summary>
     [DataField("paperInsertSound")]
     public SoundSpecifier PaperInsertSound =
@@ -32,7 +32,7 @@ public sealed class PhotocopierComponent : Component
         };
 
     /// <summary>
-    ///     Sound that plays when printing
+    /// Sound that plays when printing
     /// </summary>
     [DataField("printSound")]
     public SoundSpecifier PrintSound =
@@ -45,47 +45,56 @@ public sealed class PhotocopierComponent : Component
         };
 
     /// <summary>
-    /// 	Contains an item to be copied, assumes it's paper
+    /// Contains an item to be copied, assumes it's paper
     /// </summary>
     [DataField("paperSlot", required: true)]
     public ItemSlot PaperSlot = new();
 
     /// <summary>
-    /// 	Contains a toner cartridge
+    /// Contains a toner cartridge
     /// </summary>
     [DataField("tonerSlot", required: true)]
     public ItemSlot TonerSlot = new();
 
     /// <summary>
-    /// 	Remaining time of printing
+    /// Remaining time of printing
     /// </summary>
     [DataField("printingTimeRemaining")]
     public float PrintingTimeRemaining;
 
     /// <summary>
-    /// 	Remaining amount of copies to print
+    /// Remaining amount of copies to print
     /// </summary>
     [ViewVariables]
     [DataField("copiesQueued")]
     public int CopiesQueued;
 
     /// <summary>
-    /// 	Whether this photocopier is currently scanning.
-    ///     Used by server to unlock the slot after copying and to change appearance.
+    /// Whether this photocopier is currently scanning.
+    /// Used by server to unlock the slot after copying and to change appearance.
     /// </summary>
-    [ViewVariables]
-    [DataField("isScanning")]
+    [ViewVariables(VVAccess.ReadOnly)]
     public bool IsScanning;
 
     /// <summary>
-    /// 	Collections of forms available in UI
+    /// Whether this photocopier is currently copying butt.
+    /// Is used by server to determine whether an entity overlap check at the end of the printing is needed.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsCopyingButt;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsCopyingPhysicalButt;
+
+    /// <summary>
+    /// Collections of forms available in UI
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("formCollections")]
     public HashSet<string> FormCollections = new();
 
     /// <summary>
-    /// 	Maximum amount of copies that can be queued
+    /// Maximum amount of copies that can be queued
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxQueueLength")]
@@ -103,16 +112,27 @@ public sealed class PhotocopierComponent : Component
     private int _maxQueueLength = 10;
 
     /// <summary>
-    /// 	A content that is cached for copying.
+    /// A content that is cached for copying.
     /// </summary>
     [ViewVariables]
-    [DataField("dataToCopy", serverOnly: true)]
     public Form? DataToCopy;
 
     /// <summary>
-    /// 	A content that is cached for copying.
+    /// Used by photocopier to determine what to print out as a result of a copy operation
     /// </summary>
-    [DataField("printAudioStream", serverOnly: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string? ButtTextureToCopy;
+
+    /// <summary>
+    /// Used by photocopier to determine whether the species on top of the photocopier is the same as it was
+    /// without having to fetch the texture every tick.
+    /// </summary>
+    public string? ButtSpecies;
+
+    /// <summary>
+    /// An audio stream of printing sound.
+    /// Is saved in a variable so sound can be stopped later.
+    /// </summary>
     public IPlayingAudioStream? PrintAudioStream;
 }
 

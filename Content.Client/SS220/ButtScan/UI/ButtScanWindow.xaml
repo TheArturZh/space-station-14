@@ -1,0 +1,20 @@
+﻿<ui:ButtScanWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:ui="clr-namespace:Content.Client.SS220.ButtScan.UI"
+
+                      Resizable="False"
+                      MinSize="350 350"
+                      SetSize="350 350">
+
+    <BoxContainer Name="ContentsRoot" Orientation="Vertical">
+        <PanelContainer StyleClasses="AngleRect" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
+        </PanelContainer>
+    </BoxContainer>
+
+    <PanelContainer Name="ScanBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
+        <PanelContainer Name="ScanContent" VerticalExpand="True" HorizontalExpand="True">
+            <TextureButton Name="ContentsImage" SetSize="300 300" HorizontalAlignment="Center" VerticalAlignment="Center" MouseFilter="Ignore"/>
+        </PanelContainer>
+    </PanelContainer>
+</ui:ButtScanWindow>
