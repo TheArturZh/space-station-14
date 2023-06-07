@@ -189,7 +189,7 @@ public sealed class PhotocopierSystem : EntitySystem
             return;
 
         // Prioritize inserted paper over butt
-        if (TryQueueCopyPaper(uid, component, args.Amount))
+        if (TryQueueCopySlot(uid, component, args.Amount))
             return;
 
         if (TryGetHumanoidOnTop(uid, component, out var humanoidOnScanner))
@@ -254,22 +254,32 @@ public sealed class PhotocopierSystem : EntitySystem
     /// <summary>
     /// Caches paper data (if paper is in) and queues copy operation
     /// </summary>
-    private bool TryQueueCopyPaper(EntityUid uid, PhotocopierComponent component, int amount)
+    private bool TryQueueCopySlot(EntityUid uid, PhotocopierComponent component, int amount)
     {
         var copyEntity = component.PaperSlot.Item;
         if (copyEntity is null)
             return false;
 
-        if (!TryComp<MetaDataComponent>(copyEntity, out var metadata) ||
-            !TryComp<PaperComponent>(copyEntity, out var paper))
+        if (TryComp<ButtScanComponent>(copyEntity, out var buttScan))
+        {
+            component.IsCopyingButt = true;
+            component.ButtTextureToCopy = buttScan.ButtTexturePath;
+        }
+        else if (
+            TryComp<MetaDataComponent>(copyEntity, out var metadata) &&
+            TryComp<PaperComponent>(copyEntity, out var paper))
+        {
+            component.DataToCopy = new Form(
+                metadata.EntityName,
+                paper.Content,
+                prototypeId: metadata.EntityPrototype?.ID,
+                stampState: paper.StampState,
+                stampedBy: paper.StampedBy);
+        }
+        else
+        {
             return false;
-
-        component.DataToCopy = new Form(
-            metadata.EntityName,
-            paper.Content,
-            prototypeId: metadata.EntityPrototype?.ID,
-            stampState: paper.StampState,
-            stampedBy: paper.StampedBy);
+        }
 
         component.IsScanning = true;
         component.CopiesQueued = Math.Clamp(amount, 0, component.MaxQueueLength);
