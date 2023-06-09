@@ -8,7 +8,7 @@ namespace Content.Shared.SS220.Photocopier;
 [RegisterComponent, NetworkedComponent]
 public sealed class PhotocopierComponent : Component
 {
-    public const string PaperSlotId = "Paper";
+    public const string PaperSlotId = "CopierScan";
     public const string TonerSlotId = "TonerCartridge";
 
     /// <summary>
