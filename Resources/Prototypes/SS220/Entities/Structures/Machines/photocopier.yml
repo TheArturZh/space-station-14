@@ -71,6 +71,11 @@
     interfaces:
       - key: enum.PhotocopierUiKey.Key
         type: PhotocopierBoundUi
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      CopierScan: !type:ContainerSlot
+      TonerCartridge: !type:ContainerSlot
 
 - type: entity
   id: PhotocopierCentralCommand
