@@ -29,22 +29,11 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-        density: 60
+        density: 150
         mask:
         - MachineMask
         layer:
         - MachineLayer
-  - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    intersectRatio: 0.4
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Physics
-    bodyType: Static
-  - type: Transform
-    noRot: true
-  - type: Anchorable
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
