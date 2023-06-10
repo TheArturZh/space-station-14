@@ -33,11 +33,13 @@ public sealed class PhotocopierCombinedVisualState : ICloneable
 {
     public PhotocopierVisualState State { get; }
     public bool GotItem { get; }
+    public bool Emagged { get; }
 
-    public PhotocopierCombinedVisualState(PhotocopierVisualState state, bool gotItem)
+    public PhotocopierCombinedVisualState(PhotocopierVisualState state, bool gotItem, bool emagged)
     {
         State = state;
         GotItem = gotItem;
+        Emagged = emagged;
     }
 
     public object Clone() => MemberwiseClone();

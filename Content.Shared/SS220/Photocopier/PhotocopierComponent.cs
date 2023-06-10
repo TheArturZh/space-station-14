@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.SS220.Photocopier.Forms;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
@@ -8,6 +9,8 @@ namespace Content.Shared.SS220.Photocopier;
 [RegisterComponent, NetworkedComponent]
 public sealed class PhotocopierComponent : Component
 {
+    // ReSharper disable RedundantLinebreak
+
     public const string PaperSlotId = "CopierScan";
     public const string TonerSlotId = "TonerCartridge";
 
@@ -41,6 +44,25 @@ public sealed class PhotocopierComponent : Component
             Params = new AudioParams
             {
                 Volume = -2f
+            }
+        };
+
+    /// <summary>
+    /// Sound to play when component has been emagged
+    /// </summary>
+    [DataField("emagSound")]
+    public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
+
+    /// <summary>
+    /// Sound that plays when an emagged photocopier burns someones butt
+    /// </summary>
+    [DataField("buttDamageSound")]
+    public SoundSpecifier ButtDamageSound =
+        new SoundPathSpecifier("/Audio/Items/welder2.ogg")
+        {
+            Params = new AudioParams
+            {
+                Volume = -4f
             }
         };
 
@@ -110,6 +132,13 @@ public sealed class PhotocopierComponent : Component
         }
     }
     private int _maxQueueLength = 10;
+
+    /// <summary>
+    /// Damage dealt to a creature when they try to photocopy their butt on an emagged photocopier.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("emagButtDamage")]
+    public DamageSpecifier? EmagButtDamage;
 
     /// <summary>
     /// A content that is cached for copying.

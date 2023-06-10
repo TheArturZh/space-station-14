@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Chat.Systems;
 using Content.Shared.SS220.Photocopier;
 using Content.Shared.SS220.Photocopier.Forms;
 using Content.Shared.Containers.ItemSlots;
@@ -9,6 +10,9 @@ using Content.Server.Power.Components;
 using Content.Server.Paper;
 using Content.Server.Power.EntitySystems;
 using Content.Server.SS220.Photocopier.Forms;
+using Content.Shared.Damage;
+using Content.Shared.Emag.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.SS220.ButtScan;
@@ -30,14 +34,18 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+
     private FormManager? _specificFormManager;
+    private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        _sawmill = Logger.GetSawmill("photocopier");
         _specificFormManager = _sysMan.GetEntitySystem<FormManager>();
 
         SubscribeLocalEvent<PhotocopierComponent, ComponentInit>(OnComponentInit);
@@ -45,6 +53,7 @@ public sealed class PhotocopierSystem : EntitySystem
         SubscribeLocalEvent<PhotocopierComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<PhotocopierComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<PhotocopierComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<PhotocopierComponent, GotEmaggedEvent>(OnEmagged);
 
         // UI
         SubscribeLocalEvent<PhotocopierComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
@@ -76,7 +85,6 @@ public sealed class PhotocopierSystem : EntitySystem
     /// </summary>
     private bool TryGetHumanoidOnTop(
         EntityUid uid,
-        PhotocopierComponent component,
         [NotNullWhen(true)] out HumanoidAppearanceComponent? humanoidAppearance)
     {
         if (!TryComp<TransformComponent>(uid, out var xform))
@@ -92,10 +100,10 @@ public sealed class PhotocopierSystem : EntitySystem
         // May be a hack, but at least it works reliably (on my computer)
 
         // lerp alpha (effective alpha will be twice as big since we perform lerp on both corners)
-        var shrinkCoefficient = 0.4f;
+        const float shrinkCoefficient = 0.4f;
         // lerp corners towards each other
-        var boundsTR = new Vector2(bounds.TopRight.X, bounds.TopRight.Y);
-        var boundsBL = new Vector2(bounds.BottomLeft.X, bounds.BottomLeft.Y);
+        var boundsTR = bounds.TopRight;
+        var boundsBL = bounds.BottomLeft;
         bounds.TopRight = (boundsBL - boundsTR) * shrinkCoefficient + boundsTR;
         bounds.BottomLeft = (boundsTR - boundsBL) * shrinkCoefficient + boundsBL;
 
@@ -115,7 +123,7 @@ public sealed class PhotocopierSystem : EntitySystem
     {
         var tonerSlotItem = component.TonerSlot.Item;
         if (tonerSlotItem is not null)
-            return TryComp<TonerCartridgeComponent>(tonerSlotItem, out tonerCartridgeComponent);
+            return TryComp(tonerSlotItem, out tonerCartridgeComponent);
 
         tonerCartridgeComponent = null;
         return false;
@@ -189,11 +197,14 @@ public sealed class PhotocopierSystem : EntitySystem
             return;
 
         // Prioritize inserted paper over butt
-        if (TryQueueCopySlot(uid, component, args.Amount))
+        if (TryQueueCopySlot(component, args.Amount))
             return;
 
-        if (TryGetHumanoidOnTop(uid, component, out var humanoidOnScanner))
-            TryQueueCopyPhysicalButt(uid, component, humanoidOnScanner, args.Amount);
+        if (TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
+        {
+            TryQueueCopyPhysicalButt(component, humanoidOnScanner, args.Amount);
+            BurnButt(humanoidOnScanner.Owner, uid, component);
+        }
     }
 
     private void OnPrintButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierPrintMessage args)
@@ -227,12 +238,37 @@ public sealed class PhotocopierSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    private void OnEmagged(EntityUid uid, PhotocopierComponent component, ref GotEmaggedEvent args)
+    {
+        _audio.PlayPvs(component.EmagSound, uid);
+        args.Handled = true;
+    }
+
+    private void BurnButt(EntityUid mobUid, EntityUid photocopierUid, PhotocopierComponent component)
+    {
+        if (component.EmagButtDamage is null)
+            return;
+
+        // TODO LATER: Когда добавим куклу нужно сделать так чтоб дамаг шел в гроин
+        if(!TryComp<DamageableComponent>(mobUid, out var damageable))
+            return;
+
+        var dealtDamage = _damageableSystem.TryChangeDamage(
+            mobUid, component.EmagButtDamage, false, false, damageable, photocopierUid);
+
+        _audio.PlayPvs(component.ButtDamageSound, photocopierUid);
+
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAA
+        if (dealtDamage is null || dealtDamage.Empty)
+            return; //...but only if it dealt damage
+        _chat.TryEmoteWithChat(mobUid, "Scream", ChatTransmitRange.GhostRangeLimit);
+    }
+
     /// <summary>
     /// Queues copy operation to copy an ass of specified HumanoidAppearanceComponent.
     /// Causes photocopier to check for HumanoidAppearanceComponents on top of it every tick.
     /// </summary>
     private void TryQueueCopyPhysicalButt(
-        EntityUid uid,
         PhotocopierComponent component,
         HumanoidAppearanceComponent humanoidAppearance,
         int amount)
@@ -254,7 +290,7 @@ public sealed class PhotocopierSystem : EntitySystem
     /// <summary>
     /// Caches paper data (if paper is in) and queues copy operation
     /// </summary>
-    private bool TryQueueCopySlot(EntityUid uid, PhotocopierComponent component, int amount)
+    private bool TryQueueCopySlot(PhotocopierComponent component, int amount)
     {
         var copyEntity = component.PaperSlot.Item;
         if (copyEntity is null)
@@ -331,16 +367,14 @@ public sealed class PhotocopierSystem : EntitySystem
         var printout = component.DataToCopy;
         if (printout is null)
         {
-            Logger.ErrorS(
-                "photocopier",
-                "Entity " + uid + " tried to spawn a copy of paper, but DataToCopy was null.");
+            _sawmill.Error("Entity " + uid + " tried to spawn a copy of paper, but DataToCopy was null.");
             return;
         }
 
         var entityToSpawn = string.IsNullOrEmpty(printout.PrototypeId) ? "Paper" : printout.PrototypeId;
         var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
 
-        if (TryComp<PaperComponent>(printed, out var paper))
+        if (TryComp<PaperComponent>(printed, out _))
         {
             _paperSystem.SetContent(printed, printout.Content);
 
@@ -391,7 +425,7 @@ public sealed class PhotocopierSystem : EntitySystem
             if (component.IsCopyingPhysicalButt)
             {
                 // If there is no butt or someones else butt is in the way - stop copying.
-                if (!TryGetHumanoidOnTop(uid, component, out var humanoid)
+                if (!TryGetHumanoidOnTop(uid, out var humanoid)
                     || component.ButtSpecies != humanoid.Species)
                 {
                     StopPrinting(uid, component);
@@ -463,7 +497,7 @@ public sealed class PhotocopierSystem : EntitySystem
 
         var item = component.PaperSlot.Item;
         var gotItem = item != null;
-        var combinedState = new PhotocopierCombinedVisualState(state, gotItem);
+        var combinedState = new PhotocopierCombinedVisualState(state, gotItem, HasComp<EmaggedComponent>(uid));
 
         _appearance.SetData(uid, PhotocopierVisuals.VisualState, combinedState);
     }
@@ -496,7 +530,7 @@ public sealed class PhotocopierSystem : EntitySystem
         }
 
         var isPaperInserted = component.PaperSlot.Item is not null;
-        var assIsOnScanner = TryGetHumanoidOnTop(uid, component, out _);
+        var assIsOnScanner = TryGetHumanoidOnTop(uid, out _);
 
         var state = new PhotocopierUiState(
             component.PaperSlot.Locked,

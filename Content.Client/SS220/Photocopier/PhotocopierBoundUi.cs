@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.SS220.Photocopier;
 
+/// <inheritdoc />
 public sealed class PhotocopierBoundUi : BoundUserInterface
 {
     private PhotocopierWindow? _window;
@@ -55,6 +56,7 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
         SendMessage(new PhotocopierStopMessage());
     }
 
+    /// <inheritdoc />
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
