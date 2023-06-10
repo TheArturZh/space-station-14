@@ -2,9 +2,10 @@
 
 namespace Content.Shared.SS220.ButtScan;
 
-[NetworkedComponent, RegisterComponent]
-public sealed class ButtScanComponent : Component
+[NetworkedComponent, RegisterComponent, AutoGenerateComponentState]
+public sealed partial class ButtScanComponent : Component
 {
+    [AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("buttTexturePath")]
     public string ButtTexturePath = "/Textures/SS220/Interface/Butts/human.png";
