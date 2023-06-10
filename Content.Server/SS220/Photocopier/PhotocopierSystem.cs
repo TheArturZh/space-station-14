@@ -203,7 +203,8 @@ public sealed class PhotocopierSystem : EntitySystem
         if (TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
         {
             TryQueueCopyPhysicalButt(component, humanoidOnScanner, args.Amount);
-            BurnButt(humanoidOnScanner.Owner, uid, component);
+            if(HasComp<EmaggedComponent>(uid))
+                BurnButt(humanoidOnScanner.Owner, uid, component);
         }
     }
 
