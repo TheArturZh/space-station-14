@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+using System.IO;
 using System.Xml.Serialization;
 using Content.Shared.SS220.Photocopier.Forms;
 using Content.Shared.SS220.Photocopier.Forms.FormManagerShared;
