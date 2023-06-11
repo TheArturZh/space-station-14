@@ -10,6 +10,7 @@ namespace Content.Client.SS220.Photocopier.Forms;
 public sealed class FormManager : EntitySystem
 {
     private Dictionary<string, Dictionary<string, FormGroup>> _collections = new();
+    private readonly ISawmill _sawmill = Logger.GetSawmill("form-manager");
 
     /// <summary>
     /// Provides a tree of forms, used by photocopier's UI.
@@ -24,13 +25,13 @@ public sealed class FormManager : EntitySystem
     public override void Initialize()
     {
         SubscribeNetworkEvent<PhotocopierFormsMessage>(OnRulesReceived);
-        Logger.DebugS("form-manager", "Requested forms from server");
+        _sawmill.Debug("Requested forms from server");
         RaiseNetworkEvent(new RequestPhotocopierFormsMessage());
     }
 
     private void OnRulesReceived(PhotocopierFormsMessage message, EntitySessionEventArgs args)
     {
-        Logger.DebugS("form-manager", "Received forms from server, amount of collections: " + message.Data.Count);
+        _sawmill.Debug("Received forms from server, amount of collections: " + message.Data.Count);
         _collections = message.Data;
     }
 }

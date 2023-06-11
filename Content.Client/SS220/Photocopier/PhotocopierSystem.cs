@@ -8,7 +8,7 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     private readonly PhotocopierCombinedVisualState _fallbackVisualState =
-        new PhotocopierCombinedVisualState(PhotocopierVisualState.Off, false, false);
+        new(PhotocopierVisualState.Off, false, false);
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -38,14 +38,13 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
 
     private FormManager? _specificFormManager;
-    private ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("photocopier");
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
-        _sawmill = Logger.GetSawmill("photocopier");
         _specificFormManager = _sysMan.GetEntitySystem<FormManager>();
 
         SubscribeLocalEvent<PhotocopierComponent, ComponentInit>(OnComponentInit);

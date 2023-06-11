@@ -15,11 +15,12 @@ namespace Content.Server.SS220.Photocopier.Forms;
 public sealed class FormManager : EntitySystem
 {
     [Dependency] private readonly IResourceManager _resourceManager = default!;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("form-manager");
 
-    /// <summary>
+        /// <summary>
     /// Path at which index file is located. The file contains names of groups and paths of form XML files.
     /// </summary>
-    private readonly ResPath _indexPath = new ResPath("/PhotocopierForms/FormIndex.yml");
+    private readonly ResPath _indexPath = new("/PhotocopierForms/FormIndex.yml");
 
     private Dictionary<string, Dictionary<string, FormGroup>> _collections = new();
 
@@ -43,22 +44,20 @@ public sealed class FormManager : EntitySystem
         {
             if (!_collections.TryGetValue(descriptor.CollectionId, out var collection))
             {
-                Logger.ErrorS("form-manager", "Unsuccessful attempt to access collection " + descriptor.CollectionId);
+                _sawmill.Error("Unsuccessful attempt to access collection " + descriptor.CollectionId);
                 return null;
             }
 
             if (!collection.TryGetValue(descriptor.GroupId, out var group))
             {
-                Logger.ErrorS("form-manager", "Unsuccessful attempt to access group " + descriptor.GroupId + " in collection " + descriptor.CollectionId);
+                _sawmill.Error("Unsuccessful attempt to access group " + descriptor.GroupId + " in collection " + descriptor.CollectionId);
                 return null;
             }
 
             if (!group.Forms.TryGetValue(descriptor.FormId, out var form))
             {
-                Logger.ErrorS(
-                    "form-manager",
-                    "Unsuccessful attempt to access form " + descriptor.FormId
-                    + " in group " + descriptor.GroupId + ", collection " + descriptor.CollectionId);
+                _sawmill.Error("Unsuccessful attempt to access form " + descriptor.FormId +
+                               " in group " + descriptor.GroupId + ", collection " + descriptor.CollectionId);
                 return null;
             }
 
@@ -84,7 +83,7 @@ public sealed class FormManager : EntitySystem
 
         if (string.IsNullOrEmpty(indexContentsString))
         {
-            Logger.WarningS("form-manager", "No forms were loaded because no index content was read");
+            _sawmill.Warning("No forms were loaded because no index content was read");
             return;
         }
 
@@ -103,7 +102,7 @@ public sealed class FormManager : EntitySystem
         }
 
         // Reconstruct index using NetSerializable FormGroups & parse forms
-        Logger.DebugS("form-manager", "Starting to reconstruct index and deserialize forms");
+        _sawmill.Debug("Starting to reconstruct index and deserialize forms");
 
         var newCollectionsDict = new Dictionary<string, Dictionary<string, FormGroup>>();
         var xmlDeserializer = new XmlSerializer(typeof(Form));
@@ -127,26 +126,26 @@ public sealed class FormManager : EntitySystem
                     TryReadAllText(new ResPath(formPath), out var formXmlContents);
                     if (string.IsNullOrEmpty(formXmlContents))
                     {
-                        Logger.Error("form-manager", "Form file doesn't exist or is empty at path: " + formPath);
+                        _sawmill.Error("Form file doesn't exist or is empty at path: " + formPath);
                         continue;
                     }
 
                     var form = (Form?) xmlDeserializer.Deserialize(new StringReader(formXmlContents));
                     if (form == null)
                     {
-                        Logger.ErrorS("form-manager", "Failed to deserialize form at path: " + formPath);
+                        _sawmill.Error("Failed to deserialize form at path: " + formPath);
                         continue;
                     }
 
                     if (string.IsNullOrEmpty(form.FormId))
                     {
-                        Logger.ErrorS("form-manager", "Form ID is null or empty. Form path: " + formPath);
+                        _sawmill.Error("Form ID is null or empty. Form path: " + formPath);
                         continue;
                     }
 
                     if (formGroup.Forms.ContainsKey(form.FormId))
                     {
-                        Logger.ErrorS("form-manager", "Duplicated form ID \"" + form.FormId + "\", form wasn't added.");
+                        _sawmill.Error("Duplicated form ID \"" + form.FormId + "\", form wasn't added.");
                         continue;
                     }
 
@@ -156,7 +155,7 @@ public sealed class FormManager : EntitySystem
             }
         }
 
-        Logger.InfoS("form-manager", "Successfully parsed " + totalAddedForms.ToString() + " forms");
+        _sawmill.Info("Successfully parsed " + totalAddedForms.ToString() + " forms");
         _collections = newCollectionsDict;
     }
 
@@ -181,7 +180,7 @@ public sealed class FormManager : EntitySystem
 
     private void OnFormTreeRequest(RequestPhotocopierFormsMessage message, EntitySessionEventArgs args)
     {
-        Logger.DebugS("form-manager", "Received photocopier forms request from client");
+        _sawmill.Debug("Received photocopier forms request from client");
         var response = new PhotocopierFormsMessage(_collections);
         RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
     }
