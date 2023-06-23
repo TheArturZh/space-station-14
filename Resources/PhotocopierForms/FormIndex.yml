@@ -68,10 +68,13 @@ nanotrasen_station:
     Forms:
     - /PhotocopierForms/nanotrasen_station/science/rnd_ord.xml
     - /PhotocopierForms/nanotrasen_station/science/rnd_rnt.xml
+    - /PhotocopierForms/nanotrasen_station/science/rnd_rar.xml
+    - /PhotocopierForms/nanotrasen_station/science/rnd_ror.xml
   cargo:
     Name: Отдел снабжения
     Forms:
     - /PhotocopierForms/nanotrasen_station/cargo/sup_ord.xml
+    - /PhotocopierForms/nanotrasen_station/cargo/sup_ord_dng.xml
   service:
     Name: Отдел обслуживания
     Forms:
