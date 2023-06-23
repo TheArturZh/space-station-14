@@ -204,7 +204,7 @@ public sealed class PhotocopierSystem : EntitySystem
         if (TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
         {
             TryQueueCopyPhysicalButt(component, humanoidOnScanner, args.Amount);
-            if(HasComp<EmaggedComponent>(uid))
+            if (HasComp<EmaggedComponent>(uid))
                 BurnButt(humanoidOnScanner.Owner, uid, component);
         }
     }
@@ -214,7 +214,7 @@ public sealed class PhotocopierSystem : EntitySystem
         if (!component.Initialized)
             return;
 
-        if(_specificFormManager is null)
+        if (_specificFormManager is null)
             return;
 
         if (component.CopiesQueued > 0)
@@ -252,7 +252,7 @@ public sealed class PhotocopierSystem : EntitySystem
             return;
 
         // TODO LATER: Когда добавим куклу нужно сделать так чтоб дамаг шел в гроин
-        if(!TryComp<DamageableComponent>(mobUid, out var damageable))
+        if (!TryComp<DamageableComponent>(mobUid, out var damageable))
             return;
 
         var dealtDamage = _damageableSystem.TryChangeDamage(
@@ -423,7 +423,6 @@ public sealed class PhotocopierSystem : EntitySystem
                 return;
             }
 
-
             if (component.IsCopyingPhysicalButt)
             {
                 // If there is no butt or someones else butt is in the way - stop copying.
@@ -438,7 +437,7 @@ public sealed class PhotocopierSystem : EntitySystem
             component.PrintingTimeRemaining -= frameTime;
 
             var isPrinted = component.PrintingTimeRemaining <= 0;
-            if(!isPrinted)
+            if (!isPrinted)
                 return;
 
             if (component.IsCopyingButt)
@@ -491,7 +490,7 @@ public sealed class PhotocopierSystem : EntitySystem
         var outOfToner = (!TryGetTonerCartridge(component, out var tonerCartridge) || tonerCartridge.Charges <= 0);
 
         if (component.CopiesQueued > 0)
-            state = component.IsScanning? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
+            state = component.IsScanning ? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
         else if (!this.IsPowered(uid, EntityManager))
             state = PhotocopierVisualState.Off;
         else if (outOfToner)
