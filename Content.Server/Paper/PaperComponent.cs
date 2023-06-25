@@ -10,6 +10,12 @@ namespace Content.Server.Paper
         [DataField("content")]
         public string Content { get; set; } = "";
 
+        /// <summary>
+        ///     Allows to forbid to write on paper without using stamps as a hack
+        /// </summary>
+        [DataField("writable")]
+        public bool Writable { get; set; } = true;
+
         [DataField("contentSize")]
         public int ContentSize { get; set; } = 6000;
 
