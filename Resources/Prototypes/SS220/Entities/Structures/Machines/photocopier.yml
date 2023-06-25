@@ -76,13 +76,6 @@
   components:
   - type: Photocopier
     formCollections: [ "nanotrasen_station", "nanotrasen_central_command" ]
-    paperSlot:
-      insertSound: null #Is handled by Photocopier component, use paperInsertSound field of Photocopier
-      ejectSound: /Audio/SS220/Effects/paper_pick_up.ogg
-      whitelist:
-        components:
-          - Paper
-          - ButtScan
     tonerSlot:
       insertSound: /Audio/Machines/screwdriveropen.ogg
       ejectSound: /Audio/Machines/screwdriverclose.ogg
