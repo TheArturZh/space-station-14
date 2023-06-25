@@ -3,7 +3,7 @@
   <FormId>sec_rep_itg</FormId>
   <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-ОТЧ</EntityName>
-  <PhotocopierTitle>Отчет о расследовании</PhotocopierTitle>
+  <PhotocopierTitle>Отчёт о расследовании</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-СБ-ОТЧ
 Отчет о расследовании
 

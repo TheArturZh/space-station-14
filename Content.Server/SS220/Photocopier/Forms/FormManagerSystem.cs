@@ -125,13 +125,9 @@ public sealed class FormManager : EntitySystem
                 Color groupColor;
 
                 if (deserializedFormGroup.Color is { } colorString)
-                {
                     groupColor = Color.TryFromHex(colorString) ?? Color.LightGray;
-                }
                 else
-                {
                     groupColor = Color.LightGray;
-                }
 
                 var formGroup = new FormGroup(
                     deserializedFormGroup.Name,

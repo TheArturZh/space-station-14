@@ -187,11 +187,22 @@ public sealed partial class PhotocopierWindow : FancyWindow
     {
         Tree.Clear();
 
+        Dictionary<string, TreeItem> existingGroups = new();
+
         foreach (var collection in collections)
         {
             foreach (var formGroup in collection.Groups)
             {
-                AddEntry(null, formGroup, collection.CollectionId);
+                if (existingGroups.TryGetValue(formGroup.GroupId, out var existingGroupEntry))
+                {
+                    AddEntry(null, formGroup, collection.CollectionId, existingGroupEntry);
+                }
+                else
+                {
+                    var groupEntry = AddEntry(null, formGroup, collection.CollectionId);
+                    if (groupEntry is not null)
+                        existingGroups.Add(formGroup.GroupId, groupEntry);
+                }
             }
         }
 
@@ -199,7 +210,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
         Tree.SetAllExpanded(!string.IsNullOrWhiteSpace(SearchBar.Text));
     }
 
-    private void AddEntry(TreeItem? parent, FormGroup group, string collectionId)
+    private TreeItem? AddEntry(TreeItem? parent, FormGroup group, string collectionId, TreeItem? useAsEntry = null)
     {
         // Use SortedDictionary so entries are sorted alphabetically
         SortedDictionary<string, (Form, FormDescriptor)> childEntries = new();
@@ -222,11 +233,19 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
         // don't create group if it is empty/everything is filtered out
         if (childEntries.Count <= 0)
-            return;
+            return null;
 
-        var item = Tree.AddItem(parent);
-        item.Label.Text = group.Name;
-        item.Label.Modulate = group.Color;
+        TreeItem item;
+        if (useAsEntry is null)
+        {
+            item = Tree.AddItem(parent);
+            item.Label.Text = group.Name;
+            item.Label.Modulate = group.Color;
+        }
+        else
+        {
+            item = useAsEntry;
+        }
 
         if (group.IconPath is not null)
         {
@@ -240,6 +259,8 @@ public sealed partial class PhotocopierWindow : FancyWindow
         {
             AddEntry(item, formData.Value.Item1, formData.Value.Item2);
         }
+
+        return item;
     }
 
     private void AddEntry(TreeItem? parent, Form entry, FormDescriptor descriptor)

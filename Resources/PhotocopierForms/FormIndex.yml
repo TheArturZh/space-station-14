@@ -7,6 +7,12 @@
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_evac.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal_rep.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_shift_end.xml
+  - Id: blank_сс
+    Name: Свободные бланки ЦентКома
+    IconPath: /Textures/SS220/DepartmentIcons/empty.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_central_command/blank/blank_regular_cc.xml
+    - /PhotocopierForms/nanotrasen_central_command/blank/blank_secure_cc.xml
 - Id: nanotrasen_station
   Groups:
   - Id: command
@@ -99,3 +105,14 @@
     Forms:
     - /PhotocopierForms/nanotrasen_station/service/svc_mcf.xml
     - /PhotocopierForms/nanotrasen_station/service/svc_mds.xml
+  - Id: blank
+    Name: Свободные бланки
+    IconPath: /Textures/SS220/DepartmentIcons/empty.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_cargo.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_cmd.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_eng.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_med.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_sci.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_sec.xml
