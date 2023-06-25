@@ -10,6 +10,7 @@ using Content.Shared.Examine;
 using Content.Server.UserInterface;
 using Content.Server.Power.Components;
 using Content.Server.Paper;
+using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.SS220.Photocopier.Forms;
 using Content.Shared.Damage;
@@ -17,6 +18,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Popups;
 using Content.Shared.SS220.ButtScan;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
@@ -37,6 +39,7 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
 
     private FormManager? _specificFormManager;
@@ -201,12 +204,12 @@ public sealed class PhotocopierSystem : EntitySystem
         if (TryQueueCopySlot(component, args.Amount))
             return;
 
-        if (TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
-        {
-            TryQueueCopyPhysicalButt(component, humanoidOnScanner, args.Amount);
-            if (HasComp<EmaggedComponent>(uid))
-                BurnButt(humanoidOnScanner.Owner, uid, component);
-        }
+        if (!TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
+            return;
+
+        TryQueueCopyPhysicalButt(uid, component, humanoidOnScanner, args.Amount);
+        if (HasComp<EmaggedComponent>(uid))
+            BurnButt(humanoidOnScanner.Owner, uid, component);
     }
 
     private void OnPrintButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierPrintMessage args)
@@ -263,7 +266,9 @@ public sealed class PhotocopierSystem : EntitySystem
         // AAAAAAAAAAAAAAAAAAAAAAAAAAA
         if (dealtDamage is null || dealtDamage.Empty)
             return; //...but only if it dealt damage
+
         _chat.TryEmoteWithChat(mobUid, "Scream", ChatTransmitRange.GhostRangeLimit);
+        _popup.PopupEntity(Loc.GetString("photocopier-popup-butt-burn"), photocopierUid, PopupType.SmallCaution);
     }
 
     /// <summary>
@@ -271,6 +276,7 @@ public sealed class PhotocopierSystem : EntitySystem
     /// Causes photocopier to check for HumanoidAppearanceComponents on top of it every tick.
     /// </summary>
     private void TryQueueCopyPhysicalButt(
+        EntityUid entity,
         PhotocopierComponent component,
         HumanoidAppearanceComponent humanoidAppearance,
         int amount)
@@ -280,6 +286,9 @@ public sealed class PhotocopierSystem : EntitySystem
 
         if (!_prototypeManager.TryIndex<SpeciesPrototype>(humanoidAppearance.Species, out var speciesPrototype))
             return;
+
+        if(!HasComp<EmaggedComponent>(entity))
+            _popup.PopupEntity(Loc.GetString("photocopier-popup-butt-scan"), entity);
 
         component.IsScanning = true;
         component.IsCopyingButt = true;

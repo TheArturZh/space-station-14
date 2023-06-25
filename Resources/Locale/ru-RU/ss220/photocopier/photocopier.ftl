@@ -16,6 +16,9 @@ photocopier-ui-scan-surface-item = [color=lime]есть предмет[/color]
 photocopier-ui-scan-surface-posterior = [color=orange]есть... предмет?[/color]
 photocopier-examine-scan-got-item = На нём что-то лежит.
 
+photocopier-popup-butt-scan = Копир сканирует задницу.
+photocopier-popup-butt-burn = Копир обжигает задницу!
+
 photocopier-ui-stop-button = Отмена
 photocopier-ui-eject-button = Извлечь
 photocopier-ui-copy-button = Копия
