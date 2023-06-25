@@ -1,6 +1,7 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Collections.Immutable;
+using System.Linq;
 using Content.Client.Message;
 using Content.Client.SS220.Photocopier.Forms;
 using Content.Client.UserInterface.Controls;
@@ -18,30 +19,36 @@ namespace Content.Client.SS220.Photocopier.UI;
 [GenerateTypedNameReferences]
 public sealed partial class PhotocopierWindow : FancyWindow
 {
+    // Constants
     private const int SelectedLabelCharLimit = 23;
-
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-    private HashSet<string> _lastAvailableFormCollections = new();
-
-    public event Action? EjectButtonPressed;
-    public event Action? StopButtonPressed;
-    public event Action<int>? CopyButtonPressed;
-    public event Action<int, FormDescriptor>? PrintButtonPressed;
-    public event Action? RefreshButtonPressed;
-
-    private int _copyAmount = 1;
-    private int _maxCopyAmount = 10;
-    private bool _canPrint;
 
     private const float TonerBarColorValue = 50.2f / 100;
     private const float TonerBarColorSaturation = 48.44f / 100;
     private const float TonerBarFullHue = 118.06f / 360;
     private const float TonerBarEmptyHue = 0;
 
+    private readonly Vector2 _groupIconSize = new Vector2(30, 30);
+
+    // Dependencies
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+
+    // Actions
+    public event Action? EjectButtonPressed;
+    public event Action? StopButtonPressed;
+    public event Action<int>? CopyButtonPressed;
+    public event Action<int, FormDescriptor>? PrintButtonPressed;
+    public event Action? RefreshButtonPressed;
+
+    // State
+    private int _copyAmount = 1;
+    private int _maxCopyAmount = 10;
+    private bool _canPrint;
+    private HashSet<string> _lastAvailableFormCollectionIds = new();
+
     /// <summary>
     /// Used for tree repopulation and FormDescriptor construction
     /// </summary>
-    private readonly ImmutableDictionary<string, ImmutableDictionary<string, FormGroup>> _collections;
+    private readonly ImmutableList<FormCollection> _collections;
 
     public PhotocopierWindow()
     {
@@ -154,37 +161,37 @@ public sealed partial class PhotocopierWindow : FancyWindow
         StatusLabel.SetMarkup(statusLabelText);
 
         // Update form tree
-        if (!state.AvailableFormCollections.SetEquals(_lastAvailableFormCollections))
+        if (!state.AvailableFormCollections.SetEquals(_lastAvailableFormCollectionIds))
         {
-            _lastAvailableFormCollections = state.AvailableFormCollections;
+            _lastAvailableFormCollectionIds = state.AvailableFormCollections;
             RepopulateTreeWithAvailableCollections();
         }
     }
 
     private void RepopulateTreeWithAvailableCollections()
     {
-        Dictionary<string, ImmutableDictionary<string, FormGroup>> availableFormTree = new();
+        List<FormCollection> availableFormTree = new();
 
-        foreach (var collectionId in _lastAvailableFormCollections)
+        foreach (var collection in _collections)
         {
-            if (!_collections.TryGetValue(collectionId, out var collection))
+            if (!_lastAvailableFormCollectionIds.Contains(collection.CollectionId))
                 continue;
 
-            availableFormTree.Add(collectionId, collection);
+            availableFormTree.Add(collection);
         }
 
         RepopulateTree(availableFormTree);
     }
 
-    private void RepopulateTree(IDictionary<string, ImmutableDictionary<string, FormGroup>> formTree)
+    private void RepopulateTree(List<FormCollection> collections)
     {
         Tree.Clear();
 
-        foreach (var collectionPair in formTree)
+        foreach (var collection in collections)
         {
-            foreach (var formGroupPair in collectionPair.Value)
+            foreach (var formGroup in collection.Groups)
             {
-                AddEntry(null, formGroupPair.Value, collectionPair.Key);
+                AddEntry(null, formGroup, collection.CollectionId);
             }
         }
 
@@ -194,16 +201,15 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
     private void AddEntry(TreeItem? parent, FormGroup group, string collectionId)
     {
-        HashSet<(Form, FormDescriptor)> childEntries = new();
+        // Use SortedDictionary so entries are sorted alphabetically
+        SortedDictionary<string, (Form, FormDescriptor)> childEntries = new();
 
         foreach (var form in group.Forms)
         {
-            if (!string.IsNullOrWhiteSpace(SearchBar.Text))
-            {
-                var title = form.Value.PhotocopierTitle;
-                if (!title.Contains(SearchBar.Text, StringComparison.OrdinalIgnoreCase))
-                    continue;
-            }
+            var title = form.Value.PhotocopierTitle;
+            if (!string.IsNullOrWhiteSpace(SearchBar.Text) &&
+                !title.Contains(SearchBar.Text, StringComparison.OrdinalIgnoreCase))
+                continue;
 
             var descriptor = new FormDescriptor(
                 collectionId,
@@ -211,7 +217,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
                 form.Key
             );
 
-            childEntries.Add((form.Value, descriptor));
+            childEntries.Add(title, (form.Value, descriptor));
         }
 
         // don't create group if it is empty/everything is filtered out
@@ -220,10 +226,19 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
         var item = Tree.AddItem(parent);
         item.Label.Text = group.Name;
+        item.Label.Modulate = group.Color;
+
+        if (group.IconPath is not null)
+        {
+            item.Icon.TexturePath = group.IconPath;
+            item.Icon.Stretch = TextureRect.StretchMode.Scale;
+            item.Icon.MinSize = _groupIconSize;
+            item.Icon.Visible = true;
+        }
 
         foreach (var formData in childEntries)
         {
-            AddEntry(item, formData.Item1, formData.Item2);
+            AddEntry(item, formData.Value.Item1, formData.Value.Item2);
         }
     }
 
@@ -232,6 +247,9 @@ public sealed partial class PhotocopierWindow : FancyWindow
         var item = Tree.AddItem(parent);
         item.Label.Text = entry.PhotocopierTitle;
         item.Metadata = descriptor;
+
+        if (parent is not null)
+            item.Label.Modulate = parent.Label.Modulate;
     }
 
     private void OnTreeSelectionChanged(TreeItem? item)

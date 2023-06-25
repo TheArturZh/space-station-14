@@ -10,7 +10,7 @@
                       Title="{Loc 'photocopier-ui-window'}"
                       Resizable="True"
                       MinSize="550 353"
-                      SetSize="700 453">
+                      SetSize="750 453">
 
     <BoxContainer Orientation="Vertical">
 
@@ -18,9 +18,9 @@
             <!-- Tree of form templates -->
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" MinWidth="100">
 
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Name="TreeBox">
+                <BoxContainer Margin="5 2 0 0" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Name="TreeBox">
                     <LineEdit Name="SearchBar" PlaceHolder="{Loc photocopier-ui-search-placeholder}"/>
-                    <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
+                    <fancyTree:FancyTree Name="Tree" Margin="0 2 0 0" VerticalExpand="True" HorizontalExpand="True"/>
                 </BoxContainer>
 
                 <cc:VSeparator StyleClasses="LowDivider" Margin="4 0"/>
