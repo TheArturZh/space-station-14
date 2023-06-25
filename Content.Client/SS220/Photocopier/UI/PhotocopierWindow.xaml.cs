@@ -48,11 +48,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        if (Tree.Body.Parent is ScrollContainer scrollContainer)
-        {
-            scrollContainer.ReserveScrollbarSpace = true;
-            scrollContainer.HScrollEnabled = true;
-        }
+        Tree.TreeScroll.ReturnMeasure = false;
 
         var specificFormManager = _sysMan.GetEntitySystem<FormManager>();
         _collections = specificFormManager.GetImmutableFormsTree();
