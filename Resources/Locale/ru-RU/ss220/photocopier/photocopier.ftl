@@ -1,5 +1,7 @@
 photocopier-ui-window = Копировальный аппарат
 
+photocopier-ui-search-placeholder = Поиск...
+
 photocopier-ui-toner = Тонер:
 photocopier-ui-amount = Количество:
 photocopier-ui-toner-remaining = { $percentage }% ({ $lists } листов)

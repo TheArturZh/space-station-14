@@ -1,5 +1,7 @@
 photocopier-ui-window = Photocopier
 
+photocopier-ui-search-placeholder = Search...
+
 photocopier-ui-toner = Toner:
 photocopier-ui-amount = Amount:
 photocopier-ui-toner-remaining = { $percentage }% ({ $lists } pages)
