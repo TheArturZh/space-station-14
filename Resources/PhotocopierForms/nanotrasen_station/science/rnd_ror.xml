@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>rnd_ror</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormSci</PrototypeId>
   <EntityName>форма НТ-ИСЛ-ОИП</EntityName>
   <PhotocopierTitle>Отчет об изучении предмета</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-ИСЛ-ОИП

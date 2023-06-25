@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cc_cmd_dcr_goal_rep</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCc</PrototypeId>
   <EntityName>форма НТ-ЦК-КОМ-УКЗ</EntityName>
   <PhotocopierTitle>Указ о предоставлении отчёта о выполнении цели</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-ЦК-КОМ-УКЗ

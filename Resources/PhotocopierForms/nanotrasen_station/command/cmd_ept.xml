@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_ept</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-СМД</EntityName>
   <PhotocopierTitle>Заявление о смене должности</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-СМД

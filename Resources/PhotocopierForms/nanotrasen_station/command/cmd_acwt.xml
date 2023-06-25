@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_acwt</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-ОПД</EntityName>
   <PhotocopierTitle>Ордер на повышение доступа</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-ОПД

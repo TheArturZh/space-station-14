@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>sup_ord</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCargo</PrototypeId>
   <EntityName>форма НТ-СНБ-ЗАК</EntityName>
   <PhotocopierTitle>Заказ товара</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-СНБ-ЗАК
