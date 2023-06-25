@@ -133,6 +133,8 @@ public sealed class PhotocopierSystem : EntitySystem
         return false;
     }
 
+    #region EventListeners
+
     private void OnComponentInit(EntityUid uid, PhotocopierComponent component, ComponentInit args)
     {
         _itemSlots.AddItemSlot(uid, PhotocopierComponent.PaperSlotId, component.PaperSlot);
@@ -249,6 +251,14 @@ public sealed class PhotocopierSystem : EntitySystem
         args.Handled = true;
     }
 
+    #endregion
+
+    /// <summary>
+    /// Makes the photocopier burn the butt of a mob.
+    /// </summary>
+    /// <param name="mobUid">UID of mob, whose but to burn</param>
+    /// <param name="photocopierUid">UID of photocopier that tries to burn a butt</param>
+    /// <param name="component">Component of photocopier that burns.</param>
     private void BurnButt(EntityUid mobUid, EntityUid photocopierUid, PhotocopierComponent component)
     {
         if (component.EmagButtDamage is null)
@@ -513,7 +523,7 @@ public sealed class PhotocopierSystem : EntitySystem
     }
 
     /// <summary>
-    /// Stops audio stream of a printing sound, dereferences it
+    /// Stops the audio stream of a printing sound, dereferences it
     /// </summary>
     private static void StopPrintingSound(PhotocopierComponent component)
     {
