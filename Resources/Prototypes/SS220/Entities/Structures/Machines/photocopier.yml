@@ -23,17 +23,6 @@
       map: ["enum.PhotocopierVisualLayers.PrintAnim"]
   - type: Appearance
   - type: Climbable
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 150
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
