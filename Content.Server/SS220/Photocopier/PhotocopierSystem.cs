@@ -27,7 +27,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.SS220.Photocopier;
 
-public sealed class PhotocopierSystem : EntitySystem
+public sealed partial class PhotocopierSystem : EntitySystem
 {
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;

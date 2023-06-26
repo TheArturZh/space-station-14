@@ -77,3 +77,14 @@ public sealed class PhotocopierStopMessage : BoundUserInterfaceMessage
 public sealed class PhotocopierRefreshUiMessage : BoundUserInterfaceMessage
 {
 }
+
+[Serializable, NetSerializable]
+public abstract class PhotocopiedComponentData<T> where T : Component
+{
+    public abstract void RestoreComponentFields(T component);
+}
+
+public interface IPhotocopyableComponent<TU, T> where TU : PhotocopiedComponentData<T> where T : Component
+{
+    public TU GetPhotocopiedData();
+}
