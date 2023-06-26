@@ -13,7 +13,7 @@ public sealed partial class PhotocopierSystem
     /// </summary>
     /// <returns>Dictionary of component types and corresponding data structures.
     /// Ready to be assigned to DataToCopy field of PhotocopierComponent.</returns>
-    private Dictionary<Type, IPhotocopiedComponentData> GetDataToCopyFromEntity(EntityUid uid)
+    public Dictionary<Type, IPhotocopiedComponentData> GetDataToCopyFromEntity(EntityUid uid)
     {
         var output = new Dictionary<Type, IPhotocopiedComponentData>();
 
@@ -37,7 +37,7 @@ public sealed partial class PhotocopierSystem
     /// <param name="entity">Entity, whose metadata should be copied</param>
     /// <param name="metaData">If function returns true, this parameter contains Photocopyable metadata,
     /// ready to be assigned to PhotocopierComponent.MetaDataToCopy.</param>
-    private bool TryGetPhotocopyableMetaData(
+    public bool TryGetPhotocopyableMetaData(
         EntityUid entity,
         [NotNullWhen(true)] out PhotocopyableMetaData? metaData)
     {
@@ -61,7 +61,7 @@ public sealed partial class PhotocopierSystem
     /// </summary>
     /// <param name="uid">EntityUid of an entity to which DataToCopy should be written.</param>
     /// <param name="dataToCopy"></param>
-    private void RestoreEntityFromData(EntityUid uid, Dictionary<Type, IPhotocopiedComponentData> dataToCopy)
+    public void RestoreEntityFromData(EntityUid uid, Dictionary<Type, IPhotocopiedComponentData> dataToCopy)
     {
         var components = _entityManager.GetComponents(uid);
         foreach (var iComponent in components)
@@ -83,7 +83,7 @@ public sealed partial class PhotocopierSystem
     /// Turns deserialized form into sets of component fields, so they later can be made into an entity
     /// after a printing process.
     /// </summary>
-    private void FormToDataToCopy(
+    public void FormToDataToCopy(
         Form form,
         out Dictionary<Type, IPhotocopiedComponentData> dataToCopy,
         out PhotocopyableMetaData metaData)
@@ -108,7 +108,7 @@ public sealed partial class PhotocopierSystem
     /// <summary>
     /// Spawns a copy of entity at specified coordinates using DataToCopy and MetaDataToCopy.
     /// </summary>
-    private void SpawnCopy(
+    public EntityUid SpawnCopy(
         EntityCoordinates at,
         PhotocopyableMetaData? metaDataToCopy,
         Dictionary<Type, IPhotocopiedComponentData>? dataToCopy)
@@ -132,6 +132,8 @@ public sealed partial class PhotocopierSystem
 
         if (dataToCopy is not null)
             RestoreEntityFromData(printed, dataToCopy);
+
+        return printed;
     }
 
     /// <summary>
