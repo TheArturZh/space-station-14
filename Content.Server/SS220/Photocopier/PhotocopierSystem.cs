@@ -4,12 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Shared.SS220.Photocopier;
-using Content.Shared.SS220.Photocopier.Forms;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Server.UserInterface;
 using Content.Server.Power.Components;
-using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.SS220.Photocopier.Forms;
@@ -32,7 +30,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -41,6 +38,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     private FormManager? _specificFormManager;
     private readonly ISawmill _sawmill = Logger.GetSawmill("photocopier");
@@ -203,7 +201,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
             return;
 
         // Prioritize inserted paper over butt
-        if (TryQueueCopySlot(component, args.Amount))
+        if (TryQueueCopySlot(uid, component, args.Amount))
             return;
 
         if (!TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
@@ -228,11 +226,12 @@ public sealed partial class PhotocopierSystem : EntitySystem
         if (!TryGetTonerCartridge(component, out var tonerCartridge) || tonerCartridge.Charges <= 0)
             return;
 
-        component.DataToCopy = _specificFormManager.TryGetFormFromDescriptor(args.Descriptor);
-        if (component.DataToCopy is null)
+        var formToCopy = _specificFormManager.TryGetFormFromDescriptor(args.Descriptor);
+        if (formToCopy is null)
             return;
 
-        component.CopiesQueued = Math.Clamp(args.Amount, 0, component.MaxQueueLength);
+        FormToDataToCopy(formToCopy, out var dataToCopy, out var metaDataToCopy);
+        StartPrinting(uid, component, metaDataToCopy, dataToCopy, PhotocopierState.Copying, args.Amount);
     }
 
     private void OnStopButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierStopMessage args)
@@ -286,7 +285,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
     /// Causes photocopier to check for HumanoidAppearanceComponents on top of it every tick.
     /// </summary>
     private void TryQueueCopyPhysicalButt(
-        EntityUid entity,
+        EntityUid uid,
         PhotocopierComponent component,
         HumanoidAppearanceComponent humanoidAppearance,
         int amount)
@@ -297,49 +296,38 @@ public sealed partial class PhotocopierSystem : EntitySystem
         if (!_prototypeManager.TryIndex<SpeciesPrototype>(humanoidAppearance.Species, out var speciesPrototype))
             return;
 
-        if(!HasComp<EmaggedComponent>(entity))
-            _popup.PopupEntity(Loc.GetString("photocopier-popup-butt-scan"), entity);
+        if(!HasComp<EmaggedComponent>(uid))
+            _popup.PopupEntity(Loc.GetString("photocopier-popup-butt-scan"), uid);
 
-        component.IsScanning = true;
-        component.IsCopyingButt = true;
-        component.IsCopyingPhysicalButt = true;
-        component.ButtSpecies = humanoidAppearance.Species;
-        component.ButtTextureToCopy = speciesPrototype.ButtScanTexture;
-        component.CopiesQueued = Math.Clamp(amount, 0, component.MaxQueueLength);
+        var dataToCopy = new Dictionary<Type, IPhotocopiedComponentData>();
+        var metaDataToCopy = new PhotocopyableMetaData() {PrototypeId = "ButtScan"};
+
+        var buttScanData = new ButtScanPhotocopiedData() { ButtTexturePath = speciesPrototype.ButtScanTexture };
+        dataToCopy.Add(typeof(ButtScanComponent), buttScanData);
+
+        if (StartPrinting(uid, component, metaDataToCopy, dataToCopy, PhotocopierState.Copying, amount))
+        {
+            component.IsCopyingPhysicalButt = true;
+            component.ButtSpecies = humanoidAppearance.Species;
+        }
     }
 
     /// <summary>
-    /// Caches paper data (if paper is in) and queues copy operation
+    /// Caches data of item in paper slot and queues copy operation
     /// </summary>
-    private bool TryQueueCopySlot(PhotocopierComponent component, int amount)
+    private bool TryQueueCopySlot(EntityUid uid, PhotocopierComponent component, int amount)
     {
-        var copyEntity = component.PaperSlot.Item;
-        if (copyEntity is null)
+        if (component.PaperSlot.Item is not { } copyEntity)
             return false;
 
-        if (TryComp<ButtScanComponent>(copyEntity, out var buttScan))
-        {
-            component.IsCopyingButt = true;
-            component.ButtTextureToCopy = buttScan.ButtTexturePath;
-        }
-        else if (
-            TryComp<MetaDataComponent>(copyEntity, out var metadata) &&
-            TryComp<PaperComponent>(copyEntity, out var paper))
-        {
-            component.DataToCopy = new Form(
-                metadata.EntityName,
-                paper.Content,
-                prototypeId: metadata.EntityPrototype?.ID,
-                stampState: paper.StampState,
-                stampedBy: paper.StampedBy);
-        }
-        else
-        {
+        if (!TryGetPhotocopyableMetaData(copyEntity, out var metaData))
             return false;
-        }
 
-        component.IsScanning = true;
-        component.CopiesQueued = Math.Clamp(amount, 0, component.MaxQueueLength);
+        var dataToCopy = GetDataToCopyFromEntity(copyEntity);
+        if (dataToCopy.Count == 0)
+            return false;
+
+        StartPrinting(uid, component, metaData, dataToCopy, PhotocopierState.Copying, amount);
 
         return true;
     }
@@ -360,6 +348,28 @@ public sealed partial class PhotocopierSystem : EntitySystem
         }
     }
 
+    private bool StartPrinting(
+        EntityUid uid,
+        PhotocopierComponent component,
+        PhotocopyableMetaData? metaData,
+        Dictionary<Type, IPhotocopiedComponentData>? dataToCopy,
+        PhotocopierState state,
+        int amount)
+    {
+        if (amount <= 0)
+            return false;
+
+        component.DataToCopy = dataToCopy;
+        component.MetaDataToCopy = metaData;
+        component.State = state;
+        component.CopiesQueued = Math.Clamp(amount, 0, component.MaxQueueLength);
+
+        if (state == PhotocopierState.Copying)
+            _itemSlots.SetLock(uid, component.PaperSlot, true);
+
+        return true;
+    }
+
     /// <summary>
     /// Stops PhotocopierComponent from printing and clears queue. Resets cached data. Unlocks the paper slot.
     /// </summary>
@@ -368,68 +378,12 @@ public sealed partial class PhotocopierSystem : EntitySystem
         component.CopiesQueued = 0;
         component.PrintingTimeRemaining = 0;
         component.DataToCopy = null;
-        component.ButtTextureToCopy = null;
+        component.MetaDataToCopy = null;
         component.ButtSpecies = null;
-        component.IsScanning = false;
-        component.IsCopyingButt = false;
+        component.State = PhotocopierState.Idle;
         component.IsCopyingPhysicalButt = false;
 
         _itemSlots.SetLock(uid, component.PaperSlot, false);
-    }
-
-    /// <summary>
-    /// Spawns a copy of paper using data cached in component.DataToCopy.
-    /// </summary>
-    private void SpawnPaperCopy(EntityUid uid, PhotocopierComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        var printout = component.DataToCopy;
-        if (printout is null)
-        {
-            _sawmill.Error("Entity " + uid + " tried to spawn a copy of paper, but DataToCopy was null.");
-            return;
-        }
-
-        var entityToSpawn = string.IsNullOrEmpty(printout.PrototypeId) ? "Paper" : printout.PrototypeId;
-        var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
-
-        if (TryComp<PaperComponent>(printed, out _))
-        {
-            _paperSystem.SetContent(printed, printout.Content);
-
-            // Apply stamps
-            if (printout.StampState is not null)
-            {
-                foreach (var stampedBy in printout.StampedBy)
-                {
-                    _paperSystem.TryStamp(printed, stampedBy, printout.StampState);
-                }
-            }
-        }
-
-        if (!TryComp<MetaDataComponent>(printed, out var metadata))
-            return;
-
-        if (!string.IsNullOrEmpty(printout.EntityName))
-            metadata.EntityName = printout.EntityName;
-    }
-
-    /// <summary>
-    /// Spawns a ButtScan on a photocopier using butt texture path that was stored in PhotocopierComponent.
-    /// </summary>
-    private void SpawnButtCopy(EntityUid uid, PhotocopierComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.ButtTextureToCopy is null)
-            return;
-
-        var printed = EntityManager.SpawnEntity("ButtScan", Transform(uid).Coordinates);
-        if (TryComp<ButtScanComponent>(printed, out var buttScan))
-            buttScan.SetAndDirtyIfChanged(ref buttScan.ButtTexturePath, component.ButtTextureToCopy);
     }
 
     private void ProcessPrinting(EntityUid uid, float frameTime, PhotocopierComponent component)
@@ -459,10 +413,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
             if (!isPrinted)
                 return;
 
-            if (component.IsCopyingButt)
-                SpawnButtCopy(uid, component);
-            else
-                SpawnPaperCopy(uid, component);
+            SpawnCopyFromPhotocopier(uid, component);
 
             tonerCartridge.Charges--;
             component.CopiesQueued--;
@@ -489,7 +440,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
             component.PrintingTimeRemaining = component.PrintingTime;
             component.PrintAudioStream = _audio.PlayPvs(component.PrintSound, uid);
 
-            if (component.IsScanning)
+            if (component.State == PhotocopierState.Copying)
                 _itemSlots.SetLock(uid, component.PaperSlot, true);
 
             UpdateUserInterface(uid, component);
@@ -509,7 +460,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
         var outOfToner = (!TryGetTonerCartridge(component, out var tonerCartridge) || tonerCartridge.Charges <= 0);
 
         if (component.CopiesQueued > 0)
-            state = component.IsScanning ? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
+            state = (component.State == PhotocopierState.Copying) ? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
         else if (!this.IsPowered(uid, EntityManager))
             state = PhotocopierVisualState.Off;
         else if (outOfToner)

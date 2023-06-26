@@ -6,14 +6,14 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.SS220.ButtScan;
 
 [NetworkedComponent, RegisterComponent, AutoGenerateComponentState]
-public sealed partial class ButtScanComponent : Component, IPhotocopyableComponent<ButtScanPhotocopiedData, ButtScanComponent>
+public sealed partial class ButtScanComponent : Component, IPhotocopyableComponent
 {
     [AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("buttTexturePath")]
     public string ButtTexturePath = "/Textures/SS220/Interface/Butts/human.png";
 
-    public ButtScanPhotocopiedData GetPhotocopiedData()
+    public IPhotocopiedComponentData GetPhotocopiedData()
     {
         return new ButtScanPhotocopiedData()
         {
@@ -22,13 +22,16 @@ public sealed partial class ButtScanComponent : Component, IPhotocopyableCompone
     }
 }
 
-public sealed class ButtScanPhotocopiedData : PhotocopiedComponentData<ButtScanComponent>
+[Serializable]
+public sealed class ButtScanPhotocopiedData : IPhotocopiedComponentData
 {
     public string? ButtTexturePath;
-
-    public override void RestoreComponentFields(ButtScanComponent component)
+    public void RestoreFromData(EntityUid uid, Component someComponent)
     {
+        if (someComponent is not ButtScanComponent buttScanComponent)
+            return;
+
         if (ButtTexturePath is not null)
-            component.ButtTexturePath = ButtTexturePath;
+            buttScanComponent.SetAndDirtyIfChanged(ref buttScanComponent.ButtTexturePath, ButtTexturePath);
     }
 }

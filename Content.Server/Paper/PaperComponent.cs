@@ -1,12 +1,11 @@
 using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Paper
 {
     [NetworkedComponent, RegisterComponent]
-    public sealed class PaperComponent : SharedPaperComponent, IPhotocopyableComponent<PaperPhotocopiedData, PaperComponent>
+    public sealed class PaperComponent : SharedPaperComponent, IPhotocopyableComponent
     {
         public PaperAction Mode;
         [DataField("content")]
@@ -29,7 +28,7 @@ namespace Content.Server.Paper
         [DataField("stampState")]
         public string? StampState { get; set; }
 
-        public PaperPhotocopiedData GetPhotocopiedData()
+        public IPhotocopiedComponentData GetPhotocopiedData()
         {
             return new PaperPhotocopiedData()
             {
@@ -42,31 +41,46 @@ namespace Content.Server.Paper
         }
     }
 
-    [Serializable, NetSerializable]
-    public sealed class PaperPhotocopiedData : PhotocopiedComponentData<PaperComponent>
+    [Serializable]
+    public sealed class PaperPhotocopiedData : IPhotocopiedComponentData
     {
+        [Dependency, NonSerialized] private readonly IEntitySystemManager _sysMan = default!;
+
+        public PaperPhotocopiedData()
+        {
+            IoCManager.InjectDependencies(this);
+        }
+
         public string? Content;
         public bool? Writable;
         public int? ContentSize;
         public List<string>? StampedBy;
         public string? StampState;
 
-        public override void RestoreComponentFields(PaperComponent component)
+        public void RestoreFromData(EntityUid uid, Component someComponent)
         {
-            if (Content is not null)
-                component.Content = Content;
+            var paperSystem = _sysMan.GetEntitySystem<PaperSystem>();
 
-            if (Writable is { } writable)
-                component.Writable = writable;
+            if (someComponent is not PaperComponent paperComponent)
+                return;
 
             if (ContentSize is { } contentSize)
-                component.ContentSize = contentSize;
+                paperComponent.ContentSize = contentSize;
 
-            if (StampedBy is not null)
-                component.StampedBy = StampedBy;
+            if (Content is not null)
+                paperSystem.SetContent(uid, Content, paperComponent);
 
-            if (StampState is not null)
-                component.StampState = StampState;
+            if (Writable is { } writable)
+                paperComponent.Writable = writable;
+
+            // Apply stamps
+            if (StampState is null || StampedBy is null)
+                return;
+
+            foreach (var stampedBy in StampedBy)
+            {
+                paperSystem.TryStamp(uid, stampedBy, StampState);
+            }
         }
     }
 }

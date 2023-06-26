@@ -8,6 +8,9 @@
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
       - state: butt_scan
+      - state: paper_words
+        map: [ "enum.PaperVisualLayers.Writing" ]
+        visible: false
       - state: paper_stamp-generic
         map: [ "enum.PaperVisualLayers.Stamp" ]
         visible: false

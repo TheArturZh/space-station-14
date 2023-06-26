@@ -2,7 +2,6 @@
 
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
-using Content.Shared.SS220.Photocopier.Forms;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
@@ -93,20 +92,6 @@ public sealed class PhotocopierComponent : Component
     [DataField("copiesQueued")]
     public int CopiesQueued;
 
-    /// <summary>
-    /// Whether this photocopier is currently scanning.
-    /// Used by server to unlock the slot after copying and to change appearance.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsScanning;
-
-    /// <summary>
-    /// Whether this photocopier is currently copying butt.
-    /// Is used by server to determine whether an entity overlap check at the end of the printing is needed.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsCopyingButt;
-
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsCopyingPhysicalButt;
 
@@ -143,27 +128,31 @@ public sealed class PhotocopierComponent : Component
     public DamageSpecifier? EmagButtDamage;
 
     /// <summary>
-    /// A content that is cached for copying.
-    /// </summary>
-    [ViewVariables]
-    public Form? DataToCopy;
-
-    /// <summary>
-    /// Used by photocopier to determine what to print out as a result of a copy operation
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string? ButtTextureToCopy;
-
-    /// <summary>
     /// Used by photocopier to determine whether the species on top of the photocopier is the same as it was
     /// without having to fetch the texture every tick.
     /// </summary>
+    [ViewVariables]
     public string? ButtSpecies;
+
+    /// <summary>
+    /// Contains fields of components that will be copied.
+    /// Is applied to a new entity that is created as a result of photocopying.
+    /// </summary>
+    [ViewVariables]
+    public Dictionary<Type, IPhotocopiedComponentData>? DataToCopy;
+
+    /// <summary>
+    /// Contains metadata that will be copied.
+    /// Is applied to a new entity that is created as a result of photocopying.
+    /// </summary>
+    public PhotocopyableMetaData? MetaDataToCopy;
 
     /// <summary>
     /// An audio stream of printing sound.
     /// Is saved in a variable so sound can be stopped later.
     /// </summary>
     public IPlayingAudioStream? PrintAudioStream;
+
+    public PhotocopierState State = PhotocopierState.Idle;
 }
 
