@@ -36,7 +36,6 @@ public sealed partial class PhotocopierWindow : FancyWindow
     public event Action? StopButtonPressed;
     public event Action<int>? CopyButtonPressed;
     public event Action<int, FormDescriptor>? PrintButtonPressed;
-    public event Action? RefreshButtonPressed;
 
     // State
     private int _copyAmount = 1;
@@ -69,7 +68,6 @@ public sealed partial class PhotocopierWindow : FancyWindow
         EjectButton.OnPressed += _ => EjectButtonPressed?.Invoke();
         CopyButton.OnPressed += _ => CopyButtonPressed?.Invoke(_copyAmount);
         StopButton.OnPressed += _ => StopButtonPressed?.Invoke();
-        RefreshButton.OnPressed += _ => RefreshButtonPressed?.Invoke();
         SearchBar.OnTextChanged += _ => RepopulateTreeWithAvailableCollections();
     }
 

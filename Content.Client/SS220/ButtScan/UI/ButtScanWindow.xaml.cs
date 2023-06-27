@@ -22,16 +22,15 @@ public sealed partial class ButtScanWindow : PaperWindow
     private readonly Thickness _buttRectMargin = new(25, 25);
 
     public readonly TextureRect ButtTextureRect;
-    private readonly Control Layers;
 
     public ButtScanWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Layers = new Control();
-        Layers.HorizontalExpand = true;
-        Layers.VerticalExpand = true;
+        var layers = new Control();
+        layers.HorizontalExpand = true;
+        layers.VerticalExpand = true;
 
         ButtTextureRect = new TextureRect();
         ButtTextureRect.Stretch = TextureRect.StretchMode.Scale;
@@ -41,10 +40,10 @@ public sealed partial class ButtScanWindow : PaperWindow
         ButtTextureRect.HorizontalAlignment = HAlignment.Center;
         ButtTextureRect.VerticalAlignment = VAlignment.Center;
 
-        PaperBackground.AddChild(Layers);
+        PaperBackground.AddChild(layers);
         ScrollingContents.Orphan();
-        Layers.AddChild(ButtTextureRect);
-        Layers.AddChild(ScrollingContents);
+        layers.AddChild(ButtTextureRect);
+        layers.AddChild(ScrollingContents);
     }
 
     public void InitVisuals(ButtScanComponent scan, PaperVisualsComponent visuals)

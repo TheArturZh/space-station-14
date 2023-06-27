@@ -81,11 +81,6 @@ public sealed class PhotocopierStopMessage : BoundUserInterfaceMessage
 {
 }
 
-[Serializable, NetSerializable]
-public sealed class PhotocopierRefreshUiMessage : BoundUserInterfaceMessage
-{
-}
-
 public interface IPhotocopiedComponentData
 {
     public void RestoreFromData(EntityUid uid, Component someComponent);

@@ -102,15 +102,6 @@
                         Align="End">
 
                         <ui:IconButton
-                            Name="RefreshButton"
-                            Margin="0 0 2 0"
-                            SetWidth="64"
-                            IconTexture="/Textures/SS220/Interface/Misc/alternate-sync.png"
-                            HorizontalExpand="True"
-                            VerticalExpand="True"
-                            ToolTip="{Loc 'photocopier-ui-refresh-button'}"
-                            StyleClasses="OpenRight"/>
-                        <ui:IconButton
                             Name="EjectButton"
                             Margin="0 0"
                             SetWidth="64"
@@ -118,8 +109,7 @@
                             Disabled="True"
                             HorizontalExpand="True"
                             VerticalExpand="True"
-                            ToolTip="{Loc 'photocopier-ui-eject-button'}"
-                            StyleClasses="OpenLeft"/>
+                            ToolTip="{Loc 'photocopier-ui-eject-button'}"/>
                     </BoxContainer>
                 </BoxContainer>
                 <Button Name="CopyButton"

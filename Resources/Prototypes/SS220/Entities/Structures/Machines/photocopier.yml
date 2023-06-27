@@ -26,6 +26,11 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: ShapeCollisionTracker
+    enabled: true
+    shape:
+      !type:PhysShapeCircle
+      radius: 0.2
   - type: Photocopier
     formCollections: [ "nanotrasen_station" ]
     emagButtDamage:

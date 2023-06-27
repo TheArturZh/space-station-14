@@ -2,6 +2,7 @@
 
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
+using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
@@ -80,22 +81,6 @@ public sealed class PhotocopierComponent : Component
     public ItemSlot TonerSlot = new();
 
     /// <summary>
-    /// Remaining time of printing
-    /// </summary>
-    [DataField("printingTimeRemaining")]
-    public float PrintingTimeRemaining;
-
-    /// <summary>
-    /// Remaining amount of copies to print
-    /// </summary>
-    [ViewVariables]
-    [DataField("copiesQueued")]
-    public int CopiesQueued;
-
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsCopyingPhysicalButt;
-
-    /// <summary>
     /// Collections of forms available in UI
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -127,6 +112,9 @@ public sealed class PhotocopierComponent : Component
     [DataField("emagButtDamage")]
     public DamageSpecifier? EmagButtDamage;
 
+
+    /// STATE
+
     /// <summary>
     /// Used by photocopier to determine whether the species on top of the photocopier is the same as it was
     /// without having to fetch the texture every tick.
@@ -153,6 +141,26 @@ public sealed class PhotocopierComponent : Component
     /// </summary>
     public IPlayingAudioStream? PrintAudioStream;
 
+    [ViewVariables(VVAccess.ReadOnly)]
     public PhotocopierState State = PhotocopierState.Idle;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? EntityOnTop;
+
+    public HumanoidAppearanceComponent? HumanoidAppearanceOnTop;
+
+    /// <summary>
+    /// Remaining time of printing
+    /// </summary>
+    public float PrintingTimeRemaining;
+
+    /// <summary>
+    /// Remaining amount of copies to print
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int CopiesQueued;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsCopyingPhysicalButt;
 }
 

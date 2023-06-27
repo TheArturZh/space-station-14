@@ -1,7 +1,6 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Shared.SS220.Photocopier;
 using Content.Shared.Containers.ItemSlots;
@@ -18,8 +17,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.SS220.ButtScan;
+using Content.Shared.SS220.ShapeCollisionTracker;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -32,8 +31,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -56,6 +53,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
         SubscribeLocalEvent<PhotocopierComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<PhotocopierComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<PhotocopierComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<PhotocopierComponent, ShapeCollisionTrackerUpdatedEvent>(OnCollisionChanged);
 
         // UI
         SubscribeLocalEvent<PhotocopierComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
@@ -63,7 +61,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
         SubscribeLocalEvent<PhotocopierComponent, PhotocopierCopyMessage>(OnCopyButtonPressed);
         SubscribeLocalEvent<PhotocopierComponent, PhotocopierStopMessage>(OnStopButtonPressed);
         SubscribeLocalEvent<PhotocopierComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<PhotocopierComponent, PhotocopierRefreshUiMessage>(OnRefreshUiMessage);
     }
 
     /// <inheritdoc/>
@@ -79,41 +76,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
 
             ProcessPrinting(uid, frameTime, photocopier);
         }
-    }
-
-    /// <summary>
-    /// Try to get a HumanoidAppearanceComponent of one of the creatures that are on top of the photocopier at the moment.
-    /// Returns null if there are none.
-    /// </summary>
-    private bool TryGetHumanoidOnTop(
-        EntityUid uid,
-        [NotNullWhen(true)] out HumanoidAppearanceComponent? humanoidAppearance)
-    {
-        if (!TryComp<TransformComponent>(uid, out var xform))
-        {
-            humanoidAppearance = null;
-            return false;
-        }
-
-        var map = xform.MapID;
-        var bounds = _physics.GetWorldAABB(uid);
-
-        // We shrink the box greatly to ensure it only intersects with the objects that are on top of the photocopier.
-        // May be a hack, but at least it works reliably (on my computer)
-
-        // lerp alpha (effective alpha will be twice as big since we perform lerp on both corners)
-        const float shrinkCoefficient = 0.4f;
-        // lerp corners towards each other
-        var boundsTR = bounds.TopRight;
-        var boundsBL = bounds.BottomLeft;
-        bounds.TopRight = (boundsBL - boundsTR) * shrinkCoefficient + boundsTR;
-        bounds.BottomLeft = (boundsTR - boundsBL) * shrinkCoefficient + boundsBL;
-
-        var intersecting = _entityLookup.GetComponentsIntersecting<HumanoidAppearanceComponent>(
-            map, bounds, LookupFlags.Dynamic | LookupFlags.Sundries);
-
-        humanoidAppearance = intersecting.Count > 0 ? intersecting.ElementAt(0) : null;
-        return humanoidAppearance is not null;
     }
 
     /// <summary>
@@ -144,6 +106,37 @@ public sealed partial class PhotocopierSystem : EntitySystem
     {
         _itemSlots.RemoveItemSlot(uid, component.PaperSlot);
         _itemSlots.RemoveItemSlot(uid, component.TonerSlot);
+    }
+
+    private void OnCollisionChanged(
+        EntityUid uid,
+        PhotocopierComponent component,
+        ShapeCollisionTrackerUpdatedEvent args)
+    {
+        if (component.EntityOnTop is { } currentEntity &&
+            component.HumanoidAppearanceOnTop is not null &&
+            args.Colliding.Contains(currentEntity) &&
+            !Deleted(currentEntity))
+        {
+            return;
+        }
+        else
+        {
+            component.EntityOnTop = null;
+            component.HumanoidAppearanceOnTop = null;
+        }
+
+        foreach (var otherEntity in args.Colliding)
+        {
+            if (!TryComp<HumanoidAppearanceComponent>(otherEntity, out var humanoidAppearance))
+                continue;
+
+            component.HumanoidAppearanceOnTop = humanoidAppearance;
+            component.EntityOnTop = otherEntity;
+            break;
+        }
+
+        UpdateUserInterface(uid, component);
     }
 
     private void OnToggleInterface(EntityUid uid, PhotocopierComponent component, AfterActivatableUIOpenEvent args)
@@ -204,12 +197,13 @@ public sealed partial class PhotocopierSystem : EntitySystem
         if (TryQueueCopySlot(uid, component, args.Amount))
             return;
 
-        if (!TryGetHumanoidOnTop(uid, out var humanoidOnScanner))
+        if (component.EntityOnTop is not { } entityOnTop ||
+            component.HumanoidAppearanceOnTop is not { } humanoidAppearanceOnTop)
             return;
 
-        TryQueueCopyPhysicalButt(uid, component, humanoidOnScanner, args.Amount);
+        TryQueueCopyPhysicalButt(uid, component, humanoidAppearanceOnTop, args.Amount);
         if (HasComp<EmaggedComponent>(uid))
-            BurnButt(humanoidOnScanner.Owner, uid, component);
+            BurnButt(entityOnTop, uid, component);
     }
 
     private void OnPrintButtonPressed(EntityUid uid, PhotocopierComponent component, PhotocopierPrintMessage args)
@@ -239,11 +233,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
         StopPrinting(uid, component);
     }
 
-    private void OnRefreshUiMessage(EntityUid uid, PhotocopierComponent component, PhotocopierRefreshUiMessage args)
-    {
-        UpdateUserInterface(uid, component);
-    }
-
     private void OnEmagged(EntityUid uid, PhotocopierComponent component, ref GotEmaggedEvent args)
     {
         _audio.PlayPvs(component.EmagSound, uid);
@@ -251,6 +240,13 @@ public sealed partial class PhotocopierSystem : EntitySystem
     }
 
     #endregion
+
+    private bool IsHumanoidOnTop(PhotocopierComponent component)
+    {
+        return component.HumanoidAppearanceOnTop is not null &&
+               component.EntityOnTop is { } entityOnTop &&
+               !Deleted(entityOnTop);
+    }
 
     /// <summary>
     /// Makes the photocopier burn the butt of a mob.
@@ -399,7 +395,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
             if (component.IsCopyingPhysicalButt)
             {
                 // If there is no butt or someones else butt is in the way - stop copying.
-                if (!TryGetHumanoidOnTop(uid, out var humanoid)
+                if (component.HumanoidAppearanceOnTop is not { } humanoid
                     || component.ButtSpecies != humanoid.Species)
                 {
                     StopPrinting(uid, component);
@@ -501,7 +497,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
         }
 
         var isPaperInserted = component.PaperSlot.Item is not null;
-        var assIsOnScanner = TryGetHumanoidOnTop(uid, out _);
+        var assIsOnScanner = IsHumanoidOnTop(component);
 
         var state = new PhotocopierUiState(
             component.PaperSlot.Locked,
