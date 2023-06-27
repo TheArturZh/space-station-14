@@ -67,7 +67,8 @@ namespace Content.Server.Paper
             if (ContentSize is { } contentSize)
                 paperComponent.ContentSize = contentSize;
 
-            if (Content is not null)
+            //Don't set empty content string so empty paper notice is properly displayed
+            if (!string.IsNullOrEmpty(Content))
                 paperSystem.SetContent(uid, Content, paperComponent);
 
             if (Writable is { } writable)
