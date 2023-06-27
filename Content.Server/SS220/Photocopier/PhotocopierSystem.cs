@@ -51,6 +51,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
         SubscribeLocalEvent<PhotocopierComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<PhotocopierComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<PhotocopierComponent, ShapeCollisionTrackerUpdatedEvent>(OnCollisionChanged);
+        SubscribeLocalEvent<PhotocopierComponent, ComponentShutdown>(OnShutdown);
 
         // UI
         SubscribeLocalEvent<PhotocopierComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
@@ -103,6 +104,13 @@ public sealed partial class PhotocopierSystem : EntitySystem
     {
         _itemSlots.RemoveItemSlot(uid, component.PaperSlot);
         _itemSlots.RemoveItemSlot(uid, component.TonerSlot);
+    }
+
+    private void OnShutdown(EntityUid uid, PhotocopierComponent component, ComponentShutdown args)
+    {
+        component.EntityOnTop = null;
+        component.HumanoidAppearanceOnTop = null;
+        component.PrintAudioStream = null;
     }
 
     private void OnCollisionChanged(
