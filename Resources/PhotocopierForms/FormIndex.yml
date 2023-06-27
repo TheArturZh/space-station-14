@@ -11,6 +11,8 @@
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_hire.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_sitrep.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_sop.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_law.xml
   - Id: blank_сс
     Name: Свободные бланки ЦентКома
     IconPath: /Textures/SS220/DepartmentIcons/Centcom_dep.png
