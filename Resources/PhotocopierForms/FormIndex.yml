@@ -10,6 +10,7 @@
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_exec.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_hire.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_sitrep.xml
   - Id: blank_сс
     Name: Свободные бланки ЦентКома
     IconPath: /Textures/SS220/DepartmentIcons/Centcom_dep.png
@@ -68,6 +69,7 @@
     - /PhotocopierForms/nanotrasen_station/security/sec_vdc.xml
     - /PhotocopierForms/nanotrasen_station/security/sec_vdc_gop.xml
     - /PhotocopierForms/nanotrasen_station/security/sup_ord_wep.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_sitrep.xml
   - Id: medical
     Name: Медицинский отдел
     Color: "#8585FFFF"
@@ -78,6 +80,7 @@
     - /PhotocopierForms/nanotrasen_station/medical/med_rcp.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rep_death.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rep_psych.xml
+    - /PhotocopierForms/nanotrasen_station/medical/med_sitrep.xml
   - Id: engineering
     Name: Инженерный отдел
     Color: "#FCA503FF"
@@ -86,6 +89,7 @@
     - /PhotocopierForms/nanotrasen_station/engineering/eng_permit.xml
     - /PhotocopierForms/nanotrasen_station/engineering/eng_permit_2.xml
     - /PhotocopierForms/nanotrasen_station/engineering/eng_req_tw.xml
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_sitrep.xml
   - Id: science
     Name: Научный отдел
     Color: "#AB2EFFFF"
@@ -102,6 +106,7 @@
     Forms:
     - /PhotocopierForms/nanotrasen_station/cargo/sup_ord.xml
     - /PhotocopierForms/nanotrasen_station/cargo/sup_ord_dng.xml
+    - /PhotocopierForms/nanotrasen_station/cargo/sup_sitrep.xml
   - Id: service
     Name: Отдел обслуживания
     Color: "#81D962FF"
@@ -109,6 +114,7 @@
     Forms:
     - /PhotocopierForms/nanotrasen_station/service/svc_mcf.xml
     - /PhotocopierForms/nanotrasen_station/service/svc_mds.xml
+    - /PhotocopierForms/nanotrasen_station/service/svc_sitrep.xml
   - Id: blank
     Name: Свободные бланки
     IconPath: /Textures/SS220/DepartmentIcons/empty.png
