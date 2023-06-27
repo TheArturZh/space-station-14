@@ -37,15 +37,16 @@
     - /PhotocopierForms/nanotrasen_station/command/cmd_qlf.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_req_id.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_req_pda.xml
-  - Id: internal_affairs
+  - Id: law
     Name: Юридический отдел
     Color: "#DD4040FF"
     IconPath: /Textures/SS220/DepartmentIcons/Law_dep.png
     Forms:
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/cmd_comp.xml
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_gop.xml
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_rep_ia.xml
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_sopb.xml
+    - /PhotocopierForms/nanotrasen_station/law/cmd_comp.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_gop.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_rep_ia.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_sopb.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_sopb_crit.xml
   - Id: security
     Name: Служба Безопасности
     Color: "#DD4040FF"

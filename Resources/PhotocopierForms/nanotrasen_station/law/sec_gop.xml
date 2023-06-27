@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>sec_gop</FormId>
-  <PrototypeId>PaperNtFormSec</PrototypeId>
+  <PrototypeId>PaperNtFormLaw</PrototypeId>
   <EntityName>форма НТ-СБ-УДО</EntityName>
   <PhotocopierTitle>Запрос на УДО для заключенного</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-СБ-УДО

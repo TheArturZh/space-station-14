@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_comp</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormLaw</PrototypeId>
   <EntityName>форма НТ-КОМ-ЖАЛ</EntityName>
   <PhotocopierTitle>Жалоба</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-ЖАЛ

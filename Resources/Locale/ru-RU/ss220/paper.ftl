@@ -4,6 +4,9 @@ ent-PaperNtForm = { ent-Paper }
 ent-PaperNtFormSec = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Служба безопасности станции".
 
+ent-PaperNtFormLaw = { ent-Paper }
+    .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Юридический отдел станции".
+
 ent-PaperNtFormSci = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Отдел исследований".
 
