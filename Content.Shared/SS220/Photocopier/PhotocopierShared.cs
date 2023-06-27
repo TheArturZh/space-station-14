@@ -98,3 +98,15 @@ public sealed class PhotocopyableMetaData
     public string? EntityDescription;
     public string? PrototypeId;
 }
+
+[Serializable, NetSerializable]
+public enum BurnButtWireKey : byte
+{
+    StatusKey,
+}
+
+[Serializable, NetSerializable]
+public enum SusFormsWireKey : byte
+{
+    StatusKey,
+}

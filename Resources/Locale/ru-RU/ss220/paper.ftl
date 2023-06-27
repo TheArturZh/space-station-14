@@ -24,3 +24,6 @@ ent-PaperNtFormCc = { ent-Paper }
 
 ent-PaperNtFormCcSecure = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Центральное командование NanoTrasen".
+
+ent-PaperSyndieForm = { ent-Paper }
+    .desc = Лист белой бумаги. Логотип в верхней части бумаги выглядит очень подозрительным.

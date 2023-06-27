@@ -9,7 +9,7 @@
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_shift_end.xml
   - Id: blank_сс
     Name: Свободные бланки ЦентКома
-    IconPath: /Textures/SS220/DepartmentIcons/empty.png
+    IconPath: /Textures/SS220/DepartmentIcons/Centcom_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_central_command/blank/blank_regular_cc.xml
     - /PhotocopierForms/nanotrasen_central_command/blank/blank_secure_cc.xml
@@ -116,3 +116,10 @@
     - /PhotocopierForms/nanotrasen_station/blank/blank_regular_med.xml
     - /PhotocopierForms/nanotrasen_station/blank/blank_regular_sci.xml
     - /PhotocopierForms/nanotrasen_station/blank/blank_regular_sec.xml
+- Id: syndicate
+  Groups:
+  - Id: syndicate
+    Name: "ER%&R"
+    IconPath: /Textures/SS220/DepartmentIcons/empty.png
+    Forms:
+    - /PhotocopierForms/syndicate/main/blank_syndicate.xml

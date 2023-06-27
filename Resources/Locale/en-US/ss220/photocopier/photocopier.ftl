@@ -1,3 +1,6 @@
+wire-name-photocopier-burn = BGHT
+wire-name-photocopier-contraband = DATA
+
 photocopier-ui-window = Photocopier
 
 photocopier-ui-search-placeholder = Search...

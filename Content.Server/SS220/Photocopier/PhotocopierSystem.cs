@@ -11,8 +11,6 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.SS220.Photocopier.Forms;
 using Content.Shared.Damage;
-using Content.Shared.Emag.Components;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Popups;
@@ -52,7 +50,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
         SubscribeLocalEvent<PhotocopierComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<PhotocopierComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<PhotocopierComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<PhotocopierComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<PhotocopierComponent, ShapeCollisionTrackerUpdatedEvent>(OnCollisionChanged);
 
         // UI
@@ -120,11 +117,9 @@ public sealed partial class PhotocopierSystem : EntitySystem
         {
             return;
         }
-        else
-        {
-            component.EntityOnTop = null;
-            component.HumanoidAppearanceOnTop = null;
-        }
+
+        component.EntityOnTop = null;
+        component.HumanoidAppearanceOnTop = null;
 
         foreach (var otherEntity in args.Colliding)
         {
@@ -177,6 +172,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
         if (!args.Powered)
         {
             StopPrinting(uid, component, false);
+            component.ManualButtBurnAnimationRemainingTime = null;
         }
 
         TryUpdateVisualState(uid, component);
@@ -198,11 +194,12 @@ public sealed partial class PhotocopierSystem : EntitySystem
             return;
 
         if (component.EntityOnTop is not { } entityOnTop ||
-            component.HumanoidAppearanceOnTop is not { } humanoidAppearanceOnTop)
+            component.HumanoidAppearanceOnTop is not { } humanoidAppearanceOnTop ||
+            Deleted(entityOnTop))
             return;
 
         TryQueueCopyPhysicalButt(uid, component, humanoidAppearanceOnTop, args.Amount);
-        if (HasComp<EmaggedComponent>(uid))
+        if (component.BurnsButts)
             BurnButt(entityOnTop, uid, component);
     }
 
@@ -233,12 +230,6 @@ public sealed partial class PhotocopierSystem : EntitySystem
         StopPrinting(uid, component);
     }
 
-    private void OnEmagged(EntityUid uid, PhotocopierComponent component, ref GotEmaggedEvent args)
-    {
-        _audio.PlayPvs(component.EmagSound, uid);
-        args.Handled = true;
-    }
-
     #endregion
 
     private bool IsHumanoidOnTop(PhotocopierComponent component)
@@ -249,6 +240,50 @@ public sealed partial class PhotocopierSystem : EntitySystem
     }
 
     /// <summary>
+    /// Locks/unlocks contraband forms by adding them to available form collections hashset.
+    /// Used by PhotocopierSusFormsWireAction.
+    /// </summary>
+    /// <param name="uid">EntityUid of photocopier entity</param>
+    /// <param name="component">PhotocopierComponent to lock/unlock contraband at</param>
+    /// <param name="unlocked">To add contraband or to remove?</param>
+    public void SetContrabandFormsUnlocked(EntityUid uid, PhotocopierComponent component, bool unlocked)
+    {
+        foreach (var collection in component.ContrabandFormCollections)
+        {
+            if (unlocked)
+                component.FormCollections.Add(collection);
+            else
+                component.FormCollections.Remove(collection);
+        }
+
+        component.SusFormsUnlocked = unlocked;
+        UpdateUserInterface(uid, component);
+    }
+
+    /// <summary>
+    /// Tries to burn the butt of an entity on top of the specified photocopier.
+    /// Has a cooldown, regardless if there is an entity on top.
+    /// Also plays the animation and sound effect regardless if there is an entity on top.
+    /// </summary>
+    public void TryManuallyBurnButtOnTop(EntityUid uid, PhotocopierComponent component)
+    {
+        if (component.ManualButtBurnAnimationRemainingTime > 0)
+            return;
+
+        component.ManualButtBurnAnimationRemainingTime = component.ManualButtBurnDuration;
+        TryUpdateVisualState(uid, component);
+
+        if (component.EntityOnTop is not { } entityOnTop)
+        {
+            // play the sound regardless to catch the user's attention,. Will otherwise be done by BurnButt method.
+            _audio.PlayPvs(component.ButtDamageSound, uid);
+            return;
+        }
+
+        BurnButt(entityOnTop, uid, component);
+    }
+
+    /// <summary>
     /// Makes the photocopier burn the butt of a mob.
     /// </summary>
     /// <param name="mobUid">UID of mob, whose but to burn</param>
@@ -256,7 +291,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
     /// <param name="component">Component of photocopier that burns.</param>
     private void BurnButt(EntityUid mobUid, EntityUid photocopierUid, PhotocopierComponent component)
     {
-        if (component.EmagButtDamage is null)
+        if (component.ButtDamage is null)
             return;
 
         // TODO LATER: Когда добавим куклу нужно сделать так чтоб дамаг шел в гроин
@@ -264,7 +299,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
             return;
 
         var dealtDamage = _damageableSystem.TryChangeDamage(
-            mobUid, component.EmagButtDamage, false, false, damageable, photocopierUid);
+            mobUid, component.ButtDamage, false, false, damageable, photocopierUid);
 
         _audio.PlayPvs(component.ButtDamageSound, photocopierUid);
 
@@ -292,7 +327,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
         if (!_prototypeManager.TryIndex<SpeciesPrototype>(humanoidAppearance.Species, out var speciesPrototype))
             return;
 
-        if(!HasComp<EmaggedComponent>(uid))
+        if(!component.BurnsButts)
             _popup.PopupEntity(Loc.GetString("photocopier-popup-butt-scan"), uid);
 
         var dataToCopy = new Dictionary<Type, IPhotocopiedComponentData>();
@@ -384,6 +419,16 @@ public sealed partial class PhotocopierSystem : EntitySystem
 
     private void ProcessPrinting(EntityUid uid, float frameTime, PhotocopierComponent component)
     {
+        if (component.ManualButtBurnAnimationRemainingTime is not null)
+        {
+            component.ManualButtBurnAnimationRemainingTime -= frameTime;
+            if (component.ManualButtBurnAnimationRemainingTime <= 0)
+            {
+                TryUpdateVisualState(uid, component);
+                component.ManualButtBurnAnimationRemainingTime = null;
+            }
+        }
+
         if (component.PrintingTimeRemaining > 0)
         {
             if (!TryGetTonerCartridge(component, out var tonerCartridge) || tonerCartridge.Charges <= 0)
@@ -455,16 +500,18 @@ public sealed partial class PhotocopierSystem : EntitySystem
         var state = PhotocopierVisualState.Powered;
         var outOfToner = (!TryGetTonerCartridge(component, out var tonerCartridge) || tonerCartridge.Charges <= 0);
 
-        if (component.CopiesQueued > 0)
-            state = (component.State == PhotocopierState.Copying) ? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
-        else if (!this.IsPowered(uid, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             state = PhotocopierVisualState.Off;
+        else if (component.CopiesQueued > 0)
+            state = (component.State == PhotocopierState.Copying) ? PhotocopierVisualState.Copying : PhotocopierVisualState.Printing;
         else if (outOfToner)
             state = PhotocopierVisualState.OutOfToner;
 
         var item = component.PaperSlot.Item;
         var gotItem = item != null;
-        var combinedState = new PhotocopierCombinedVisualState(state, gotItem, HasComp<EmaggedComponent>(uid));
+
+        var burnsButtManually = component.ManualButtBurnAnimationRemainingTime > 0;
+        var combinedState = new PhotocopierCombinedVisualState(state, gotItem, component.BurnsButts, burnsButtManually);
 
         _appearance.SetData(uid, PhotocopierVisuals.VisualState, combinedState);
     }

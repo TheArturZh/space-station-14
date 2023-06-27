@@ -1,3 +1,6 @@
+wire-name-photocopier-burn = ЯРК
+wire-name-photocopier-contraband = ДАНН
+
 photocopier-ui-window = Копировальный аппарат
 
 photocopier-ui-search-placeholder = Поиск...

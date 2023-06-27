@@ -11,6 +11,8 @@
     layers:
     - state: "off"
       map: ["enum.PhotocopierVisualLayers.Base"]
+    - state: no_cover
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: "led_powered"
       map: ["enum.PhotocopierVisualLayers.Led"]
       shader: unshaded
@@ -33,7 +35,8 @@
       radius: 0.2
   - type: Photocopier
     formCollections: [ "nanotrasen_station" ]
-    emagButtDamage:
+    contrabandFormCollections: [ "syndicate" ]
+    buttDamage:
       types:
         Heat: 10
     paperSlot:
@@ -57,11 +60,21 @@
     interfaces:
       - key: enum.PhotocopierUiKey.Key
         type: PhotocopierBoundUi
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: ItemSlots
   - type: ContainerContainer
     containers:
       CopierScan: !type:ContainerSlot
       TonerCartridge: !type:ContainerSlot
+  - type: WiresPanel
+  - type: Wires
+    BoardName: "Photocopier"
+    LayoutId: Photocopier
+  - type: WiresVisuals
+  - type: Tag
+    tags:
+      - EmagImmune
 
 - type: entity
   id: PhotocopierCentralCommand
