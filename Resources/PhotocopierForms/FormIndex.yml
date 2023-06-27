@@ -38,7 +38,7 @@
     - /PhotocopierForms/nanotrasen_station/command/cmd_req_id.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_req_pda.xml
   - Id: internal_affairs
-    Name: Агент Внутренних Дел
+    Name: Юридический отдел
     Color: "#DD4040FF"
     IconPath: /Textures/SS220/DepartmentIcons/Law_dep.png
     Forms:
