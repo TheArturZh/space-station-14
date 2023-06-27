@@ -440,7 +440,10 @@ public sealed class FaxSystem : EntitySystem
 
         var printout = component.PrintingQueue.Dequeue();
         var coords = Transform(uid).Coordinates;
-        var printed = _photocopierSystem.SpawnCopy(coords, printout.MetaData, printout.DataToCopy);
+        var possiblePrinted = _photocopierSystem.SpawnCopy(coords, printout.MetaData, printout.DataToCopy);
+        if (possiblePrinted is not { } printed)
+            return;
+
         var contentToLog = GetPaperContent(printed) ?? "";
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid)} printed {ToPrettyString(printed)}: {contentToLog}");

@@ -3,6 +3,7 @@ using Content.Server.Paper;
 using Content.Shared.SS220.Photocopier;
 using Content.Shared.SS220.Photocopier.Forms;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.SS220.Photocopier;
 
@@ -108,7 +109,7 @@ public sealed partial class PhotocopierSystem
     /// <summary>
     /// Spawns a copy of entity at specified coordinates using DataToCopy and MetaDataToCopy.
     /// </summary>
-    public EntityUid SpawnCopy(
+    public EntityUid? SpawnCopy(
         EntityCoordinates at,
         PhotocopyableMetaData? metaDataToCopy,
         Dictionary<Type, IPhotocopiedComponentData>? dataToCopy)
@@ -119,7 +120,17 @@ public sealed partial class PhotocopierSystem
         else
             entityToSpawn = "Paper";
 
-        var printed = EntityManager.SpawnEntity(entityToSpawn, at);
+        EntityUid printed;
+        try
+        {
+            printed = EntityManager.SpawnEntity(entityToSpawn, at);
+        }
+        catch (UnknownPrototypeException e)
+        {
+            _sawmill.Error("Tried to spawn a copy of a document, but got an unknown prototype ID: \""+entityToSpawn+"\"");
+            return null;
+        }
+
 
         if (metaDataToCopy is not null && TryComp<MetaDataComponent>(printed, out var metaData))
         {
