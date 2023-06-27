@@ -12,6 +12,8 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
 
+    private readonly HashSet<(EntityUid, ShapeCollisionTrackerComponent)> _trackerDebounce = new();
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -32,6 +34,7 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
 
         if (!component.Enabled)
         {
+            _trackerDebounce.Remove((uid, component));
             component.Colliding.Clear();
         }
         // Re-check for contacts as we cleared them.
@@ -50,7 +53,7 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
             return;
 
         component.Colliding.Add(args.OtherEntity);
-        RaiseLocalEvent(uid, new ShapeCollisionTrackerUpdatedEvent(component.Colliding.ToImmutableHashSet()));
+        _trackerDebounce.Add((uid, component));
     }
 
     private void OnEndCollide(
@@ -62,7 +65,7 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
             return;
 
         component.Colliding.Remove(args.OtherEntity);
-        RaiseLocalEvent(uid, new ShapeCollisionTrackerUpdatedEvent(component.Colliding.ToImmutableHashSet()));
+        _trackerDebounce.Add((uid, component));
     }
 
     private void OnMapInit(
@@ -84,11 +87,36 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
             collisionLayer: (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable));
     }
 
-    private static void OnShutdown(
+    private void OnShutdown(
         EntityUid uid,
         ShapeCollisionTrackerComponent component,
         ComponentShutdown args)
     {
         component.Colliding.Clear();
+        _trackerDebounce.Remove((uid, component));
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var trackerPair in _trackerDebounce)
+        {
+            RaiseLocalEvent(trackerPair.Item1, new ShapeCollisionTrackerUpdatedEvent(trackerPair.Item2.Colliding.ToImmutableHashSet()));
+        }
+
+        _trackerDebounce.Clear();
+    }
+
+    public override void Shutdown()
+    {
+        _trackerDebounce.Clear();
+        var trackerQuery = EntityQuery<ShapeCollisionTrackerComponent>(true);
+        foreach (var trackerEntity in trackerQuery)
+        {
+            trackerEntity.Colliding.Clear();
+        }
+
+        base.Shutdown();
     }
 }
