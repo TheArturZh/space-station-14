@@ -1,26 +1,26 @@
-ent-PaperNtForm = бумага
+ent-PaperNtForm = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen.
 	
-ent-PaperNtFormSec = бумага
+ent-PaperNtFormSec = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Служба безопасности станции".
 
-ent-PaperNtFormSci = бумага
+ent-PaperNtFormSci = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Отдел исследований".
 
-ent-PaperNtFormCmd = бумага
+ent-PaperNtFormCmd = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Командование станции".
 
-ent-PaperNtFormMed = бумага
+ent-PaperNtFormMed = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Медицинский отдел станции".
 
-ent-PaperNtFormCargo = бумага
+ent-PaperNtFormCargo = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Отдел снабжения станции".
 
-ent-PaperNtFormEng = бумага
+ent-PaperNtFormEng = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Инженерный отдел станции".
 
-ent-PaperNtFormCc = бумага
+ent-PaperNtFormCc = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Центральное командование NanoTrasen".
 
-ent-PaperNtFormCcSecure = бумага
+ent-PaperNtFormCcSecure = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Центральное командование NanoTrasen".
