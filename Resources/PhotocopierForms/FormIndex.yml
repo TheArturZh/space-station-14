@@ -7,6 +7,9 @@
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_evac.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal_rep.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_shift_end.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_exec.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_hire.xml
   - Id: blank_сс
     Name: Свободные бланки ЦентКома
     IconPath: /Textures/SS220/DepartmentIcons/Centcom_dep.png
