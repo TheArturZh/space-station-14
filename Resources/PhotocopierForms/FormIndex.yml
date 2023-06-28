@@ -29,20 +29,25 @@
     - /PhotocopierForms/nanotrasen_station/command/cc_req_bonus.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_acap.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_acom.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_acr.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_acwt.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_afe.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_frs.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_goal.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_inv.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_srt.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_dcr_award.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_dsc.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_ept.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_fcom.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_qlf.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_req_id.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_req_pda.xml
+  - Id: hr
+    Name: Отдел кадров
+    Color: "#5555FFFF"
+    IconPath: /Textures/SS220/DepartmentIcons/Cmd_dep.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_qlf.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_req_id.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_req_pda.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_afe.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_dsc.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_ept.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_acr.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_acwt.xml
   - Id: law
     Name: Юридический отдел
     Color: "#DD4040FF"
