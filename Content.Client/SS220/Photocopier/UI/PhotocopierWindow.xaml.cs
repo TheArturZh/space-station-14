@@ -1,5 +1,6 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
+using System.Numerics;
 using System.Collections.Immutable;
 using Content.Client.Message;
 using Content.Client.SS220.Photocopier.Forms;
@@ -26,7 +27,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
     private const float TonerBarFullHue = 118.06f / 360;
     private const float TonerBarEmptyHue = 0;
 
-    private readonly Vector2 _groupIconSize = new Vector2(30, 30);
+    private readonly Vector2 _groupIconSize = new(30, 30);
 
     // Dependencies
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
@@ -107,7 +108,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
         const float tonerBarHueDiff = TonerBarFullHue - TonerBarEmptyHue;
         var tonerBarFillHue = TonerBarEmptyHue + tonerBarHueDiff * value;
-        var tonerBarFillColor = Color.FromHsv(new Vector4(
+        var tonerBarFillColor = Color.FromHsv(new Robust.Shared.Maths.Vector4(
             tonerBarFillHue, TonerBarColorSaturation, TonerBarColorValue, 1));
 
         TonerBar.ForegroundStyleBoxOverride ??= new StyleBoxFlat();
