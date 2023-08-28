@@ -4,7 +4,12 @@
   name: microwave
   description: It's magic.
   components:
-  - type: Microwave
+#  - type: Microwave #SS220 remove default microwave
+  #SS220 supa kitchen begin
+  - type: CookingInstrument
+    instrumentType: microwave
+  - type: CookingMachine
+  #SS220 supa kitchen end
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -21,12 +26,14 @@
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
           False: { visible: false }
-  - type: ActivatableUI
-    key: enum.MicrowaveUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.MicrowaveUiKey.Key
-      type: MicrowaveBoundUserInterface
+#SS220 remove default microwave begin
+#  - type: ActivatableUI
+#    key: enum.MicrowaveUiKey.Key
+#  - type: UserInterface
+#    interfaces:
+#    - key: enum.MicrowaveUiKey.Key
+#      type: MicrowaveBoundUserInterface
+#SS220 remove default microwave end
   - type: Physics
   - type: Fixtures
     fixtures:
