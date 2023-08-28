@@ -10,5 +10,8 @@ public sealed partial class CookingMachineComponent : Component
     [DataField("maxCookingTimer"), ViewVariables(VVAccess.ReadWrite)]
     public uint MaxCookingTimer = 30;
 
+    [DataField("broken"), ViewVariables(VVAccess.ReadOnly)]
+    public bool Broken = false;
+
     public Container Storage = default!;
 }
