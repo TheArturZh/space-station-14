@@ -2,6 +2,8 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.SS220.SupaKitchen;
+
+[RegisterComponent]
 public sealed partial class CookingInstrumentComponent : Component
 {
     [DataField("instrumentType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<CookingInstrumentTypePrototype>))]

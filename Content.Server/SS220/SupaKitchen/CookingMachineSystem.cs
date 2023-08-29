@@ -1,7 +1,11 @@
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Construction;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
@@ -23,6 +27,7 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly CookingInstrumentSystem _cookingInstrument = default!;
 
     public override void Initialize()
     {
@@ -30,11 +35,14 @@ public sealed class CookingMachineSystem : EntitySystem
 
         SubscribeLocalEvent<CookingMachineComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<CookingMachineComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
+        SubscribeLocalEvent<CookingMachineComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<CookingMachineComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CookingMachineComponent, BreakageEventArgs>(OnBreak);
+        SubscribeLocalEvent<CookingMachineComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<CookingMachineComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
         // UI event listeners
-        //SubscribeLocalEvent<CookingMachineComponent, CookingMachineStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
+        SubscribeLocalEvent<CookingMachineComponent, CookingMachineStartCookMessage>((u, c, m) => StartCooking(u, c, m.Session.AttachedEntity));
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineEjectMessage>(OnEjectMessage);
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineEjectSolidIndexedMessage>(OnEjectIndex);
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineSelectCookTimeMessage>(OnSelectTime);
@@ -50,6 +58,7 @@ public sealed class CookingMachineSystem : EntitySystem
         if (!args.Powered)
         {
             SetAppearance(uid, CookingMachineVisualState.Idle, component);
+            StopCooking(uid, component);
             _sharedContainer.EmptyContainer(component.Storage);
         }
         UpdateUserInterfaceState(uid, component);
@@ -59,21 +68,30 @@ public sealed class CookingMachineSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         if (!(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
         {
-            _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, args.User);
+            _popupSystem.PopupEntity(
+                Loc.GetString("cooking-machine-component-interact-using-no-power", ("machine", MetaData(uid).EntityName)),
+                uid,
+                args.User);
             return;
         }
 
         if (component.Broken)
         {
-            _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, args.User);
+            _popupSystem.PopupEntity(
+                Loc.GetString("cooking-machine-component-interact-using-broken", ("machine", MetaData(uid).EntityName)),
+                uid,
+                args.User);
             return;
         }
 
         if (!HasComp<ItemComponent>(args.Used))
         {
-            _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("cooking-machine-component-interact-using-transfer-fail"),
+                uid,
+                args.User);
             return;
         }
 
@@ -82,12 +100,29 @@ public sealed class CookingMachineSystem : EntitySystem
         UpdateUserInterfaceState(uid, component);
     }
 
+    private void OnSolutionChange(EntityUid uid, CookingMachineComponent component, SolutionChangedEvent args)
+    {
+        UpdateUserInterfaceState(uid, component);
+    }
+
     private void OnBreak(EntityUid uid, CookingMachineComponent component, BreakageEventArgs args)
     {
         component.Broken = true;
         SetAppearance(uid, CookingMachineVisualState.Broken, component);
+        StopCooking(uid, component);
         _sharedContainer.EmptyContainer(component.Storage);
         UpdateUserInterfaceState(uid, component);
+    }
+
+    private void OnRefreshParts(EntityUid uid, CookingMachineComponent component, RefreshPartsEvent args)
+    {
+        var cookRating = args.PartRatings[component.MachinePartCookTimeMultiplier];
+        component.CookTimeMultiplier = MathF.Pow(component.CookTimeScalingConstant, cookRating - 1);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, CookingMachineComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("cooking-machine-component-upgrade-cook-time", component.CookTimeMultiplier);
     }
 
     #region ui_messages
@@ -149,5 +184,113 @@ public sealed class CookingMachineSystem : EntitySystem
             component.CurrentCookTimeButtonIndex,
             component.CookingTimer
         ));
+    }
+
+    public void StartCooking(EntityUid uid, CookingMachineComponent component, EntityUid? whoStarted = null)
+    {
+        if (!TryComp<CookingInstrumentComponent>(uid, out var cookingInstrument))
+            return;
+
+        if (!HasContents(component) || component.Active)
+            return;
+
+        var solidsDict = new Dictionary<string, int>();
+        var reagentDict = new Dictionary<string, FixedPoint2>();
+
+        foreach (var item in component.Storage.ContainedEntities)
+        {
+            var ev = new ProcessedInCookingMachineEvent(uid, component, whoStarted);
+            RaiseLocalEvent(item, ev);
+
+            if (ev.Handled)
+            {
+                UpdateUserInterfaceState(uid, component);
+                return;
+            }
+
+            var metaData = MetaData(item); //this still begs for cooking refactor
+            if (metaData.EntityPrototype == null)
+                continue;
+
+            if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
+                solidsDict[metaData.EntityPrototype.ID]++;
+            else
+                solidsDict.Add(metaData.EntityPrototype.ID, 1);
+
+            if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
+                continue;
+
+            foreach (var (_, solution) in solMan.Solutions)
+            {
+                foreach (var reagent in solution.Contents)
+                {
+                    if (reagentDict.ContainsKey(reagent.ReagentId))
+                        reagentDict[reagent.ReagentId] += reagent.Quantity;
+                    else
+                        reagentDict.Add(reagent.ReagentId, reagent.Quantity);
+                }
+            }
+        }
+
+        // Check recipes
+        var portionedRecipe = _cookingInstrument.GetSatisfiedPortionedRecipe(
+            cookingInstrument, solidsDict, reagentDict, component.CookingTimer);
+
+        _audio.PlayPvs(component.StartCookingSound, uid);
+        component.CookTimeRemaining = component.CookingTimer * component.CookTimeMultiplier;
+        component.CurrentlyCookingRecipe = portionedRecipe;
+        UpdateUserInterfaceState(uid, component);
+
+        SetAppearance(uid, CookingMachineVisualState.Cooking, component);
+
+        component.PlayingStream =
+            _audio.PlayPvs(component.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+
+        component.Active = true;
+    }
+
+    public void StopCooking(EntityUid uid, CookingMachineComponent component)
+    {
+        component.Active = false;
+        component.CookTimeRemaining = 0;
+        component.CurrentlyCookingRecipe = (null, 0);
+        UpdateUserInterfaceState(uid, component);
+        SetAppearance(uid, CookingMachineVisualState.Idle, component);
+        component.PlayingStream?.Stop();
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<CookingMachineComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            if (!component.Active)
+                continue;
+
+            //check if there's still cook time left
+            component.CookTimeRemaining -= frameTime;
+            if (component.CookTimeRemaining > 0)
+                continue;
+
+            //this means the cooking machine has finished cooking.
+            var ev = new BeforeCookingMachineFinished(component);
+            RaiseLocalEvent(uid, ev);
+
+            if (component.CurrentlyCookingRecipe.Item1 != null)
+            {
+                var coords = Transform(uid).Coordinates;
+                for (var i = 0; i < component.CurrentlyCookingRecipe.Item2; i++)
+                {
+                    _cookingInstrument.SubtractContents(component.Storage, component.CurrentlyCookingRecipe.Item1);
+                    Spawn(component.CurrentlyCookingRecipe.Item1.Result, coords);
+                }
+            }
+
+            _sharedContainer.EmptyContainer(component.Storage);
+            StopCooking(uid, component);
+            _audio.PlayPvs(component.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
+        }
     }
 }

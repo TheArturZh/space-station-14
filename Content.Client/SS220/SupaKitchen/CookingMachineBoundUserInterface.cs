@@ -73,9 +73,9 @@ namespace Content.Client.SS220.SupaKitchen.UI
             var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
             var cookTime = cState.ActiveButtonIndex == 0
-                ? Loc.GetString("microwave-menu-instant-button")
+                ? Loc.GetString("cooking-machine-menu-instant-button")
                 : cState.CurrentCookTime.ToString();
-            _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
+            _menu.CookTimeInfoLabel.Text = Loc.GetString("cooking-machine-bound-user-interface-cook-time-label",
                                                          ("time", cookTime));
         }
 

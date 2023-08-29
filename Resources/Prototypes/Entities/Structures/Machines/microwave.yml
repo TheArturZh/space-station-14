@@ -28,11 +28,11 @@
           True: { visible: true }
           False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
-        enum.MicrowaveVisualizerLayers.Base:
+        enum.CookingMachineVisualizerLayers.Base:
           Idle: { state: "mw" }
           Broken: { state: "mwb" }
           Cooking: { state: "mw" }
-        enum.MicrowaveVisualizerLayers.BaseUnlit:
+        enum.CookingMachineVisualizerLayers.BaseUnlit:
           Idle: { state: "mw_unlit" }
           Broken: { state: "mw_unlit" }
           Cooking: { state: "mw_running_unlit" }
@@ -40,7 +40,7 @@
           Idle: { visible: false }
           Broken: { visible: false }
       enum.PowerDeviceVisuals.Powered:
-        enum.MicrowaveVisualizerLayers.BaseUnlit:
+        enum.CookingMachineVisualizerLayers.BaseUnlit:
           True: { visible: true }
           False: { visible: false }
   - type: DeviceLinkSink
@@ -77,10 +77,10 @@
     snapCardinals: true
     layers:
     - state: mw0
-      map: ["enum.MicrowaveVisualizerLayers.Base"]
+      map: ["enum.CookingMachineVisualizerLayers.Base"]
     - state: mw_unlit
       shader: unshaded
-      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+      map: ["enum.CookingMachineVisualizerLayers.BaseUnlit"]
     - state: mwbloody0
       map: ["bloody"]
       visible: false

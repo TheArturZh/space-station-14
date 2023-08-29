@@ -1,6 +1,6 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-            Title="{Loc 'microwave-menu-title'}"
+            Title="{Loc 'cooking-machine-menu-title'}"
             SetSize="512 256"
             MinSize="512 256">
     <BoxContainer Orientation="Horizontal">
@@ -22,12 +22,12 @@
                           SizeFlagsStretchRatio="3">
                 <Button Name="StartButton"
                         Access="Public"
-                        Text="{Loc 'microwave-menu-start-button'}"
+                        Text="{Loc 'cooking-machine-menu-start-button'}"
                         TextAlign="Center" />
                 <Button Name="EjectButton"
                         Access="Public"
-                        Text="{Loc 'microwave-menu-eject-all-text'}"
-                        ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
+                        Text="{Loc 'cooking-machine-menu-eject-all-text'}"
+                        ToolTip="{Loc 'cooking-machine-menu-eject-all-tooltip'}"
                         TextAlign="Center" />
             </BoxContainer>
             <Control MinSize="0 15" />
