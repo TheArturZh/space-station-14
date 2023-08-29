@@ -26,7 +26,7 @@ public sealed class CookingRecipePrototype : IPrototype
     [DataField("result", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Result { get; } = string.Empty;
 
-    [DataField("instrumentType", customTypeSerializer: typeof(PrototypeIdSerializer<InstrumentTypePrototype>))]
+    [DataField("instrumentType", customTypeSerializer: typeof(PrototypeIdSerializer<CookingInstrumentTypePrototype>))]
     public string InstrumentType { get; } = string.Empty;
 
     [DataField("time")]
