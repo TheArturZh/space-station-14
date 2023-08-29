@@ -3,14 +3,14 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.SS220.SupaKitchen;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
+using System.Linq;
 
 namespace Content.Server.SS220.SupaKitchen;
 public sealed class CookingInstrumentSystem : EntitySystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SupaRecipeManager _recipeManager = default!;
 
     public override void Initialize()
     {
@@ -26,6 +26,9 @@ public sealed class CookingInstrumentSystem : EntitySystem
         )
     {
         var portions = 0;
+
+        if (component.InstrumentType != recipe.InstrumentType)
+            return (recipe, 0);
 
         if (
             cookingTimer % recipe.CookTime != 0
@@ -70,7 +73,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
         return (recipe, portions);
     }
 
-    private void SubtractContents(CookingInstrumentComponent component, Container container, CookingRecipePrototype recipe)
+    public void SubtractContents(Container container, CookingRecipePrototype recipe)
     {
         var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
 
@@ -130,5 +133,16 @@ public sealed class CookingInstrumentSystem : EntitySystem
                 }
             }
         }
+    }
+
+    public (CookingRecipePrototype, int) GetSatisfiedPortionedRecipe(
+        CookingInstrumentComponent component,
+        Dictionary<string, int> solidsDict,
+        Dictionary<string, FixedPoint2> reagentDict,
+        uint cookingTimer
+        )
+    {
+        return _recipeManager.Recipes.Select(r =>
+            CanSatisfyRecipe(component, r, solidsDict, reagentDict, cookingTimer)).FirstOrDefault(r => r.Item2 > 0);
     }
 }
