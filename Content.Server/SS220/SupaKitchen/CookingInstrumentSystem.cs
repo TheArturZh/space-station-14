@@ -15,13 +15,6 @@ public sealed class CookingInstrumentSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<CookingInstrumentComponent, ComponentInit>(OnInit);
-    }
-
-    private void OnInit(EntityUid uid, CookingInstrumentComponent component, ComponentInit ags)
-    {
-        component.Storage = _container.EnsureContainer<Container>(uid, "cooking_instrument_entity_container");
     }
 
     public static (CookingRecipePrototype, int) CanSatisfyRecipe(
@@ -130,7 +123,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
 
                     if (metaData.EntityPrototype.ID == recipeSolid.Key)
                     {
-                        component.Storage.Remove(item);
+                        container.Remove(item);
                         EntityManager.DeleteEntity(item);
                         break;
                     }
