@@ -1,19 +1,65 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SS220.SupaKitchen;
+
+[Serializable, NetSerializable]
+public sealed class CookingMachineStartCookMessage : BoundUserInterfaceMessage
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class CookingMachineEjectMessage : BoundUserInterfaceMessage
+{
+
+}
+
+[Serializable, NetSerializable]
+public sealed class CookingMachineEjectSolidIndexedMessage : BoundUserInterfaceMessage
+{
+    public EntityUid EntityID;
+    public CookingMachineEjectSolidIndexedMessage(EntityUid entityId)
+    {
+        EntityID = entityId;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CookingMachineVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
+{
+    public Solution.ReagentQuantity ReagentQuantity;
+    public CookingMachineVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
+    {
+        ReagentQuantity = reagentQuantity;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CookingMachineSelectCookTimeMessage : BoundUserInterfaceMessage
+{
+    public int ButtonIndex;
+    public uint NewCookTime;
+    public CookingMachineSelectCookTimeMessage(int buttonIndex, uint inputTime)
+    {
+        ButtonIndex = buttonIndex;
+        NewCookTime = inputTime;
+    }
+}
 
 [NetSerializable, Serializable]
 public sealed class CookingMachineUpdateUserInterfaceState : BoundUserInterfaceState
 {
     public EntityUid[] ContainedSolids;
     public bool IsMachineBusy;
+    public int ActiveButtonIndex;
     public uint CurrentCookTime;
 
     public CookingMachineUpdateUserInterfaceState(EntityUid[] containedSolids,
-        bool isMachineBusy, uint currentCookTime)
+        bool isMachineBusy, int activeButtonIndex, uint currentCookTime)
     {
         ContainedSolids = containedSolids;
         IsMachineBusy = isMachineBusy;
+        ActiveButtonIndex = activeButtonIndex;
         CurrentCookTime = currentCookTime;
     }
 

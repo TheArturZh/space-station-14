@@ -9,6 +9,7 @@ using Content.Shared.Power;
 using Content.Shared.SS220.SupaKitchen;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using System.Linq;
 
@@ -21,6 +22,7 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -30,6 +32,12 @@ public sealed class CookingMachineSystem : EntitySystem
         SubscribeLocalEvent<CookingMachineComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
         SubscribeLocalEvent<CookingMachineComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CookingMachineComponent, BreakageEventArgs>(OnBreak);
+
+        // UI event listeners
+        //SubscribeLocalEvent<CookingMachineComponent, CookingMachineStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
+        SubscribeLocalEvent<CookingMachineComponent, CookingMachineEjectMessage>(OnEjectMessage);
+        SubscribeLocalEvent<CookingMachineComponent, CookingMachineEjectSolidIndexedMessage>(OnEjectIndex);
+        SubscribeLocalEvent<CookingMachineComponent, CookingMachineSelectCookTimeMessage>(OnSelectTime);
     }
 
     private void OnInit(EntityUid uid, CookingMachineComponent component, ComponentInit ags)
@@ -82,6 +90,42 @@ public sealed class CookingMachineSystem : EntitySystem
         UpdateUserInterfaceState(uid, component);
     }
 
+    #region ui_messages
+    private void OnEjectMessage(EntityUid uid, CookingMachineComponent component, CookingMachineEjectMessage args)
+    {
+        if (!HasContents(component) || component.Active)
+            return;
+
+        _sharedContainer.EmptyContainer(component.Storage);
+        _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVolume(-2));
+        UpdateUserInterfaceState(uid, component);
+    }
+
+    private void OnEjectIndex(EntityUid uid, CookingMachineComponent component, CookingMachineEjectSolidIndexedMessage args)
+    {
+        if (!HasContents(component) || component.Active)
+            return;
+
+        component.Storage.Remove(args.EntityID);
+        UpdateUserInterfaceState(uid, component);
+    }
+
+    private void OnSelectTime(EntityUid uid, CookingMachineComponent component, CookingMachineSelectCookTimeMessage args)
+    {
+        if (!HasContents(component) || component.Active || !(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
+            return;
+
+        // some validation to prevent trollage
+        if (args.NewCookTime % 5 != 0 || args.NewCookTime > component.MaxCookingTimer)
+            return;
+
+        component.CurrentCookTimeButtonIndex = args.ButtonIndex;
+        component.CookingTimer = args.NewCookTime;
+        _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVolume(-2));
+        UpdateUserInterfaceState(uid, component);
+    }
+    #endregion
+
     public static bool HasContents(CookingMachineComponent component)
     {
         return component.Storage.ContainedEntities.Any();
@@ -102,6 +146,7 @@ public sealed class CookingMachineSystem : EntitySystem
         UserInterfaceSystem.SetUiState(ui, new CookingMachineUpdateUserInterfaceState(
             component.Storage.ContainedEntities.ToArray(),
             component.Active,
+            component.CurrentCookTimeButtonIndex,
             component.CookingTimer
         ));
     }
