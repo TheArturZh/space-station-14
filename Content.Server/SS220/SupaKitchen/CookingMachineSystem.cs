@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.SS220.SupaKitchen;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
 
@@ -19,6 +20,8 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -41,7 +44,7 @@ public sealed class CookingMachineSystem : EntitySystem
             SetAppearance(uid, CookingMachineVisualState.Idle, component);
             _sharedContainer.EmptyContainer(component.Storage);
         }
-        //UpdateUserInterfaceState(uid, component);
+        UpdateUserInterfaceState(uid, component);
     }
 
     private void OnInteractUsing(EntityUid uid, CookingMachineComponent component, InteractUsingEvent args)
@@ -68,7 +71,7 @@ public sealed class CookingMachineSystem : EntitySystem
 
         args.Handled = true;
         _handsSystem.TryDropIntoContainer(args.User, args.Used, component.Storage);
-        //UpdateUserInterfaceState(uid, component);
+        UpdateUserInterfaceState(uid, component);
     }
 
     private void OnBreak(EntityUid uid, CookingMachineComponent component, BreakageEventArgs args)
@@ -76,7 +79,7 @@ public sealed class CookingMachineSystem : EntitySystem
         component.Broken = true;
         SetAppearance(uid, CookingMachineVisualState.Broken, component);
         _sharedContainer.EmptyContainer(component.Storage);
-        //UpdateUserInterfaceState(uid, component);
+        UpdateUserInterfaceState(uid, component);
     }
 
     public static bool HasContents(CookingMachineComponent component)
@@ -88,5 +91,18 @@ public sealed class CookingMachineSystem : EntitySystem
     {
         var display = component.Broken ? CookingMachineVisualState.Broken : state;
         _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display);
+    }
+
+    public void UpdateUserInterfaceState(EntityUid uid, CookingMachineComponent component)
+    {
+        var ui = _userInterface.GetUiOrNull(uid, CookingMachineUiKey.Key);
+        if (ui == null)
+            return;
+
+        UserInterfaceSystem.SetUiState(ui, new CookingMachineUpdateUserInterfaceState(
+            component.Storage.ContainedEntities.ToArray(),
+            component.Active,
+            component.CookingTimer
+        ));
     }
 }

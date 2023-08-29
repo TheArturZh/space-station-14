@@ -3,8 +3,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.SupaKitchen;
 
-[Prototype("instrumentType")]
-public sealed class InstrumentTypePrototype : IPrototype
+[Prototype("cookingInstrumentType")]
+public sealed class CookingInstrumentTypePrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]
