@@ -5,3 +5,7 @@
 - type: cookingInstrumentType
   id: grill
   name: grilling
+
+- type: cookingInstrumentType
+  id: oven
+  name: baking
