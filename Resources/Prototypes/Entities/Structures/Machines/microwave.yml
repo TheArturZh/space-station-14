@@ -9,6 +9,7 @@
   - type: CookingInstrument
     instrumentType: microwave
   - type: CookingMachine
+  - type: SupaMicrowave
   - type: ActivatableUI
     key: enum.CookingMachineUiKey.Key
   - type: UserInterface
@@ -32,14 +33,14 @@
         enum.CookingMachineVisualizerLayers.BaseUnlit:
           True: { visible: true }
           False: { visible: false }
-#SS220 remove default microwave begin
+##SS220 remove default microwave begin
 #  - type: ActivatableUI
 #    key: enum.MicrowaveUiKey.Key
 #  - type: UserInterface
 #    interfaces:
 #    - key: enum.MicrowaveUiKey.Key
 #      type: MicrowaveBoundUserInterface
-#SS220 remove default microwave end
+##SS220 remove default microwave end
   - type: Physics
   - type: Fixtures
     fixtures:
