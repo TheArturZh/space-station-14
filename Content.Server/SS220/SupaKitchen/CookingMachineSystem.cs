@@ -2,6 +2,7 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.Construction.Completions;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Construction.EntitySystems;
@@ -12,6 +13,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.SS220.SupaKitchen;
+using Content.Shared.Tag;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -187,6 +189,13 @@ public sealed class CookingMachineSystem : EntitySystem
         ));
     }
 
+    public void Break(EntityUid uid, CookingMachineComponent component)
+    {
+        component.Broken = true;
+        SetAppearance(uid, CookingMachineVisualState.Broken, component);
+        _audio.PlayPvs(component.ItemBreakSound, uid);
+    }
+
     public void StartCooking(EntityUid uid, CookingMachineComponent component, EntityUid? whoStarted = null)
     {
         if (!TryComp<CookingInstrumentComponent>(uid, out var cookingInstrument))
@@ -198,10 +207,10 @@ public sealed class CookingMachineSystem : EntitySystem
         var solidsDict = new Dictionary<string, int>();
         var reagentDict = new Dictionary<string, FixedPoint2>();
 
-        foreach (var item in component.Storage.ContainedEntities)
+        foreach (var item in component.Storage.ContainedEntities.ToList())
         {
-            var ev = new ProcessedInCookingMachineEvent(uid, component, whoStarted);
-            RaiseLocalEvent(item, ev);
+            var ev = new ProcessedInCookingMachineEvent(uid, component, item, whoStarted);
+            RaiseLocalEvent(uid, ev);
 
             if (ev.Handled)
             {

@@ -68,12 +68,14 @@ public sealed class ProcessedInCookingMachineEvent : HandledEntityEventArgs
     public EntityUid MachineEntity;
     public CookingMachineComponent CookingMachine;
     public EntityUid? User;
+    public EntityUid Item;
 
-    public ProcessedInCookingMachineEvent(EntityUid machineEntity, CookingMachineComponent cookingMachine, EntityUid? user = null)
+    public ProcessedInCookingMachineEvent(EntityUid machineEntity, CookingMachineComponent cookingMachine, EntityUid item, EntityUid? user = null)
     {
         MachineEntity = machineEntity;
         CookingMachine = cookingMachine;
         User = user;
+        Item = item;
     }
 }
 
