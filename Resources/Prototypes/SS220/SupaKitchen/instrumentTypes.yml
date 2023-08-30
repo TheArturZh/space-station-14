@@ -1,3 +1,7 @@
 - type: cookingInstrumentType
   id: microwave
   name: microwaving
+
+- type: cookingInstrumentType
+  id: grill
+  name: grilling
