@@ -1,0 +1,76 @@
+- type: entity
+  id: KitchenStove
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: stove
+  description: It's magic.
+  components:
+  - type: CookingInstrument
+    instrumentType: oven
+  - type: CookingMachine
+  - type: ActivatableUI
+    key: enum.CookingMachineUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.CookingMachineUiKey.Key
+      type: CookingMachineBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.VisualState:
+        enum.CookingMachineVisualizerLayers.Base:
+          Idle: { state: "stove_idle" }
+          Broken: { state: "stove_idle" }
+          Cooking: { state: "stove_cooking" }
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.16"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Sprite
+    sprite: SS220/Structures/Machines/stove.rsi
+    snapCardinals: true
+    layers:
+    - state: stove_idle
+      map: ["enum.CookingMachineVisualizerLayers.Base"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: ApcPowerReceiver
+    powerLoad: 400
+  - type: Machine
+    board: StoveMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      cooking_machine_entity_container: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: GuideHelp
+    guides:
+    - Chef
+
+- type: entity
+  id: StoveMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: stove machine board
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: KitchenStove
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        Glass: 2
+        Cable: 2
