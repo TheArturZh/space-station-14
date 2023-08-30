@@ -4,7 +4,7 @@
   name: microwave
   description: It's magic.
   components:
-#  - type: Microwave #SS220 remove default microwave
+# - type: Microwave #SS220 remove default microwave
   #SS220 supa kitchen begin
   - type: CookingInstrument
     instrumentType: microwave
@@ -76,7 +76,7 @@
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer
     containers:
-      microwave_entity_container: !type:Container
+      cooking_machine_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: GuideHelp
