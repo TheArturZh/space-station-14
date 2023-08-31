@@ -1,11 +1,14 @@
 - type: cookingInstrumentType
   id: microwave
-  name: microwaving
+  name: микроволновка
+  iconPath: /Textures/SS220/SupaKitchen/Interface/InstrumentIcons/mw.png
 
 - type: cookingInstrumentType
   id: grill
-  name: grilling
+  name: гриль
+  iconPath: /Textures/SS220/SupaKitchen/Interface/InstrumentIcons/grill.png
 
 - type: cookingInstrumentType
   id: oven
-  name: baking
+  name: духовка
+  iconPath: /Textures/SS220/SupaKitchen/Interface/InstrumentIcons/oven.png
