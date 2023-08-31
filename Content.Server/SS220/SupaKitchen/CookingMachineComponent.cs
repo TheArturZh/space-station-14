@@ -11,6 +11,17 @@ namespace Content.Server.SS220.SupaKitchen;
 [RegisterComponent]
 public sealed partial class CookingMachineComponent : Component
 {
+    #region  stats
+    [DataField("maxCookingTimer"), ViewVariables(VVAccess.ReadWrite)]
+    public uint MaxCookingTimer = 30;
+
+    [DataField("temperatureUpperThreshold")]
+    public float TemperatureUpperThreshold = 373.15f;
+
+    [DataField("heatPerSecond")]
+    public float HeatPerSecond = 100;
+    #endregion
+
     #region  upgrades
     [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
     public float CookTimeMultiplier = 1;
@@ -18,11 +29,6 @@ public sealed partial class CookingMachineComponent : Component
     public string MachinePartCookTimeMultiplier = "Capacitor";
     [DataField("cookTimeScalingConstant")]
     public float CookTimeScalingConstant = 0.5f;
-    #endregion
-
-    #region  stats
-    [DataField("maxCookingTimer"), ViewVariables(VVAccess.ReadWrite)]
-    public uint MaxCookingTimer = 30;
     #endregion
 
     #region  state

@@ -1,9 +1,5 @@
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Interaction.Events;
@@ -18,8 +14,6 @@ public sealed class SupaMicrowaveSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly CookingMachineSystem _cookingMachine = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -29,7 +23,6 @@ public sealed class SupaMicrowaveSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SupaMicrowaveComponent, ProcessedInCookingMachineEvent>(OnItemProcessed);
-        SubscribeLocalEvent<SupaMicrowaveComponent, BeforeCookingMachineFinished>(OnCookingFinished);
         SubscribeLocalEvent<SupaMicrowaveComponent, SuicideEvent>(OnSuicide);
     }
 
@@ -61,38 +54,6 @@ public sealed class SupaMicrowaveSystem : EntitySystem
             args.CookingMachine.Storage.Insert(junk);
             QueueDel(args.Item);
         }
-    }
-
-    /// <summary>
-    ///     Adds temperature to every item in the microwave,
-    ///     based on the time it took to microwave.
-    /// </summary>
-    /// <param name="machine">The machine that contains objects to heat up.</param>
-    /// <param name="microwave">The microwave that is heating up.</param>
-    /// <param name="time">The time on the microwave, in seconds.</param>
-    private void AddTemperature(CookingMachineComponent machine, SupaMicrowaveComponent microwave, float time)
-    {
-        var heatToAdd = time * 100;
-        foreach (var entity in machine.Storage.ContainedEntities)
-        {
-            if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                _temperature.ChangeHeat(entity, heatToAdd, false, tempComp);
-
-            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
-                continue;
-            foreach (var (_, solution) in solutions.Solutions)
-            {
-                if (solution.Temperature > microwave.TemperatureUpperThreshold)
-                    continue;
-
-                _solutionContainer.AddThermalEnergy(entity, solution, heatToAdd);
-            }
-        }
-    }
-
-    private void OnCookingFinished(EntityUid uid, SupaMicrowaveComponent component, BeforeCookingMachineFinished args)
-    {
-        AddTemperature(args.CookingMachine, component, args.CookingMachine.CookingTimer);
     }
 
     private void OnSuicide(EntityUid uid, SupaMicrowaveComponent component, SuicideEvent args)

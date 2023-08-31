@@ -4,6 +4,4 @@ namespace Content.Server.SS220.SupaKitchen;
 [RegisterComponent]
 public sealed partial class SupaMicrowaveComponent : Component
 {
-    [DataField("temperatureUpperThreshold")]
-    public float TemperatureUpperThreshold = 373.15f;
 }
