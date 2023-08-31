@@ -14,4 +14,7 @@ public sealed class CookingInstrumentTypePrototype : IPrototype
     private string _name = string.Empty;
 
     public string Name => Loc.GetString(_name);
+
+    [DataField("iconPath")]
+    public string? IconPath;
 }
