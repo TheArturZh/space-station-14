@@ -7,6 +7,7 @@
   - type: CookingInstrument
     instrumentType: grill
   - type: CookingMachine
+    heatPerSecond: 1500 #Should be strong enough to cook meat in 10s
   - type: ActivatableUI
     key: enum.CookingMachineUiKey.Key
   - type: UserInterface

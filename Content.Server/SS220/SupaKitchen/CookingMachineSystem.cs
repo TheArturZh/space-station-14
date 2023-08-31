@@ -4,6 +4,8 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
@@ -29,6 +31,8 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly CookingInstrumentSystem _cookingInstrument = default!;
+    [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
@@ -286,6 +290,8 @@ public sealed class CookingMachineSystem : EntitySystem
             var ev = new BeforeCookingMachineFinished(component);
             RaiseLocalEvent(uid, ev);
 
+            AddTemperature(component, component.CookingTimer);
+
             if (component.CurrentlyCookingRecipe.Item1 != null)
             {
                 var coords = Transform(uid).Coordinates;
@@ -299,6 +305,35 @@ public sealed class CookingMachineSystem : EntitySystem
             _sharedContainer.EmptyContainer(component.Storage);
             StopCooking(uid, component);
             _audio.PlayPvs(component.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
+        }
+    }
+
+    /// <summary>
+    ///     Adds temperature to every item in the microwave,
+    ///     based on the time it took to microwave.
+    /// </summary>
+    /// <param name="machine">The machine that contains objects to heat up.</param>
+    /// <param name="time">The time on the microwave, in seconds.</param>
+    private void AddTemperature(CookingMachineComponent machine, float time)
+    {
+        if (machine.HeatPerSecond == 0)
+            return;
+
+        var heatToAdd = time * machine.HeatPerSecond;
+        foreach (var entity in machine.Storage.ContainedEntities)
+        {
+            if (TryComp<TemperatureComponent>(entity, out var tempComp))
+                _temperature.ChangeHeat(entity, heatToAdd, false, tempComp);
+
+            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
+                continue;
+            foreach (var (_, solution) in solutions.Solutions)
+            {
+                if (solution.Temperature > machine.TemperatureUpperThreshold)
+                    continue;
+
+                _solutionContainer.AddThermalEnergy(entity, solution, heatToAdd);
+            }
         }
     }
 }
