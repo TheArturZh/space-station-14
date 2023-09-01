@@ -8,6 +8,9 @@
     instrumentType: grill
   - type: CookingMachine
     heatPerSecond: 1500 #Should be strong enough to cook meat in 10s
+    beginCookingSound: /Audio/Effects/lightburn.ogg
+    loopingSound: /Audio/SS220/SupaKitchen/grillsizzle.ogg
+    foodDoneSound: /Audio/SS220/SupaKitchen/ring.ogg
   - type: ActivatableUI
     key: enum.CookingMachineUiKey.Key
   - type: UserInterface
