@@ -7,6 +7,9 @@
   - type: CookingInstrument
     instrumentType: oven
   - type: CookingMachine
+    beginCookingSound: "/Audio/SS220/SupaKitchen/oven/oven_loop_start.ogg"
+    loopingSound: "/Audio/SS220/SupaKitchen/oven/oven_loop_mid.ogg"
+    foodDoneSound: "/Audio/SS220/SupaKitchen/ring.ogg"
   - type: ActivatableUI
     key: enum.CookingMachineUiKey.Key
   - type: UserInterface
