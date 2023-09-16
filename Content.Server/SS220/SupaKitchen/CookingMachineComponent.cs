@@ -3,6 +3,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.SS220.SupaKitchen;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 
@@ -12,22 +13,22 @@ namespace Content.Server.SS220.SupaKitchen;
 public sealed partial class CookingMachineComponent : Component
 {
     #region  stats
-    [DataField("maxCookingTimer"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public uint MaxCookingTimer = 30;
 
-    [DataField("temperatureUpperThreshold")]
+    [DataField]
     public float TemperatureUpperThreshold = 373.15f;
 
-    [DataField("heatPerSecond")]
+    [DataField]
     public float HeatPerSecond = 100;
     #endregion
 
     #region  upgrades
-    [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CookTimeMultiplier = 1;
-    [DataField("machinePartCookTimeMultiplier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartCookTimeMultiplier = "Capacitor";
-    [DataField("cookTimeScalingConstant")]
+    [DataField]
+    public ProtoId<MachinePartPrototype> MachinePartCookTimeMultiplier = "Capacitor";
+    [DataField]
     public float CookTimeScalingConstant = 0.5f;
     #endregion
 
@@ -44,25 +45,25 @@ public sealed partial class CookingMachineComponent : Component
     [ViewVariables]
     public int CurrentCookTimeButtonIndex;
 
-    [DataField("broken"), ViewVariables]
+    [DataField, ViewVariables]
     public bool Broken = false;
 
-    [DataField("active"), ViewVariables, Access(typeof(CookingMachineSystem))]
+    [DataField, ViewVariables, Access(typeof(CookingMachineSystem), Other = AccessPermissions.Read)]
     public bool Active = false;
     #endregion
 
     #region  audio
-    [DataField("beginCookingSound")]
-    public SoundSpecifier StartCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
-    [DataField("foodDoneSound")]
+    [DataField]
+    public SoundSpecifier BeginCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
+    [DataField]
     public SoundSpecifier FoodDoneSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
-    [DataField("clickSound")]
+    [DataField]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-    [DataField("ItemBreakSound")]
+    [DataField]
     public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
     public IPlayingAudioStream? PlayingStream { get; set; }
-    [DataField("loopingSound")]
+    [DataField]
     public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
     #endregion
 

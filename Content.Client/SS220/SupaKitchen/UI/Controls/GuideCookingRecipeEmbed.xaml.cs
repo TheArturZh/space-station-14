@@ -21,7 +21,6 @@ namespace Content.Client.SS220.SupaKitchen.UI.Controls;
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideCookingRecipeEmbed : BoxContainer, IDocumentTag, ISearchableControl
 {
-    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private HashSet<string> _nameSearchCache;

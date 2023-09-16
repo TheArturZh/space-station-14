@@ -2,7 +2,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.SS220.SupaKitchen;
@@ -23,11 +22,11 @@ public sealed class CookingRecipePrototype : IPrototype
     [DataField("solids", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, EntityPrototype>))]
     private readonly Dictionary<string, FixedPoint2> _ingsSolids = new();
 
-    [DataField("result", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Result { get; } = string.Empty;
+    [DataField]
+    public ProtoId<EntityPrototype> Result { get; } = string.Empty;
 
-    [DataField("instrumentType", customTypeSerializer: typeof(PrototypeIdSerializer<CookingInstrumentTypePrototype>))]
-    public string InstrumentType { get; } = string.Empty;
+    [DataField]
+    public ProtoId<CookingInstrumentTypePrototype> InstrumentType { get; } = string.Empty;
 
     [DataField("time")]
     public uint CookTime { get; } = 5;

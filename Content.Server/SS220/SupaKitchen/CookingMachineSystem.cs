@@ -146,7 +146,7 @@ public sealed class CookingMachineSystem : EntitySystem
         if (!HasContents(component) || component.Active)
             return;
 
-        component.Storage.Remove(args.EntityID);
+        component.Storage.Remove(GetEntity(args.EntityID));
         UpdateUserInterfaceState(uid, component);
     }
 
@@ -183,8 +183,8 @@ public sealed class CookingMachineSystem : EntitySystem
         if (ui == null)
             return;
 
-        UserInterfaceSystem.SetUiState(ui, new CookingMachineUpdateUserInterfaceState(
-            component.Storage.ContainedEntities.ToArray(),
+        _userInterface.SetUiState(ui, new CookingMachineUpdateUserInterfaceState(
+            GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
             component.Active,
             component.CurrentCookTimeButtonIndex,
             component.CookingTimer
@@ -234,12 +234,12 @@ public sealed class CookingMachineSystem : EntitySystem
 
             foreach (var (_, solution) in solMan.Solutions)
             {
-                foreach (var reagent in solution.Contents)
+                foreach (var (reagent, quantity) in solution.Contents)
                 {
-                    if (reagentDict.ContainsKey(reagent.ReagentId))
-                        reagentDict[reagent.ReagentId] += reagent.Quantity;
+                    if (reagentDict.ContainsKey(reagent.Prototype))
+                        reagentDict[reagent.Prototype] += quantity;
                     else
-                        reagentDict.Add(reagent.ReagentId, reagent.Quantity);
+                        reagentDict.Add(reagent.Prototype, quantity);
                 }
             }
         }
@@ -248,7 +248,7 @@ public sealed class CookingMachineSystem : EntitySystem
         var portionedRecipe = _cookingInstrument.GetSatisfiedPortionedRecipe(
             cookingInstrument, solidsDict, reagentDict, component.CookingTimer);
 
-        _audio.PlayPvs(component.StartCookingSound, uid);
+        _audio.PlayPvs(component.BeginCookingSound, uid);
         component.CookTimeRemaining = component.CookingTimer * component.CookTimeMultiplier;
         component.CurrentlyCookingRecipe = portionedRecipe;
         UpdateUserInterfaceState(uid, component);
