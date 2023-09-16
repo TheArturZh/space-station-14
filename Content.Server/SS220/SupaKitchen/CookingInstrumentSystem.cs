@@ -92,10 +92,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
                     if (!totalReagentsToRemove.ContainsKey(reagent))
                         continue;
 
-                    if (!solution.ContainsReagent(reagent))
-                        continue;
-
-                    var quant = solution.GetReagentQuantity(reagent);
+                    var quant = solution.GetTotalPrototypeQuantity(reagent);
 
                     if (quant >= totalReagentsToRemove[reagent])
                     {
@@ -107,7 +104,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
                         totalReagentsToRemove[reagent] -= quant;
                     }
 
-                    _solutionContainer.TryRemoveReagent(item, solution, reagent, quant);
+                    _solutionContainer.RemoveReagent(item, solution, reagent, quant);
                 }
             }
         }

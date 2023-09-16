@@ -1,5 +1,5 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.SS220.SupaKitchen;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -18,10 +18,13 @@ namespace Content.Client.SS220.SupaKitchen.UI
         private readonly Dictionary<int, EntityUid> _solids = new();
 
         [ViewVariables]
-        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents = new();
+        private readonly Dictionary<int, ReagentQuantity> _reagents = new();
+
+        private IEntityManager _entManager;
 
         public CookingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()
@@ -34,7 +37,7 @@ namespace Content.Client.SS220.SupaKitchen.UI
             _menu.EjectButton.OnPressed += _ => SendMessage(new CookingMachineEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
-                SendMessage(new CookingMachineEjectSolidIndexedMessage(_solids[args.ItemIndex]));
+                SendMessage(new CookingMachineEjectSolidIndexedMessage(_entManager.GetNetEntity(_solids[args.ItemIndex])));
             };
 
             _menu.OnCookTimeSelected += (args, buttonIndex) =>
@@ -67,7 +70,7 @@ namespace Content.Client.SS220.SupaKitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMachineBusy);
-            RefreshContentsDisplay(cState.ContainedSolids);
+            RefreshContentsDisplay(_entManager.GetEntityArray(cState.ContainedSolids));
 
             if (_menu == null) return;
 
