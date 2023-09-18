@@ -30,7 +30,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         component.LastEntityBuckledTo = EnsureEntity<BuckleComponent>(state.LastEntityBuckledTo, uid);
         component.DontCollide = state.DontCollide;
 
-        ActionBlockerSystem.UpdateCanMove(uid);
+        ActionBlocker.UpdateCanMove(uid);
 
         if (!TryComp<SpriteComponent>(uid, out var ownerSprite))
             return;
@@ -66,8 +66,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (!TryComp<RotationVisualsComponent>(uid, out var rotVisuals))
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
-            !AppearanceSystem.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
+        if (!Appearance.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
+            !Appearance.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
             !buckled ||
             args.Sprite == null)
         {
@@ -78,6 +78,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         // Animate strapping yourself to something at a given angle
         _rotationVisualizerSystem.SetHorizontalAngle(uid, Angle.FromDegrees(angle), rotVisuals);
         // TODO: Dump this when buckle is better
-        _rotationVisualizerSystem.AnimateSpriteRotation(uid, args.Sprite, rotVisuals.HorizontalRotation, 0.125f);
+        _rotationVisualizerSystem.AnimateSpriteRotation(uid, args.Sprite, rotVisuals.HorizontalRotation, rotVisuals.AnimationTime);
     }
 }
