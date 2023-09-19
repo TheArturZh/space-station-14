@@ -294,9 +294,9 @@ public abstract class SharedMindSystem : EntitySystem
         return true;
     }
 
-    public bool TryRemoveObjective(MindComponent mind, Objective objective)
+    public bool TryRemoveObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
-        return TryRemoveObjective(mind, mind.Objectives.IndexOf(objective));
+        return TryRemoveObjective(mindId, mind, mind.Objectives.IndexOf(objective));
     }
 
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
