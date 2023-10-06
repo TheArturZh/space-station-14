@@ -1,14 +1,12 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Globalization;
 using Content.Server.Chat.Systems;
 using Content.Server.Forensics;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Objectives;
-using Content.Server.Objectives.Conditions;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
@@ -25,8 +23,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
 using Content.Shared.Storage;
+using Content.Server.Objectives.Components;
 
 namespace Content.Server.SS220.CryopodSSD;
 
@@ -42,7 +40,7 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly ObjectivesSystem  _objectives = default!;
+    [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
@@ -168,22 +166,26 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
 
         var station = _stationSystem.GetOwningStation(uid);
 
-        if (station is not null)
+        if (station.HasValue)
         {
-            if (DeleteEntityRecord(entityToTransfer, station.Value, out var deletedRecord))
+            var recordPairTry = FindEntityStationRecordKey(station.Value, entityToTransfer);
+            if (recordPairTry is { } recordPair)
             {
                 _chatSystem.DispatchStationAnnouncement(station.Value,
                     Loc.GetString(
                         "cryopodSSD-entered-cryo",
                         ("character", MetaData(entityToTransfer).EntityName),
-                        ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(deletedRecord.JobTitle))),
+                        ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(recordPair.Item2.JobTitle))),
                     Loc.GetString("cryopodSSD-sender"),
                     playSound: false);
 
                 component.StoredEntities.Add(
-                    $"{MetaData(entityToTransfer).EntityName} - [{deletedRecord.JobTitle}] - {_gameTiming.RealTime}");
+                    $"{MetaData(entityToTransfer).EntityName} - [{recordPair.Item2.JobTitle}] - {_gameTiming.RealTime}");
 
-                _stationJobsSystem.TryAdjustJobSlot(station.Value, deletedRecord.JobPrototype, 1);
+                _stationJobsSystem.TryAdjustJobSlot(station.Value, recordPair.Item2.JobPrototype, 1);
+
+                recordPair.Item2.IsInCryo = true;
+                _stationRecordsSystem.Synchronize(station.Value);
             }
         }
 
@@ -210,21 +212,29 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
                 continue;
             }
 
-            IEnumerable<Objective> objectiveToReplace = mind.AllObjectives
-                .Where(objective =>
-                    objective.Conditions.Any(condition => (condition as KillPersonCondition)?.IsTarget(uid) ?? false))
-                .ToArray();
+            List<EntityUid> objectiveToReplace = new();
+            foreach (var objective in mind.AllObjectives)
+            {
+                if (!TryComp<TargetObjectiveComponent>(objective, out var target))
+                    continue;
+
+                if (target.Target != uid)
+                    continue;
+
+                objectiveToReplace.Add(objective);
+            }
 
             foreach (var objective in objectiveToReplace)
             {
-                _mindSystem.TryRemoveObjective(mind, objective);
+                _mindSystem.TryRemoveObjective(mindId, mind, objective);
                 var newObjective = _objectives.GetRandomObjective(mindId, mind, "TraitorObjectiveGroups");
-                if (newObjective is null || !_mindSystem.TryAddObjective(mindId, mind, newObjective))
+                if (newObjective is null)
                 {
                     _sawmill.Error($"{ToPrettyString(mind.OwnedEntity.Value)}'s target get in cryo, so he lost his objective and didn't get a new one");
                     continue;
                 }
 
+                _mindSystem.AddObjective(mindId, mind, newObjective.Value);
                 _sawmill.Info($"{ToPrettyString(mind.OwnedEntity.Value)}'s target get in cryo, so he get a new one");
             }
         }
@@ -315,7 +325,7 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
     /// <param name="station"></param>
     /// <param name="deletedRecord"> returns copy of deleted generalRecord </param>
     /// <returns> True if we successfully deleted record of entity, otherwise returns false</returns>
-    private bool DeleteEntityRecord(EntityUid uid, EntityUid station,[NotNullWhen(true)] out GeneralStationRecord? deletedRecord)
+    private bool DeleteEntityRecord(EntityUid uid, EntityUid station, [NotNullWhen(true)] out GeneralStationRecord? deletedRecord)
     {
         var stationRecord = FindEntityStationRecordKey(station, uid);
 

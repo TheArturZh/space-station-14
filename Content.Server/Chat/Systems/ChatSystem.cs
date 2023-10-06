@@ -31,6 +31,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Chat.Systems;
 
@@ -54,6 +55,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -548,7 +550,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.EscapeText(action)));
 
         if (checkEmote)
-            TryEmoteChatInput(source, action);
+        {
+            // SS220 Chat-Emote-Cooldown begin
+            TryEmoteChatInput(source, action, out var consumed);
+            if (consumed)
+                return;
+            // SS220 Chat-Emote-Cooldown end
+        }
+
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range);
         if (!hideLog)
             if (name != Name(source))
@@ -757,7 +766,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         // TODO proper speech occlusion
 
         var recipients = new Dictionary<ICommonSession, ICChatRecipientData>();
-        var ghosts = GetEntityQuery<GhostComponent>();
+        var ghostHearing = GetEntityQuery<GhostHearingComponent>();
         var xforms = GetEntityQuery<TransformComponent>();
 
         var transformSource = xforms.GetComponent(source);
@@ -774,21 +783,17 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (transformEntity.MapID != sourceMapId)
                 continue;
 
-            var observer = ghosts.HasComponent(playerEntity);
+            var observer = ghostHearing.HasComponent(playerEntity);
 
-            // admin ghosts should hear whispers on any range
-            if (observer && _adminManager.IsAdmin((IPlayerSession) player))
+            // even if they are a ghost hearer, in some situations we still need the range
+            if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < voiceGetRange)
             {
-                recipients.Add(player, new ICChatRecipientData(-1, true));
+                recipients.Add(player, new ICChatRecipientData(distance, observer));
                 continue;
             }
 
-            // even if they are an observer, in some situations we still need the range
-            if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance)
-                && (observer || distance < voiceGetRange))
-            {
-                recipients.Add(player, new ICChatRecipientData(distance, observer));
-            }
+            if (observer)
+                recipients.Add(player, new ICChatRecipientData(-1, true));
         }
 
         RaiseLocalEvent(new ExpandICChatRecipientstEvent(source, voiceGetRange, recipients));

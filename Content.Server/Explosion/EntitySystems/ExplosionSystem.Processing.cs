@@ -9,8 +9,8 @@ using Content.Shared.Maps;
 using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Spawners.Components;
 using Content.Shared.SS220.Photocopier.Forms;
+using Robust.Shared.Spawners;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -20,6 +20,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -396,7 +397,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (damage != null && damageQuery.TryGetComponent(uid, out var damageable))
         {
             var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ref ev, false);
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 

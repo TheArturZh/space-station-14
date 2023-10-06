@@ -93,7 +93,9 @@ namespace Content.Server.Zombies
                     ? comp.CritDamageMultiplier
                     : 1f;
 
+                _bloodstream.TryModifyBloodLevel(uid, -1);
                 _damageable.TryChangeDamage(uid, comp.Damage * multiplier, true, false, damage);
+
             }
 
             // Heal the zombified
@@ -262,7 +264,7 @@ namespace Content.Server.Zombies
             foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
             {
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidAppearance.SetBaseLayerId(target, layer, info.ID);
+                _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
             if(TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
             {

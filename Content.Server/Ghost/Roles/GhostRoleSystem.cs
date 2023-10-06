@@ -1,11 +1,15 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
 using Content.Server.Players;
+using Content.Server.Players.PlayTimeTracking;
+using Content.Server.SS220.Ghost.Roles.Components;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
@@ -37,6 +41,8 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTrackingManager = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -240,7 +246,7 @@ namespace Content.Server.Ghost.Roles
                 if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
-                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules});
+                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, Requirements = role.Requirements});
             }
 
             return roles.ToArray();
@@ -375,6 +381,28 @@ namespace Content.Server.Ghost.Roles
             {
                 args.TookRole = false;
                 return;
+            }
+
+            if (HasComp<GhostPlayTimeRestrictComponent>(uid))
+            {
+                if (!_playerManager.TryGetSessionById(args.Player.UserId, out var session))
+                {
+                    args.TookRole = false;
+                    return;
+                }
+
+                var overAll = _playTimeTrackingManager.GetOverallPlaytime(session);
+
+                if (overAll < TimeSpan.FromHours(10))
+                {
+                    var msg = Loc.GetString("ghost-role-time-restrict");
+                    var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+
+                    _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.ConnectedClient, Color.Red);
+
+                    args.TookRole = false;
+                    return;
+                }
             }
 
             ghostRole.Taken = true;

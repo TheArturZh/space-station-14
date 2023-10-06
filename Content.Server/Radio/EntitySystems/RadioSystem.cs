@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.Corvax.TTS;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
 using Content.Server.Popups;
@@ -79,6 +78,7 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
+        // SS220 department-radio-color
         var formattedName = $"[color={GetIdCardColor(messageSource)}]{GetIdCardName(messageSource)}{name}[/color]";
 
         var formattedMessage = FormattedMessage.EscapeText(message);
@@ -173,6 +173,7 @@ public sealed class RadioSystem : EntitySystem
         return null;
     }
 
+    // SS220 radio-department-tag begin
     private string GetIdCardName(EntityUid senderUid)
     {
         var idCardTitle = Loc.GetString("chat-radio-no-id");
@@ -183,16 +184,20 @@ public sealed class RadioSystem : EntitySystem
 
         return $"\\[{idCardTitle}\\] ";
     }
+    // S220 radio-department-tag end
 
+    // SS220 department-radio-color begin
     private string GetIdCardColor(EntityUid senderUid)
     {
-        return GetIdCard(senderUid)?.JobColor ?? "#9FED58";
+        var color = GetIdCard(senderUid)?.JobColor;
+        return (!string.IsNullOrEmpty(color)) ? color : "#9FED58";
     }
 
     private bool GetIdCardIsBold(EntityUid senderUid)
     {
         return GetIdCard(senderUid)?.RadioBold ?? false;
     }
+    // SS220 department-radio-color end
 
     /// <inheritdoc cref="TelecomServerComponent"/>
     private bool HasActiveServer(MapId mapId, string channelId)
