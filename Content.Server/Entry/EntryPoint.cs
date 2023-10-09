@@ -27,14 +27,14 @@ using Content.Server.SS220.PrimeWhitelist;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
+using Content.Shared.Localizations;
 using Robust.Server;
-using Robust.Shared.Configuration;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Localizations;
 using Content.Server.SS220.BackEndApi;
 using Content.Shared.SS220.SupaKitchen;
 
@@ -43,7 +43,7 @@ namespace Content.Server.Entry
 {
     public sealed class EntryPoint : GameServer
     {
-        private const string ConfigPresetsDir = "/ConfigPresets/";
+        internal const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
 
         private EuiManager _euiManager = default!;
