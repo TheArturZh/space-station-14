@@ -74,11 +74,6 @@ public sealed class SupaMicrowaveSystem : EntitySystem
 
             foreach (var part in headSlots)
             {
-                if (!_bodySystem.OrphanPart(part.Id, part.Component))
-                {
-                    continue;
-                }
-
                 cookingMachine.Storage.Insert(part.Id);
                 headCount++;
             }
