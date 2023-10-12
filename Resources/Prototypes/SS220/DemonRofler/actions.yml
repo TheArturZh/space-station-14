@@ -1,0 +1,39 @@
+- type: entity
+  id: ActionDarkReaperRofl
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperRoflEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: icon_jnecscream }
+    useDelay: 25
+
+- type: entity
+  id: ActionDarkReaperStun
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperStunEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: icon_jnecscream }
+    useDelay: 40
+
+- type: entity
+  id: ActionDarkReaperConsume
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    event: !type:ReaperConsumeEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: icon_jneceat }
+    useDelay: 10
+
+- type: entity
+  id: ActionDarkReaperMaterialize
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperMaterializeEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: jnecexit }
+    useDelay: 15
