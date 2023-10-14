@@ -13,6 +13,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.SS220.DarkReaper;
@@ -32,6 +33,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -78,6 +81,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     protected virtual void DoStunAbility(EntityUid uid, DarkReaperComponent comp)
     {
         _audio.PlayPredicted(comp.StunAbilitySound, uid, uid);
+        comp.StunScreamStart = _timing.CurTime;
+        _appearance.SetData(uid, DarkReaperVisual.StunEffect, true);
 
         var entities = _lookup.GetEntitiesInRange(uid, comp.StunAbilityRadius);
         foreach (var entity in entities)
@@ -141,7 +146,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     {
         args.Handled = true;
 
-        if (args.PortalEntity.HasValue)
+        if (_net.IsServer && args.PortalEntity.HasValue)
             QueueDel(GetEntity(args.PortalEntity.Value));
 
         if (!args.Cancelled)
@@ -152,6 +157,24 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     public override void Update(float delta)
     {
         base.Update(delta);
+
+        var query = EntityQueryEnumerator<DarkReaperComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (IsPaused(uid) || comp.StunScreamStart == null)
+                continue;
+
+            if (comp.StunScreamStart.Value + comp.StunGlareLength < _timing.CurTime)
+            {
+                comp.StunScreamStart = null;
+                _appearance.SetData(uid, DarkReaperVisual.StunEffect, false);
+            }
+            else
+            {
+                _appearance.SetData(uid, DarkReaperVisual.StunEffect, true);
+            }
+        }
     }
 
     // Crap
@@ -160,6 +183,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         UpdateStageAppearance(uid, comp);
         UpdateDamage(uid, comp);
         ChangeForm(uid, comp, comp.PhysicalForm);
+
+        _pointLight.SetEnabled(uid, comp.StunScreamStart.HasValue);
 
         // Make tests crash & burn if stupid things are done
         DebugTools.Assert(comp.MaxStage >= 1, "DarkReaperComponent.MaxStage must always be equal or greater than 1.");
@@ -195,6 +220,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         else
         {
             _tag.RemoveTag(uid, "DoorBumpOpener");
+            comp.StunScreamStart = null;
+            _appearance.SetData(uid, DarkReaperVisual.StunEffect, false);
         }
 
         UpdateDamage(uid, comp);

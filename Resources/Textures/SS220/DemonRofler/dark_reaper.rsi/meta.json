@@ -27,6 +27,13 @@
 	},
 	{
 	  "name": "icon_jnecscream"
+	},
+	{
+	  "name": "eyes_glow",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes_solo"
 	}
   ]
 }

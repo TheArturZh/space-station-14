@@ -145,7 +145,7 @@ public sealed partial class DarkReaperComponent : Component
     public EntityUid? MaterializeActionEntity;
 
     // ABILITY STATES ///
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public TimeSpan? StunScreamStart;
 }
 
@@ -154,4 +154,6 @@ public enum DarkReaperVisual
 {
     Stage,
     PhysicalForm,
+    StunEffect,
+    GhostCooldown,
 }

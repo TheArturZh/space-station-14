@@ -17,17 +17,30 @@
 
   # Visuals and appearance
   - type: Sprite
+    netsync: false
     noRot: true
     drawdepth: Ghosts
     sprite: SS220/DemonRofler/dark_reaper.rsi
     layers:
     - state: jnec_s1
       map: [ "enum.DarkReaperVisual.Stage" ]
+    - state: eyes_glow
+      map: [ "enum.DarkReaperVisual.StunEffect" ]
+      visible: false
+      shader: unshaded
+    - state: eyes_solo
+      map: [ "enum.DarkReaperVisual.GhostCooldown" ]
+      visible: false
+      shader: unshaded
+  - type: Icon
+    sprite: SS220/DemonRofler/dark_reaper.rsi
+    state: jnec_s3
   - type: Appearance
   - type: PointLight
     color: Red
     radius: 2
     softness: 1
+    netsync: false
 #  - type: Visibility
 #    layer: 2 #ghost vis layer
   - type: Eye
@@ -45,10 +58,14 @@
           1: {state: jnec_s1}
           2: {state: jnec_s2}
           3: {state: jnec_s3}
-      enum.DarkReaperVisual.PhysicalForm:
-        enum.DarkReaperVisual.Stage:
-          True: {color: "#ffffffff"}
-          False: {color: "#bbbbff88"} #Add some transparency
+      enum.DarkReaperVisual.StunEffect:
+        enum.DarkReaperVisual.StunEffect:
+          True: {visible: True}
+          False: {visible: False}
+      enum.DarkReaperVisual.GhostCooldown:
+        enum.DarkReaperVisual.GhostCooldown:
+          True: {visible: True}
+          False: {visible: False}
 
   #Movement
   - type: Input

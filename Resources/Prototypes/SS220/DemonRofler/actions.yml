@@ -16,7 +16,7 @@
     event: !type:ReaperStunEvent
     itemIconStyle: NoItem
     icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: icon_jnecscream }
-    useDelay: 40
+    useDelay: 30
 
 - type: entity
   id: ActionDarkReaperConsume

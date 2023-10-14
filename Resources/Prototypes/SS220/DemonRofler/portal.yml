@@ -17,6 +17,7 @@
     color: White
     radius: 2
     softness: 1
+    netsync: false
   - type: Fixtures
     fixtures:
       portalFixture:
