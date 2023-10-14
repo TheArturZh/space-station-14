@@ -7,10 +7,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SS220.DarkReaper;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedDarkReaperSystem), Friend = AccessPermissions.ReadWrite, Other = AccessPermissions.Read)]
+[Access(typeof(SharedDarkReaperSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class DarkReaperComponent : Component
 {
-    [ViewVariables, DataField, AutoNetworkedField]
+    [ViewVariables, DataField]
     public EntProtoId PortalEffectPrototype = "DarkReaperPortalEffect";
 
     /// <summary>
@@ -31,6 +31,48 @@ public sealed partial class DarkReaperComponent : Component
     [ViewVariables, AutoNetworkedField]
     public int CurrentStage = 1;
 
+    /// DEATH ///
+
+    /// <summary>
+    /// Sound played when reaper dies
+    /// </summary>
+    [ViewVariables, DataField]
+    public SoundSpecifier SoundDeath = new SoundPathSpecifier("/Audio/SS220/DarkReaper/jnec_dead.ogg", new()
+    {
+        MaxDistance = 9
+    });
+
+    [ViewVariables, DataField]
+    public SoundSpecifier HitSound = new SoundCollectionSpecifier("AlienClaw");
+
+    [ViewVariables, DataField]
+    public SoundSpecifier SwingSound = new SoundCollectionSpecifier("DarkReaperSwing");
+
+    [ViewVariables, DataField(serverOnly: true)]
+    public HashSet<EntProtoId> SpawnOnDeathPool = new()
+    {
+        "LeftLegHuman",
+        "RightLegHuman",
+        "LeftFootHuman",
+        "RightFootHuman",
+        "LeftArmHuman",
+        "RightArmHuman",
+        "LeftHandHuman",
+        "RightHandHuman",
+        "TorsoSkeleton",
+        "NormalHeadSkeleton"
+    };
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int SpawnOnDeathAmount = 8;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int SpawnOnDeathAdditionalPerStage = 4;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float SpawnOnDeathImpulseStrength = 30;
+
+
     /// ABILITY STATS ///
 
     /// STUN
@@ -50,7 +92,7 @@ public sealed partial class DarkReaperComponent : Component
     /// <summary>
     /// Radius in which stun ability breaks lights
     /// </summary>
-    [ViewVariables, DataField, AutoNetworkedField]
+    [ViewVariables, DataField]
     public float StunAbilityLightBreakRadius = 4.5f;
 
     /// <summary>
@@ -94,6 +136,33 @@ public sealed partial class DarkReaperComponent : Component
 
     [ViewVariables, DataField, AutoNetworkedField]
     public float UnMaterialMovementSpeed = 7f;
+
+    [ViewVariables]
+    public EntityUid? ActivePortal;
+
+    /// <summary>
+    /// Sound played before portal opens
+    /// </summary>
+    [ViewVariables, DataField, AutoNetworkedField]
+    public SoundSpecifier PortalOpenSound = new SoundPathSpecifier("/Audio/SS220/DarkReaper/jnec_gate_open.ogg", new()
+    {
+        MaxDistance = 8
+    });
+
+    /// <summary>
+    /// Sound played before portal closes
+    /// </summary>
+    [ViewVariables, DataField, AutoNetworkedField]
+    public SoundSpecifier PortalCloseSound = new SoundPathSpecifier("/Audio/SS220/DarkReaper/jnec_gate_close.ogg", new()
+    {
+        MaxDistance = 7
+    });
+
+    [ViewVariables, NonSerialized]
+    public IPlayingAudioStream? PlayingPortalAudio;
+
+    [ViewVariables]
+    public TimeSpan? MaterializedStart;
 
     /// STAGE PROGRESSION
 

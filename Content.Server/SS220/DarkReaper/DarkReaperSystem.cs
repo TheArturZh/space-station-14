@@ -30,14 +30,10 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
 
         if (isTransitioning && !isMaterial)
         {
-            if (_prototype.HasIndex<EntityPrototype>(comp.PortalEffectPrototype))
+            if (comp.ActivePortal != null)
             {
-                var portal = Spawn(comp.PortalEffectPrototype, Transform(uid).Coordinates);
-                if (!isMaterial)
-                {
-                    var tiimedDespawn = EnsureComp<TimedDespawnComponent>(portal);
-                    tiimedDespawn.Lifetime = 1.5f;
-                }
+                QueueDel(comp.ActivePortal);
+                comp.ActivePortal = null;
             }
         }
     }

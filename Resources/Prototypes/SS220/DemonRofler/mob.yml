@@ -87,15 +87,7 @@
 
   # Combat
   - type: CombatMode
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Slash: 6
+  #weapon is added during the game, when reaper is material.
   - type: NpcFactionMember
     factions:
     - SimpleHostile #Doesn't get attacked by flesh anomaly spawns

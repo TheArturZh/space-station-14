@@ -29,3 +29,8 @@
         layer:
         - WallLayer
         hard: false
+  - type: AmbientSound
+    volume: -7
+    range: 5
+    sound:
+      path: /Audio/SS220/DarkReaper/jnec_gate_ambience.ogg
