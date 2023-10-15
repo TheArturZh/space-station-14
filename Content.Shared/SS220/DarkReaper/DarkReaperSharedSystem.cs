@@ -2,14 +2,18 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -40,6 +44,9 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -53,10 +60,12 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         SubscribeLocalEvent<DarkReaperComponent, ReaperConsumeEvent>(OnConsumeAction);
         SubscribeLocalEvent<DarkReaperComponent, ReaperMaterializeEvent>(OnMaterializeAction);
         SubscribeLocalEvent<DarkReaperComponent, ReaperStunEvent>(OnStunAction);
-        SubscribeLocalEvent<DarkReaperComponent, AfterMaterialize>(OnAfterMaterialize);
-        SubscribeLocalEvent<DarkReaperComponent, AfterDeMaterialize>(OnAfterDeMaterialize);
         SubscribeLocalEvent<DarkReaperComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DarkReaperComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+
+        SubscribeLocalEvent<DarkReaperComponent, AfterMaterialize>(OnAfterMaterialize);
+        SubscribeLocalEvent<DarkReaperComponent, AfterDeMaterialize>(OnAfterDeMaterialize);
+        SubscribeLocalEvent<DarkReaperComponent, AfterConsumed>(OnAfterConsumed);
     }
 
     // Action bindings
@@ -72,7 +81,45 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         if (!comp.PhysicalForm)
             return;
 
-        args.Handled = true;
+        // Only consume dead
+        if (!_mobState.IsDead(args.Target))
+        {
+            if (_net.IsClient)
+                _popup.PopupEntity("Цель должна быть мертва!", uid, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!TryComp<HumanoidAppearanceComponent>(args.Target, out _))
+        {
+            if (_net.IsClient)
+                _popup.PopupEntity("Цель должна быть гуманоидом!", uid, PopupType.MediumCaution);
+            return;
+        }
+
+        var doafterArgs = new DoAfterArgs(
+            EntityManager,
+            uid,
+            TimeSpan.FromSeconds(9 /* Hand-picked value to match the sound */),
+            new AfterConsumed(),
+            uid,
+            args.Target
+        )
+        {
+            Broadcast = false,
+            BreakOnDamage = false,
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            NeedHand = false,
+            BlockDuplicate = true,
+            CancelDuplicate = false,
+            VisibleOnlyToUser = false
+        };
+
+        var started = _doAfter.TryStartDoAfter(doafterArgs);
+        if (started)
+        {
+            comp.ConsoomAudio = _audio.PlayPredicted(comp.ConsumeAbilitySound, uid, uid);
+        }
     }
 
     private void OnMaterializeAction(EntityUid uid, DarkReaperComponent comp, ReaperMaterializeEvent args)
@@ -163,6 +210,17 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             {
                 _audio.PlayPredicted(comp.PortalCloseSound, uid, uid);
             }
+        }
+    }
+
+    protected virtual void OnAfterConsumed(EntityUid uid, DarkReaperComponent comp, AfterConsumed args)
+    {
+        args.Handled = true;
+
+        if (comp.ConsoomAudio != null)
+        {
+            comp.ConsoomAudio.Stop();
+            comp.ConsoomAudio = null;
         }
     }
 
@@ -312,6 +370,25 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         UpdateStageAppearance(uid, comp);
     }
 
+    public void UpdateStage(EntityUid uid, DarkReaperComponent comp)
+    {
+        var picked_stage = 1;
+        for (int i = 0; i < comp.ConsumedPerStage.Count; i++)
+        {
+            var required = comp.ConsumedPerStage[i];
+            if (comp.Consumed >= required)
+            {
+                picked_stage = i + 2;
+            }
+        }
+
+        if (comp.CurrentStage != picked_stage)
+        {
+            ChangeStage(uid, comp, picked_stage);
+            _audio.PlayPredicted(comp.LevelupSound, uid, uid);
+        }
+    }
+
     private void UpdateStageAppearance(EntityUid uid, DarkReaperComponent comp)
     {
         _appearance.SetData(uid, DarkReaperVisual.Stage, comp.CurrentStage);
@@ -365,11 +442,22 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         if (args.NewMobState != MobState.Dead)
             return;
 
+        if (component.ConsoomAudio != null)
+            component.ConsoomAudio.Stop();
+
+        if (component.PlayingPortalAudio != null)
+            component.PlayingPortalAudio.Stop();
+
         if (_net.IsServer)
         {
             // play at coordinates because entity is getting deleted
             var coordinates = Transform(uid).Coordinates;
             _audio.Play(component.SoundDeath, Filter.Pvs(coordinates), coordinates, true);
+
+            if (_container.TryGetContainer(uid, DarkReaperComponent.BrainContainerId, out var container))
+            {
+                _container.EmptyContainer(container);
+            }
 
             QueueDel(component.ActivePortal);
 
@@ -405,4 +493,10 @@ public sealed partial class AfterMaterialize : DoAfterEvent
 public sealed partial class AfterDeMaterialize : DoAfterEvent
 {
     public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class AfterConsumed : DoAfterEvent
+{
+    public override AfterConsumed Clone() => this;
 }

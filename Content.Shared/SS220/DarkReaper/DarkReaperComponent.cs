@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -10,6 +11,8 @@ namespace Content.Shared.SS220.DarkReaper;
 [Access(typeof(SharedDarkReaperSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class DarkReaperComponent : Component
 {
+    public const string BrainContainerId = "consumed";
+
     [ViewVariables, DataField]
     public EntProtoId PortalEffectPrototype = "DarkReaperPortalEffect";
 
@@ -30,6 +33,9 @@ public sealed partial class DarkReaperComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public int CurrentStage = 1;
+
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public int Consumed = 0;
 
     /// DEATH ///
 
@@ -158,7 +164,24 @@ public sealed partial class DarkReaperComponent : Component
         MaxDistance = 7
     });
 
+    /// CONSOOM
+
+    [ViewVariables, DataField, AutoNetworkedField]
+    public SoundSpecifier ConsumeAbilitySound = new SoundPathSpecifier("/Audio/SS220/DarkReaper/jnec_eat.ogg", new()
+    {
+        MaxDistance = 8
+    });
+
+    [ViewVariables, DataField]
+    public DamageSpecifier HealPerConsume = new();
+
     /// STAGE PROGRESSION
+
+    [ViewVariables, DataField, AutoNetworkedField]
+    public SoundSpecifier LevelupSound = new SoundPathSpecifier("/Audio/SS220/DarkReaper/jnec_levelup.ogg", new()
+    {
+        MaxDistance = 8
+    });
 
     /// <summary>
     /// DamageSpecifier for melee damage that Dark Reaper does at every stage.
@@ -169,23 +192,30 @@ public sealed partial class DarkReaperComponent : Component
         // Stage 1
         new()
         {
-            { "Slash", 10 },
-            { "Piercing", 2 }
+            { "Slash", 12 },
+            { "Piercing", 4 }
         },
 
         // Stage 2
         new()
         {
-            { "Slash", 12 },
-            { "Piercing", 4 }
+            { "Slash", 16 },
+            { "Piercing", 8 }
         },
 
         // Stage 3
         new()
         {
-            { "Slash", 14 },
-            { "Piercing", 8 }
+            { "Slash", 18 },
+            { "Piercing", 10 }
         }
+    };
+
+    public List<int> ConsumedPerStage = new()
+    {
+        // stage 1 is free (initial)
+        3,
+        8
     };
 
     /// ABILITIES ///
@@ -216,6 +246,9 @@ public sealed partial class DarkReaperComponent : Component
 
     [ViewVariables, NonSerialized]
     public IPlayingAudioStream? PlayingPortalAudio;
+
+    [ViewVariables, NonSerialized]
+    public IPlayingAudioStream? ConsoomAudio;
 
     [ViewVariables]
     public TimeSpan? MaterializedStart;
