@@ -101,6 +101,9 @@ public sealed partial class DarkReaperComponent : Component
     [ViewVariables, DataField, AutoNetworkedField]
     public TimeSpan StunDuration = TimeSpan.FromSeconds(4);
 
+    [ViewVariables, DataField, AutoNetworkedField]
+    public string LightBehaviorFlicker = "flicker";
+
     /// <summary>
     /// Stun ability sound
     /// </summary>
@@ -137,9 +140,6 @@ public sealed partial class DarkReaperComponent : Component
     [ViewVariables, DataField, AutoNetworkedField]
     public float UnMaterialMovementSpeed = 7f;
 
-    [ViewVariables]
-    public EntityUid? ActivePortal;
-
     /// <summary>
     /// Sound played before portal opens
     /// </summary>
@@ -157,12 +157,6 @@ public sealed partial class DarkReaperComponent : Component
     {
         MaxDistance = 7
     });
-
-    [ViewVariables, NonSerialized]
-    public IPlayingAudioStream? PlayingPortalAudio;
-
-    [ViewVariables]
-    public TimeSpan? MaterializedStart;
 
     /// STAGE PROGRESSION
 
@@ -216,6 +210,15 @@ public sealed partial class DarkReaperComponent : Component
     // ABILITY STATES ///
     [ViewVariables, AutoNetworkedField]
     public TimeSpan? StunScreamStart;
+
+    [ViewVariables]
+    public EntityUid? ActivePortal;
+
+    [ViewVariables, NonSerialized]
+    public IPlayingAudioStream? PlayingPortalAudio;
+
+    [ViewVariables]
+    public TimeSpan? MaterializedStart;
 }
 
 [Serializable, NetSerializable]

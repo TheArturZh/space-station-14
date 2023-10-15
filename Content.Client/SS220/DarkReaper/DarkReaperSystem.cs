@@ -1,3 +1,4 @@
+using Content.Client.Light.Components;
 using Content.Shared.Ghost;
 using Content.Shared.SS220.DarkReaper;
 using Robust.Client.GameObjects;
@@ -51,15 +52,23 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
             }
 
             if (data is bool isPhysical)
-                UpdateAppearance(uid, sprite, isPhysical, hasGlare, ghostCooldown);
+                UpdateAppearance(uid, comp, sprite, isPhysical, hasGlare, ghostCooldown);
         }
     }
 
 
-    private void UpdateAppearance(EntityUid uid, SpriteComponent sprite, bool isPhysical, bool hasGlare, bool ghostCooldown)
+    private void UpdateAppearance(EntityUid uid, DarkReaperComponent comp, SpriteComponent sprite, bool isPhysical, bool hasGlare, bool ghostCooldown)
     {
         var controlled = _playerManager.LocalPlayer?.ControlledEntity;
         var canSeeGhosted = controlled == uid || (controlled.HasValue && HasComp<GhostComponent>(controlled));
+
+        if (TryComp<LightBehaviourComponent>(uid, out var lightBehaviour))
+        {
+            if (hasGlare)
+                lightBehaviour.StartLightBehaviour(comp.LightBehaviorFlicker);
+            else
+                lightBehaviour.StopLightBehaviour();
+        }
 
         if (sprite.LayerMapTryGet(DarkReaperVisual.Stage, out var layerIndex))
         {
@@ -93,6 +102,6 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
         }
 
         if (data is bool isPhysical)
-            UpdateAppearance(uid, args.Sprite, isPhysical, hasGlare, ghostCooldown);
+            UpdateAppearance(uid, component, args.Sprite, isPhysical, hasGlare, ghostCooldown);
     }
 }
