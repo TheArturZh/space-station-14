@@ -179,15 +179,19 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
             if (_net.IsServer)
             {
-                if (_prototype.HasIndex<EntityPrototype>(comp.PortalEffectPrototype))
-                {
-                    var portalEntity = Spawn(comp.PortalEffectPrototype, Transform(uid).Coordinates);
-                    comp.ActivePortal = portalEntity;
-                }
+                CreatePortal(uid, comp);
             }
         }
     }
 
+    protected virtual void CreatePortal(EntityUid uid, DarkReaperComponent comp)
+    {
+        if (_prototype.HasIndex<EntityPrototype>(comp.PortalEffectPrototype))
+        {
+            var portalEntity = Spawn(comp.PortalEffectPrototype, Transform(uid).Coordinates);
+            comp.ActivePortal = portalEntity;
+        }
+    }
 
     private void OnAfterDeMaterialize(EntityUid uid, DarkReaperComponent comp, AfterDeMaterialize args)
     {

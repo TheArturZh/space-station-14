@@ -38,6 +38,14 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
         }
     }
 
+    protected override void CreatePortal(EntityUid uid, DarkReaperComponent comp)
+    {
+        base.CreatePortal(uid, comp);
+
+        // Make lights blink
+        BooInRadius(uid, 6);
+    }
+
     protected override void OnCompInit(EntityUid uid, DarkReaperComponent comp, ComponentInit args)
     {
         base.OnCompInit(uid, comp, args);
@@ -75,12 +83,9 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
         }
     }
 
-    protected override void DoRoflAbility(EntityUid uid, DarkReaperComponent comp)
+    private void BooInRadius(EntityUid uid, float radius)
     {
-        base.DoRoflAbility(uid, comp);
-
-        // Make lights blink
-        var entities = _lookup.GetEntitiesInRange(uid, 6);
+        var entities = _lookup.GetEntitiesInRange(uid, radius);
 
         var booCounter = 0;
         foreach (var ent in entities)
@@ -93,5 +98,13 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
             if (booCounter >= MaxBooEntities)
                 break;
         }
+    }
+
+    protected override void DoRoflAbility(EntityUid uid, DarkReaperComponent comp)
+    {
+        base.DoRoflAbility(uid, comp);
+
+        // Make lights blink
+        BooInRadius(uid, 6);
     }
 }
