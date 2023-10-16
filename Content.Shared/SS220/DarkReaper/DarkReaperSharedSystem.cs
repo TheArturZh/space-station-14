@@ -440,11 +440,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         if (args.NewMobState != MobState.Dead)
             return;
 
-        if (component.ConsoomAudio != null)
-            component.ConsoomAudio.Stop();
-
-        if (component.PlayingPortalAudio != null)
-            component.PlayingPortalAudio.Stop();
+        component.ConsoomAudio?.Stop();
+        component.PlayingPortalAudio?.Stop();
 
         if (_net.IsServer)
         {
