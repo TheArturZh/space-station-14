@@ -3,12 +3,13 @@ using Content.Server.Body.Components;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.SS220.DarkReaper;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.SS220.DarkReaper;
 
@@ -22,7 +23,9 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
 
+    private readonly ISawmill _sawmill = Logger.GetSawmill("DarkReaper");
 
     private const int MaxBooEntities = 30;
 
@@ -58,7 +61,7 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     {
         base.OnAfterConsumed(uid, comp, args);
 
-        if (!args.Cancelled && args.Target.HasValue && comp.PhysicalForm)
+        if (!args.Cancelled && args.Target.HasValue && comp.PhysicalForm && _mobState.IsDead(args.Target.Value))
         {
             var gibs = _body.GibBody(args.Target.Value, true);
             if (_container.TryGetContainer(uid, DarkReaperComponent.BrainContainerId, out var container))
@@ -76,8 +79,50 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
 
             comp.Consumed++;
             UpdateStage(uid, comp);
+            UpdateAlert(uid, comp);
             Dirty(uid, comp);
         }
+    }
+
+    private void UpdateAlert(EntityUid uid, DarkReaperComponent comp)
+    {
+        _alerts.ClearAlert(uid, AlertType.DeadscoreStage1);
+        _alerts.ClearAlert(uid, AlertType.DeadscoreStage2);
+
+        AlertType alert;
+        if (comp.CurrentStage == 1)
+            alert = AlertType.DeadscoreStage1;
+        else if (comp.CurrentStage == 2)
+            alert = AlertType.DeadscoreStage2;
+        else
+        {
+            return;
+        }
+
+        if (!comp.ConsumedPerStage.TryGetValue(comp.CurrentStage - 1, out var severity))
+            severity = 0;
+
+        severity -= comp.Consumed;
+
+        if (alert == AlertType.DeadscoreStage1 && severity > 3)
+        {
+            severity = 3; // 3 is a max value our sprite can display at stage 1
+            _sawmill.Error("Had to clamp alert severity. It shouldn't happen. Report it to Artur.");
+        }
+        else if (alert == AlertType.DeadscoreStage2 && severity > 8)
+        {
+            severity = 8; // 8 is a max value our sprite can display at stage 2
+            _sawmill.Error("Had to clamp alert severity. It shouldn't happen. Report it to Artur.");
+        }
+
+        if (severity <= 0)
+        {
+            _alerts.ClearAlert(uid, AlertType.DeadscoreStage1);
+            _alerts.ClearAlert(uid, AlertType.DeadscoreStage2);
+            return;
+        }
+
+        _alerts.ShowAlert(uid, alert, (short) severity);
     }
 
     protected override void OnCompInit(EntityUid uid, DarkReaperComponent comp, ComponentInit args)
@@ -90,6 +135,8 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
         _actions.AddAction(uid, ref comp.StunActionEntity, comp.StunAction);
         _actions.AddAction(uid, ref comp.ConsumeActionEntity, comp.ConsumeAction);
         _actions.AddAction(uid, ref comp.MaterializeActionEntity, comp.MaterializeAction);
+
+        UpdateAlert(uid, comp);
     }
 
     protected override void OnCompShutdown(EntityUid uid, DarkReaperComponent comp, ComponentShutdown args)

@@ -111,8 +111,9 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             BreakOnUserMove = true,
             NeedHand = false,
             BlockDuplicate = true,
-            CancelDuplicate = false,
-            VisibleOnlyToUser = false
+            CancelDuplicate = true,
+            VisibleOnlyToUser = false,
+            DuplicateCondition = DuplicateConditions.SameEvent
         };
 
         var started = _doAfter.TryStartDoAfter(doafterArgs);
@@ -290,7 +291,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
             if (comp.MaterializedStart != null)
             {
-                var maxDuration = comp.MaterializeDurations[comp.CurrentStage];
+                var maxDuration = comp.MaterializeDurations[comp.CurrentStage - 1];
                 var diff = comp.MaterializedStart.Value + maxDuration - _timing.CurTime;
                 if (diff.TotalSeconds < 4.14 && comp.PlayingPortalAudio == null)
                 {
@@ -372,19 +373,15 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
     public void UpdateStage(EntityUid uid, DarkReaperComponent comp)
     {
-        var picked_stage = 1;
-        for (int i = 0; i < comp.ConsumedPerStage.Count; i++)
+        if (!comp.ConsumedPerStage.TryGetValue(comp.CurrentStage - 1, out var nextStageReq))
         {
-            var required = comp.ConsumedPerStage[i];
-            if (comp.Consumed >= required)
-            {
-                picked_stage = i + 2;
-            }
+            return;
         }
 
-        if (comp.CurrentStage != picked_stage)
+        if (comp.Consumed >= nextStageReq)
         {
-            ChangeStage(uid, comp, picked_stage);
+            comp.Consumed = 0;
+            ChangeStage(uid, comp, comp.CurrentStage + 1);
             _audio.PlayPredicted(comp.LevelupSound, uid, uid);
         }
     }
@@ -394,6 +391,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         _appearance.SetData(uid, DarkReaperVisual.Stage, comp.CurrentStage);
     }
 
+    // This cursed shit exists because we can't disable components.
     private void ToggleWeapon(EntityUid uid, DarkReaperComponent comp, bool isEnabled)
     {
         if (!_net.IsServer)
@@ -417,7 +415,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
     private void OnGetMeleeDamage(EntityUid uid, DarkReaperComponent comp, ref GetMeleeDamageEvent args)
     {
-        if (!comp.PhysicalForm || !comp.StageMeleeDamage.TryGetValue(comp.CurrentStage, out var damageSet))
+        if (!comp.PhysicalForm || !comp.StageMeleeDamage.TryGetValue(comp.CurrentStage - 1, out var damageSet))
         {
             damageSet = new();
         }

@@ -49,7 +49,7 @@ public sealed partial class DarkReaperComponent : Component
     });
 
     [ViewVariables, DataField]
-    public SoundSpecifier HitSound = new SoundCollectionSpecifier("AlienClaw");
+    public SoundSpecifier HitSound = new SoundCollectionSpecifier("DarkReaperHit");
 
     [ViewVariables, DataField]
     public SoundSpecifier SwingSound = new SoundCollectionSpecifier("DarkReaperSwing");
@@ -135,7 +135,7 @@ public sealed partial class DarkReaperComponent : Component
     [ViewVariables, DataField, AutoNetworkedField]
     public List<TimeSpan> MaterializeDurations = new()
     {
-        TimeSpan.FromSeconds(10),
+        TimeSpan.FromSeconds(15),
         TimeSpan.FromSeconds(20),
         TimeSpan.FromSeconds(40)
     };

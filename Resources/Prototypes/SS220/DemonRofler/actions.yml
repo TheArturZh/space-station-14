@@ -37,3 +37,13 @@
     itemIconStyle: NoItem
     icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: jnecexit }
     useDelay: 15
+
+- type: entity
+  id: ActionDarkReaperSpawn
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperSpawnEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: jnecexit }
+    useDelay: 1

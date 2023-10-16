@@ -17,3 +17,7 @@ public sealed partial class ReaperConsumeEvent : EntityTargetActionEvent
 public sealed partial class ReaperMaterializeEvent : InstantActionEvent
 {
 }
+
+public sealed partial class ReaperSpawnEvent : InstantActionEvent
+{
+}
