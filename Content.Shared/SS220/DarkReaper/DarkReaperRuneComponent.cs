@@ -20,6 +20,6 @@ public sealed partial class DarkReaperRuneComponent : Component
     [DataField]
     public EntProtoId SpawnAction = "ActionDarkReaperSpawn";
 
-    [DataField, NonSerialized]
+    [ViewVariables]
     public EntityUid? SpawnActionEntity;
 }

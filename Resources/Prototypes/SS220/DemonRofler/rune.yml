@@ -2,6 +2,7 @@
   id: DarkReaperRune
   name: странная руна
   description: Жуткая руна, нарисованная кровью.
+  save: false
   components:
   - type: DarkReaperRune
   - type: Actions
