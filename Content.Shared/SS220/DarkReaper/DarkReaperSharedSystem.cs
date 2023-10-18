@@ -341,7 +341,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             }
         }
 
-        _eye.SetDrawFov(uid, isMaterial);
+        if (TryComp<EyeComponent>(uid, out var eye))
+            _eye.SetDrawFov(uid, isMaterial, eye);
         _appearance.SetData(uid, DarkReaperVisual.PhysicalForm, isMaterial);
 
         if (isMaterial)
