@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.DarkReaper;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(DarkReaperRuneSharedSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class DarkReaperRuneComponent : Component
 {
@@ -20,6 +20,6 @@ public sealed partial class DarkReaperRuneComponent : Component
     [DataField]
     public EntProtoId SpawnAction = "ActionDarkReaperSpawn";
 
-    [DataField, AutoNetworkedField]
+    [DataField, NonSerialized]
     public EntityUid? SpawnActionEntity;
 }

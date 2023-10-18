@@ -21,10 +21,10 @@ public sealed class DarkReaperRuneSharedSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<DarkReaperRuneComponent, ReaperSpawnEvent>(OnSpawnAction);
-        SubscribeLocalEvent<DarkReaperRuneComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DarkReaperRuneComponent, ComponentStartup>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, DarkReaperRuneComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, DarkReaperRuneComponent component, ComponentStartup args)
     {
         if (_net.IsServer)
             _actions.AddAction(uid, ref component.SpawnActionEntity, component.SpawnAction);
@@ -46,7 +46,7 @@ public sealed class DarkReaperRuneSharedSystem : EntitySystem
         var coords = Transform(uid).Coordinates;
         if (!coords.IsValid(EntityManager))
         {
-            _sawmill.Debug("Failede to spawn Dark Reaper: spawn coordinates are invalid!");
+            _sawmill.Debug("Failed to spawn Dark Reaper: spawn coordinates are invalid!");
             return;
         }
 

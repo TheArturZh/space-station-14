@@ -125,16 +125,23 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
         _alerts.ShowAlert(uid, alert, (short) severity);
     }
 
-    protected override void OnCompInit(EntityUid uid, DarkReaperComponent comp, ComponentInit args)
+    protected override void OnCompInit(EntityUid uid, DarkReaperComponent comp, ComponentStartup args)
     {
         base.OnCompInit(uid, comp, args);
 
         _container.EnsureContainer<Container>(uid, DarkReaperComponent.BrainContainerId);
 
-        _actions.AddAction(uid, ref comp.RoflActionEntity, comp.RoflAction);
-        _actions.AddAction(uid, ref comp.StunActionEntity, comp.StunAction);
-        _actions.AddAction(uid, ref comp.ConsumeActionEntity, comp.ConsumeAction);
-        _actions.AddAction(uid, ref comp.MaterializeActionEntity, comp.MaterializeAction);
+        if (!comp.RoflActionEntity.HasValue)
+            _actions.AddAction(uid, ref comp.RoflActionEntity, comp.RoflAction);
+
+        if (!comp.StunActionEntity.HasValue)
+            _actions.AddAction(uid, ref comp.StunActionEntity, comp.StunAction);
+
+        if (!comp.ConsumeActionEntity.HasValue)
+            _actions.AddAction(uid, ref comp.ConsumeActionEntity, comp.ConsumeAction);
+
+        if (!comp.MaterializeActionEntity.HasValue)
+            _actions.AddAction(uid, ref comp.MaterializeActionEntity, comp.MaterializeAction);
 
         UpdateAlert(uid, comp);
     }

@@ -52,7 +52,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DarkReaperComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<DarkReaperComponent, ComponentStartup>(OnCompInit);
         SubscribeLocalEvent<DarkReaperComponent, ComponentShutdown>(OnCompShutdown);
 
         // actions
@@ -311,7 +311,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
     }
 
     // Crap
-    protected virtual void OnCompInit(EntityUid uid, DarkReaperComponent comp, ComponentInit args)
+    protected virtual void OnCompInit(EntityUid uid, DarkReaperComponent comp, ComponentStartup args)
     {
         UpdateStageAppearance(uid, comp);
         ChangeForm(uid, comp, comp.PhysicalForm);
