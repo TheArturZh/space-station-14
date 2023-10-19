@@ -10,6 +10,7 @@
   description: "An always powered light."
   suffix: Always powered
   components:
+  - type: BloomLightMask
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -201,6 +202,8 @@
   suffix: Always Powered
   parent: AlwaysPoweredWallLight
   components:
+    - type: BloomLightMask
+      lightMask: "SS220/BloomLight/Masks/lightmask_lamp.png"
     - type: AmbientSound
       volume: -15
       range: 2
