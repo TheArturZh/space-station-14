@@ -11,7 +11,7 @@ namespace Content.Shared.SS220.DarkReaper;
 [Access(typeof(SharedDarkReaperSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class DarkReaperComponent : Component
 {
-    public const string BrainContainerId = "consumed";
+    public const string ConsumedContainerId = "consumed";
 
     [ViewVariables, DataField]
     public EntProtoId PortalEffectPrototype = "DarkReaperPortalEffect";

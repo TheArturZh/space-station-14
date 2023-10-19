@@ -275,6 +275,12 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             if (IsPaused(uid))
                 continue;
 
+            if (_net.IsServer && _actions.TryGetActionData(comp.MaterializeActionEntity, out var materializeData, false))
+            {
+                var visibleEyes = materializeData.Cooldown.HasValue && materializeData.Cooldown.Value.End > _timing.CurTime;
+                _appearance.SetData(uid, DarkReaperVisual.GhostCooldown, visibleEyes);
+            }
+
             if (comp.StunScreamStart != null)
             {
                 if (comp.StunScreamStart.Value + comp.StunGlareLength < _timing.CurTime)
@@ -450,7 +456,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             var coordinates = Transform(uid).Coordinates;
             _audio.Play(component.SoundDeath, Filter.Pvs(coordinates), coordinates, true);
 
-            if (_container.TryGetContainer(uid, DarkReaperComponent.BrainContainerId, out var container))
+            if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
             {
                 _container.EmptyContainer(container);
             }
