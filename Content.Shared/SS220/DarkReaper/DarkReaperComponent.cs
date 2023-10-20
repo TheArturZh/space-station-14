@@ -209,8 +209,8 @@ public sealed partial class DarkReaperComponent : Component
         // Stage 3
         new()
         {
-            { "Slash", 18 },
-            { "Piercing", 10 }
+            { "Slash", 20 },
+            { "Piercing", 16 }
         }
     };
 
