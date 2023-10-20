@@ -237,6 +237,11 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             ChangeForm(uid, comp, true);
             comp.MaterializedStart = _timing.CurTime;
 
+            var cooldownStart = _timing.CurTime;
+            var cooldownEnd = cooldownStart + comp.CooldownAfterMaterialize;
+
+            _actions.SetCooldown(comp.MaterializeActionEntity, cooldownStart, cooldownEnd);
+
             if (_net.IsServer)
             {
                 CreatePortal(uid, comp);
@@ -278,7 +283,9 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
             if (_net.IsServer && _actions.TryGetActionData(comp.MaterializeActionEntity, out var materializeData, false))
             {
-                var visibleEyes = materializeData.Cooldown.HasValue && materializeData.Cooldown.Value.End > _timing.CurTime;
+                var visibleEyes = materializeData.Cooldown.HasValue &&
+                materializeData.Cooldown.Value.End > _timing.CurTime &&
+                !comp.PhysicalForm;
                 _appearance.SetData(uid, DarkReaperVisual.GhostCooldown, visibleEyes);
             }
 

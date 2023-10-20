@@ -141,6 +141,8 @@ public sealed partial class DarkReaperComponent : Component
         TimeSpan.FromSeconds(40)
     };
 
+    public TimeSpan CooldownAfterMaterialize = TimeSpan.FromSeconds(3);
+
     [ViewVariables, DataField, AutoNetworkedField]
     public float MaterialMovementSpeed = 4f;
 
