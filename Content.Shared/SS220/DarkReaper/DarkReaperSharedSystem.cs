@@ -453,16 +453,17 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
         if (_net.IsServer)
         {
+            QueueDel(component.ActivePortal);
+
             // play at coordinates because entity is getting deleted
             var coordinates = Transform(uid).Coordinates;
             _audio.Play(component.SoundDeath, Filter.Pvs(coordinates), coordinates, true);
 
+            // Get everthing that was consumed out before deleting
             if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
             {
                 _container.EmptyContainer(container);
             }
-
-            QueueDel(component.ActivePortal);
 
             // Make it blow up on pieces after deth
             EntProtoId[] gibPoolAsArray = component.SpawnOnDeathPool.ToArray();
@@ -481,6 +482,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
                 _physics.ApplyLinearImpulse(goreEntity, impulseVec);
             }
 
+            // insallah
             QueueDel(uid);
         }
     }
