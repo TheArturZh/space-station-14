@@ -83,7 +83,7 @@ public sealed class DarkReaperMajorRuleSystem : GameRuleSystem<DarkReaperMajorRu
                 return;
             }
 
-            if (!_specialRespawn.TryFindRandomTile(grid.Value, map.Value, 3, out var runeCoords))
+            if (!_specialRespawn.TryFindRandomTile(grid.Value, map.Value, 30, out var runeCoords))
             {
                 _chatManager.SendAdminAnnouncement(Loc.GetString("darkreaper-failed-spawn-tile"));
                 return;
