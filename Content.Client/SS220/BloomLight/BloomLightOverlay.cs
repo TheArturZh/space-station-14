@@ -16,6 +16,8 @@ public sealed class BloomLightOverlay : Overlay
     private IPrototypeManager _prototype = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+    public override bool RequestScreenTexture => true;
+
     private readonly ShaderInstance _shader;
 
     public BloomLightOverlay(EntityManager entMan, IPrototypeManager protoMan)
@@ -24,21 +26,22 @@ public sealed class BloomLightOverlay : Overlay
         _transform = entMan.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _sprite = entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
         _prototype = protoMan;
-        _shader = _prototype.Index<ShaderPrototype>("shaded").Instance();
+        _shader = _prototype.Index<ShaderPrototype>("BlurryLighting").InstanceUnique();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (ScreenTexture == null)
+            return;
+
         var handle = args.WorldHandle;
-        var eyeRot = args.Viewport.Eye?.Rotation ?? default;
 
         var lightQuery = _entity.GetEntityQuery<PointLightComponent>();
         var xformQuery = _entity.GetEntityQuery<TransformComponent>();
-        var scaleMatrix = Matrix3.CreateScale(new Vector2(1, 1));
-        //var rotationMatrix = Matrix3.CreateRotation(-eyeRot);
 
         var bounds = args.WorldAABB.Enlarged(5f);
-        handle.UseShader(_shader);
+
+        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
         var query = _entity.AllEntityQueryEnumerator<BloomLightMaskComponent, TransformComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform, out var meta))
@@ -53,27 +56,27 @@ public sealed class BloomLightOverlay : Overlay
             if (!bounds.Contains(worldPos))
                 continue;
 
-            var (_, worldRot, worldMatrix) = xform.GetWorldPositionRotationMatrix(xformQuery);
-            handle.SetTransform(worldMatrix);
-
-            var texture = _sprite.Frame0(comp.LightMask);
-            var offsetX = -0.5f - (texture.Width / 2) / EyeManager.PixelsPerMeter;
-            var offsetY = 0.5f - (texture.Height / 2) / EyeManager.PixelsPerMeter;
-
-            Color color;
+            Color color = Color.White;
             if (lightQuery.TryGetComponent(uid, out var lightComp))
             {
                 if (!lightComp.Enabled)
                     continue;
 
-                color = lightComp.Color;
-            }
-            else
-            {
-                color = Color.White;
+                if (comp.UseLightColor)
+                    color = lightComp.Color;
             }
 
-            handle.DrawTexture(texture, new Vector2(offsetX, offsetY), color);
+            var (_, worldRot, worldMatrix) = xform.GetWorldPositionRotationMatrix(xformQuery);
+            handle.SetTransform(worldMatrix);
+            handle.UseShader(comp.UseShader ? _shader : null);
+
+            foreach (var mask in comp.LightMasks)
+            {
+                var texture = _sprite.Frame0(mask);
+                var offsetX = -0.5f - (texture.Width / 2) / EyeManager.PixelsPerMeter;
+                var offsetY = 0.5f - (texture.Height / 2) / EyeManager.PixelsPerMeter;
+                handle.DrawTexture(texture, new Vector2(offsetX, offsetY), color);
+            }
         }
 
         handle.UseShader(null);

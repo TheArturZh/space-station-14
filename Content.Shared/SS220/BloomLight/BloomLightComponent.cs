@@ -6,9 +6,15 @@ namespace Content.Shared.SS220.BloomLight;
 [RegisterComponent, AutoGenerateComponentState]
 public sealed partial class BloomLightMaskComponent : Component
 {
-    [ViewVariables, DataField, AutoNetworkedField]
-    public SpriteSpecifier LightMask = new SpriteSpecifier.Texture(new("SS220/BloomLight/Masks/lightmask_lamp_soft.png"));
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public List<SpriteSpecifier> LightMasks = new() { new SpriteSpecifier.Texture(new("SS220/BloomLight/Masks/lightmask_lamp_soft.png")) };
 
-    [ViewVariables, DataField, AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public bool UseLightColor = false;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public bool UseShader = true;
 }
