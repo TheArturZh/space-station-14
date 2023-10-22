@@ -11,6 +11,9 @@
   suffix: Always powered
   components:
   - type: BloomLightMask
+    lightMasks:
+    - "SS220/BloomLight/Masks/lightmask_lamp.png"
+    - "SS220/BloomLight/Masks/tube_short.png"
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -203,7 +206,9 @@
   parent: AlwaysPoweredWallLight
   components:
     - type: BloomLightMask
-      lightMask: "SS220/BloomLight/Masks/lightmask_lamp.png"
+      lightMasks:
+      - "SS220/BloomLight/Masks/lightmask_lamp.png"
+      - "SS220/BloomLight/Masks/bulb_short.png"
     - type: AmbientSound
       volume: -15
       range: 2
