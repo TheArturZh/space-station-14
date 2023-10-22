@@ -68,14 +68,15 @@ public sealed class BloomLightOverlay : Overlay
 
             var (_, worldRot, worldMatrix) = xform.GetWorldPositionRotationMatrix(xformQuery);
             handle.SetTransform(worldMatrix);
-            handle.UseShader(comp.UseShader ? _shader : null);
 
             foreach (var mask in comp.LightMasks)
             {
-                var texture = _sprite.Frame0(mask);
+                var maskColor = color * mask.Modulate;
+                var texture = _sprite.Frame0(mask.Sprite);
                 var offsetX = -0.5f - (texture.Width / 2) / EyeManager.PixelsPerMeter;
                 var offsetY = 0.5f - (texture.Height / 2) / EyeManager.PixelsPerMeter;
-                handle.DrawTexture(texture, new Vector2(offsetX, offsetY), color);
+                handle.UseShader(comp.UseShader && mask.UseShader ? _shader : null);
+                handle.DrawTexture(texture, new Vector2(offsetX, offsetY), maskColor);
             }
         }
 

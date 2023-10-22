@@ -12,8 +12,11 @@
   components:
   - type: BloomLightMask
     lightMasks:
-    - "SS220/BloomLight/Masks/lightmask_lamp.png"
-    - "SS220/BloomLight/Masks/tube_short.png"
+    - sprite: "SS220/BloomLight/Masks/lightmask_lamp.png"
+      modulate: "#FFFFFF90"
+    - sprite: "SS220/BloomLight/Masks/tube_short.png"
+      modulate: "#FFFFFF80"
+      useShader: false
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -207,8 +210,10 @@
   components:
     - type: BloomLightMask
       lightMasks:
-      - "SS220/BloomLight/Masks/lightmask_lamp.png"
-      - "SS220/BloomLight/Masks/bulb_short.png"
+      - sprite: "SS220/BloomLight/Masks/lightmask_lamp.png"
+      - sprite: "SS220/BloomLight/Masks/bulb_short.png"
+        modulate: "#FFE4CEFF"
+        useShader: false
     - type: AmbientSound
       volume: -15
       range: 2
