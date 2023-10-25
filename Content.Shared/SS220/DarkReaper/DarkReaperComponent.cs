@@ -221,10 +221,22 @@ public sealed partial class DarkReaperComponent : Component
     public List<DamageModifierSet> StageDamageResists = new()
     {
         // Stage 1
-        new(),
+        new()
+        {
+            Coefficients = new()
+            {
+                {"Radiation", 0}
+            }
+        },
 
         // Stage 2
-        new(),
+        new()
+        {
+            Coefficients = new()
+            {
+                {"Radiation", 0}
+            }
+        },
 
         // Stage 3
         new()
@@ -237,7 +249,8 @@ public sealed partial class DarkReaperComponent : Component
                 {"Heat", 0.5f},
                 {"Cold", 0.25f},
                 {"Shock", 0.25f},
-                {"Cellular", 0}
+                {"Cellular", 0},
+                {"Radiation", 0}
             }
         }
     };
