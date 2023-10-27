@@ -86,7 +86,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsLeader
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsLeaderGear ]
@@ -156,7 +156,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsEngineer
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsEngineerGear ]
@@ -226,7 +226,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsCorpsman
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsCorpsmanGear ]
@@ -300,7 +300,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsCMO
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsCMOGear ]
@@ -370,7 +370,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsTrooper
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsTrooperGear ]
