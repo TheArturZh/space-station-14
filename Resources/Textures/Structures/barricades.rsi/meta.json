@@ -9,11 +9,11 @@
   "states": [
     {
       "name": "barricade",
-      "directions": 1
+      "directions": 4
     },
 	{
 	  "name": "barricade_full",
-	  "directions": 1
+	  "directions": 4
 	},
 	{
 	  "name": "barricade_directional",
