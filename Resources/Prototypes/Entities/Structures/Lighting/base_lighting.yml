@@ -159,6 +159,8 @@
   suffix: Blue
   parent: Poweredlight
   components:
+  - type: BloomLightMask # SS220 Grafon-Light
+    useLightColor: true
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
     damage:
