@@ -10,7 +10,7 @@
   description: "An always powered light."
   suffix: Always powered
   components:
-  - type: BloomLightMask
+  - type: BloomLightMask # SS220 Grafon-Light
     lightMasks:
     - sprite: "SS220/BloomLight/Masks/lightmask_lamp.png"
       modulate: "#FFFFFF90"
@@ -188,7 +188,7 @@
     damage:
       types:
         Heat: 5
-  - type: BloomLightMask
+  - type: BloomLightMask # SS220 Grafon-Light
     useLightColor: true
 
 - type: entity
@@ -210,7 +210,7 @@
   suffix: Always Powered
   parent: AlwaysPoweredWallLight
   components:
-    - type: BloomLightMask
+    - type: BloomLightMask # SS220 Grafon-Light
       lightMasks:
       - sprite: "SS220/BloomLight/Masks/lightmask_lamp.png"
       - sprite: "SS220/BloomLight/Masks/bulb_short.png"

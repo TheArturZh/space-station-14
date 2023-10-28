@@ -25,17 +25,20 @@ public sealed partial class BloomLightMaskComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool UseShader = true;
+}
 
-    [DataDefinition, Serializable, NetSerializable]
-    public partial struct BloomMaskSpecifier
-    {
-        [DataField]
-        public bool UseShader = true;
+[DataDefinition, Serializable, NetSerializable]
+public partial struct BloomMaskSpecifier
+{
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool UseShader = true;
 
-        [DataField]
-        public Color Modulate = Color.White;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Unshaded = false;
 
-        [DataField]
-        public SpriteSpecifier Sprite;
-    }
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public Color Modulate = Color.White;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SpriteSpecifier Sprite;
 }

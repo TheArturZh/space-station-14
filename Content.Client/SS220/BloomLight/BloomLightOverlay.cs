@@ -19,6 +19,7 @@ public sealed class BloomLightOverlay : Overlay
     public override bool RequestScreenTexture => true;
 
     private readonly ShaderInstance _shader;
+    private readonly ShaderInstance _shader_unshaded;
 
     public BloomLightOverlay(EntityManager entMan, IPrototypeManager protoMan)
     {
@@ -27,6 +28,7 @@ public sealed class BloomLightOverlay : Overlay
         _sprite = entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
         _prototype = protoMan;
         _shader = _prototype.Index<ShaderPrototype>("BlurryLighting").InstanceUnique();
+        _shader_unshaded = _prototype.Index<ShaderPrototype>("unshaded").InstanceUnique();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -75,7 +77,14 @@ public sealed class BloomLightOverlay : Overlay
                 var texture = _sprite.Frame0(mask.Sprite);
                 var offsetX = -0.5f - (texture.Width / 2) / EyeManager.PixelsPerMeter;
                 var offsetY = 0.5f - (texture.Height / 2) / EyeManager.PixelsPerMeter;
-                handle.UseShader(comp.UseShader && mask.UseShader ? _shader : null);
+
+                if (comp.UseShader && mask.UseShader)
+                    handle.UseShader(_shader);
+                else if (mask.Unshaded)
+                    handle.UseShader(_shader_unshaded);
+                else
+                    handle.UseShader(null);
+
                 handle.DrawTexture(texture, new Vector2(offsetX, offsetY), maskColor);
             }
         }
