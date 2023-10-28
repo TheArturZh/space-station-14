@@ -188,6 +188,8 @@
     damage:
       types:
         Heat: 5
+  - type: BloomLightMask
+    useLightColor: true
 
 - type: entity
   parent: AlwaysPoweredWallLight
