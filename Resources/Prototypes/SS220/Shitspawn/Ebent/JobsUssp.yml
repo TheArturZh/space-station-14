@@ -84,6 +84,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentUSSPLeaderGear ]
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPMarshal
 
 - type: job
   id: USSPLeader
@@ -169,6 +172,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentUSSPEngineerGear ]
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPCombatant
 
 - type: job
   id: USSPEngineer
@@ -258,6 +264,9 @@
       makeSentient: true
       name: Полевой медик СССП
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPMedic
 
 - type: job
   id: USSPCorpsman
@@ -343,6 +352,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentUSSPCMOGear ]
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPMedicalOfficer
 
 - type: job
   id: USSPCMO
@@ -432,6 +444,9 @@
       makeSentient: true
       name: Красноармеец
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPCombatant
 
 - type: job
   id: USSPFighter

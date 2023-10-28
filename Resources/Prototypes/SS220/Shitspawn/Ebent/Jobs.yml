@@ -81,6 +81,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadLeaderGear ]
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTCommand
 
 - type: job
   id: IronSquadLeader
@@ -204,6 +207,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadEngineerGear ]
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTEngineerOfficer
 
 - type: job
   id: IronSquadEngineer
@@ -322,6 +328,9 @@
       makeSentient: true
       name: Полевой медик Железного Отряда
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTMedic
 
 - type: job
   id: IronSquadCorpsman
@@ -446,6 +455,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadCMOGear ]
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTMedicalOfficer
 
 - type: job
   id: IronSquadCMO
@@ -562,6 +574,9 @@
       makeSentient: true
       name: Боец Железного Отряда
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTCombatant
 
 - type: job
   id: IronSquadFighter

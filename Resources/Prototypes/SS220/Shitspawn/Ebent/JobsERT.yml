@@ -90,6 +90,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsLeaderGear ]
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTSpecOpsOfficer
 
 - type: job
   id: SpecOpsLeader
@@ -160,6 +163,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsEngineerGear ]
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTEngineerOfficer
 
 - type: job
   id: SpecOpsEngineer
@@ -234,6 +240,9 @@
       makeSentient: true
       name: Парамедик Специальных Операций
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTMedic
 
 - type: job
   id: SpecOpsCorpsman
@@ -304,6 +313,9 @@
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsCMOGear ]
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTMedicalOfficer
 
 - type: job
   id: SpecOpsCMO
@@ -378,6 +390,9 @@
       makeSentient: true
       name: Рядовой Специальных Операций
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTCombatant
 
 - type: job
   id: SpecOpsFighter
