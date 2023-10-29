@@ -1,5 +1,7 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+using Content.Shared.SS220.CCVars;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.SS220.BloomLight;
@@ -8,6 +10,7 @@ public sealed class BloomLightSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private BloomLightOverlay _overlay = default!;
 
@@ -16,24 +19,29 @@ public sealed class BloomLightSystem : EntitySystem
         base.Initialize();
 
         _overlay = new(this.EntityManager, _prototype);
-        _overlayManager.AddOverlay(_overlay);
+        _cfg.OnValueChanged(CCVars220.BloomLightingEnabled, SetOverlayEnabled, true);
     }
 
-    public void ToggleOverlay()
+    public void SetOverlayEnabled(bool enabled)
     {
-        if (_overlayManager.HasOverlay<BloomLightOverlay>())
+        var hasOverlay = _overlayManager.HasOverlay<BloomLightOverlay>();
+
+        if (enabled)
         {
-            _overlayManager.RemoveOverlay(_overlay);
+            if (!hasOverlay)
+                _overlayManager.AddOverlay(_overlay);
         }
         else
         {
-            _overlayManager.AddOverlay(_overlay);
+            if (hasOverlay)
+                _overlayManager.RemoveOverlay(_overlay);
         }
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _overlayManager.RemoveOverlay(_overlay);
+        SetOverlayEnabled(false);
+        _cfg.UnsubValueChanged(CCVars220.BloomLightingEnabled, SetOverlayEnabled);
     }
 }
