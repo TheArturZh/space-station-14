@@ -63,6 +63,7 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return;
 
+        // Игнорируем некоторые Airlock структуры
         var proto = MetaData(airlockUid).EntityPrototype;
         if (proto != null && proto.Parents != null)
         {
