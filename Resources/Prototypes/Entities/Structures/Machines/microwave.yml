@@ -51,6 +51,14 @@
 #    - key: enum.MicrowaveUiKey.Key
 #      type: MicrowaveBoundUserInterface
 ##SS220 remove default microwave end
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: Physics
   - type: Fixtures
     fixtures:
