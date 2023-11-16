@@ -80,17 +80,18 @@ public sealed class CustomFoVOverlay : Overlay
         {
             foreach (var (pos, entityEntry) in objMap)
             {
-                var direction = entityEntry.Comp.WorldPosition - eye.Position.Position;
-                var directionSign = new Vector2(MathF.Sign(direction.X), MathF.Sign(direction.Y));
+                var (worldPosition, worldRot, worldMatrix) = _transform.GetWorldPositionRotationMatrix(entityEntry.Comp, xformQuery);
+                var invWorldMatrix = worldMatrix.Invert();
+                var relativePos = invWorldMatrix.Transform(eye.Position.Position);
 
-                var (_, worldRot, worldMatrix) = _transform.GetWorldPositionRotationMatrix(entityEntry.Comp, xformQuery);
+                var directionSign = new Vector2(MathF.Sign(relativePos.X), MathF.Sign(relativePos.Y));
 
                 if (directionSign.Y != 0)
                 {
-                    var additionalAngle = directionSign.Y > 0 ? 180 : 0;
-                    //worldMatrix.Add(Matrix3.CreateRotation(Angle.FromDegrees(additionalAngle)), out var rotatedMatrix);
+                    var additionalAngle = directionSign.Y > 0 ? 0 : 180;
+                    var rotatedMatrix = Matrix3.CreateTransform(worldPosition, worldRot + Angle.FromDegrees(additionalAngle));
 
-                    handle.SetTransform(worldMatrix);
+                    handle.SetTransform(rotatedMatrix);
                     handle.DrawTexture(texture, new Vector2(-0.5f, -0.5f));
                 }
             }
