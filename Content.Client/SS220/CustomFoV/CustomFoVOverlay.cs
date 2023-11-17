@@ -95,25 +95,25 @@ public sealed class CustomFoVOverlay : Overlay
 
                 Vector2i GetDirRelativeToEdge(Vector2i edge)
                 {
-                    var invGridTransform = Matrix3.CreateTransform(worldPosition + edge * 0.75f, gridRot).Invert();
-                    var relativePos = invGridTransform.Transform(eye!.Position.Position);
+                    var invGridTransform = Matrix3.CreateTransform(worldPosition, gridRot).Invert();
+                    var relativePos = invGridTransform.Transform(eye!.Position.Position) + edge * 0.5f;
                     return new Vector2i(MathF.Sign(relativePos.X), MathF.Sign(relativePos.Y));
                 }
 
                 bool south_neighbour = objMap.ContainsKey(pos + Vector2i.Down);
-                bool south_shadowed = GetDirRelativeToEdge(Vector2i.Down).Y > 0;
+                bool south_shadowed = GetDirRelativeToEdge(Vector2i.Up).Y > 0;
                 bool south_obscured = south_shadowed || south_neighbour;
 
                 bool north_neighbour = objMap.ContainsKey(pos + Vector2i.Up);
-                bool north_shadowed = GetDirRelativeToEdge(Vector2i.Up).Y < 0;
+                bool north_shadowed = GetDirRelativeToEdge(Vector2i.Down).Y < 0;
                 bool north_obscured = north_shadowed || north_neighbour;
 
                 bool east_neighbour = objMap.ContainsKey(pos + Vector2i.Right);
-                bool east_shadowed = GetDirRelativeToEdge(Vector2i.Right).X < 0;
+                bool east_shadowed = GetDirRelativeToEdge(Vector2i.Left).X < 0;
                 bool east_obscured = east_shadowed || east_neighbour;
 
                 bool west_neighbour = objMap.ContainsKey(pos + Vector2i.Left);
-                bool west_shadowed = GetDirRelativeToEdge(Vector2i.Left).X > 0;
+                bool west_shadowed = GetDirRelativeToEdge(Vector2i.Right).X > 0;
                 bool west_obscured = west_shadowed || west_neighbour;
 
                 // SW corner
