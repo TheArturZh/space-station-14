@@ -13,7 +13,6 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
-    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     layers:
     - state: cabinet
     - state: fireaxe

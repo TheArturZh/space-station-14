@@ -10,7 +10,6 @@
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
-      drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
       layers:
       - state: frame
       - state: extinguisher
