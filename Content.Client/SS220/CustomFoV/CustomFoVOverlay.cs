@@ -27,7 +27,7 @@ public sealed class CustomFoVOverlay : Overlay
         _entMan = entMan;
         _prototype = prototype;
 
-        _fovCorner = new SpriteSpecifier.Texture(new("SS220/Misc/fovside.png"));
+        _fovCorner = new SpriteSpecifier.Texture(new("SS220/Misc/fov_corner.png"));
         _sprite = _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
         _transform = _entMan.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _shader = _prototype.Index<ShaderPrototype>("unshaded").InstanceUnique();
@@ -76,23 +76,62 @@ public sealed class CustomFoVOverlay : Overlay
 
         handle.UseShader(_shader);
 
-        foreach (var (_, objMap) in _entMapDict)
+        void DrawFoVCorner(Vector2 worldPosition, Angle worldRot)
+        {
+            if (handle is null || texture is null)
+                return;
+
+            var rotatedMatrix = Matrix3.CreateTransform(worldPosition, worldRot);
+            handle.SetTransform(rotatedMatrix);
+            handle.DrawTexture(texture, new Vector2(-0.5f, -0.5f));
+        }
+
+        foreach (var (gridUid, objMap) in _entMapDict)
         {
             foreach (var (pos, entityEntry) in objMap)
             {
-                var (worldPosition, worldRot, worldMatrix) = _transform.GetWorldPositionRotationMatrix(entityEntry.Comp, xformQuery);
-                var invWorldMatrix = worldMatrix.Invert();
-                var relativePos = invWorldMatrix.Transform(eye.Position.Position);
+                var (worldPosition, _, worldMatrix) = _transform.GetWorldPositionRotationMatrix(entityEntry.Comp, xformQuery);
+
+                var gridRot = _transform.GetWorldRotation(gridUid);
+                var invGridTransform = Matrix3.CreateTransform(worldPosition, gridRot).Invert();
+                var relativePos = invGridTransform.Transform(eye.Position.Position);
 
                 var directionSign = new Vector2(MathF.Sign(relativePos.X), MathF.Sign(relativePos.Y));
 
-                if (directionSign.Y != 0)
-                {
-                    var additionalAngle = directionSign.Y > 0 ? 0 : 180;
-                    var rotatedMatrix = Matrix3.CreateTransform(worldPosition, worldRot + Angle.FromDegrees(additionalAngle));
+                bool south_neighbour = objMap.ContainsKey(pos + Vector2i.Down);
+                bool south_obscured = directionSign.Y > 0 || south_neighbour;
 
-                    handle.SetTransform(rotatedMatrix);
-                    handle.DrawTexture(texture, new Vector2(-0.5f, -0.5f));
+                bool north_neighbour = objMap.ContainsKey(pos + Vector2i.Up);
+                bool north_obscured = directionSign.Y < 0 || north_neighbour;
+
+                bool east_neighbour = objMap.ContainsKey(pos + Vector2i.Right);
+                bool east_obscured = directionSign.X < 0 || east_neighbour;
+
+                bool west_neighbour = objMap.ContainsKey(pos + Vector2i.Left);
+                bool west_obscured = directionSign.X > 0 || west_neighbour;
+
+                // SW corner
+                if (south_obscured && west_obscured)
+                {
+                    DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(0));
+                }
+
+                // SE corner
+                if (south_obscured && east_obscured)
+                {
+                    DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(90));
+                }
+
+                // NE corner
+                if (north_obscured && east_obscured)
+                {
+                    DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(180));
+                }
+
+                // NW corner
+                if (north_obscured && west_obscured)
+                {
+                    DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(270));
                 }
             }
         }
