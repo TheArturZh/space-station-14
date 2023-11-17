@@ -32,7 +32,7 @@ public sealed class CustomFoVOverlay : Overlay
         _transform = _entMan.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _shader = _prototype.Index<ShaderPrototype>("unshaded").InstanceUnique();
 
-        ZIndex = (int) Shared.DrawDepth.DrawDepth.WallTops;
+        ZIndex = (int) Shared.DrawDepth.DrawDepth.WallFovOverlay;
     }
 
     private Dictionary<EntityUid, Dictionary<Vector2i, Entity<TransformComponent>>> _entMapDict = new();
@@ -95,7 +95,7 @@ public sealed class CustomFoVOverlay : Overlay
 
                 Vector2i GetDirRelativeToEdge(Vector2i edge)
                 {
-                    var invGridTransform = Matrix3.CreateTransform(worldPosition + edge * 0.5f, gridRot).Invert();
+                    var invGridTransform = Matrix3.CreateTransform(worldPosition + edge * 0.75f, gridRot).Invert();
                     var relativePos = invGridTransform.Transform(eye!.Position.Position);
                     return new Vector2i(MathF.Sign(relativePos.X), MathF.Sign(relativePos.Y));
                 }
