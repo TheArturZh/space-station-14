@@ -91,45 +91,51 @@ public sealed class CustomFoVOverlay : Overlay
             foreach (var (pos, entityEntry) in objMap)
             {
                 var (worldPosition, _, worldMatrix) = _transform.GetWorldPositionRotationMatrix(entityEntry.Comp, xformQuery);
-
                 var gridRot = _transform.GetWorldRotation(gridUid);
-                var invGridTransform = Matrix3.CreateTransform(worldPosition, gridRot).Invert();
-                var relativePos = invGridTransform.Transform(eye.Position.Position);
 
-                var directionSign = new Vector2(MathF.Sign(relativePos.X), MathF.Sign(relativePos.Y));
+                Vector2i GetDirRelativeToEdge(Vector2i edge)
+                {
+                    var invGridTransform = Matrix3.CreateTransform(worldPosition + edge * 0.5f, gridRot).Invert();
+                    var relativePos = invGridTransform.Transform(eye!.Position.Position);
+                    return new Vector2i(MathF.Sign(relativePos.X), MathF.Sign(relativePos.Y));
+                }
 
                 bool south_neighbour = objMap.ContainsKey(pos + Vector2i.Down);
-                bool south_obscured = directionSign.Y > 0 || south_neighbour;
+                bool south_shadowed = GetDirRelativeToEdge(Vector2i.Down).Y > 0;
+                bool south_obscured = south_shadowed || south_neighbour;
 
                 bool north_neighbour = objMap.ContainsKey(pos + Vector2i.Up);
-                bool north_obscured = directionSign.Y < 0 || north_neighbour;
+                bool north_shadowed = GetDirRelativeToEdge(Vector2i.Up).Y < 0;
+                bool north_obscured = north_shadowed || north_neighbour;
 
                 bool east_neighbour = objMap.ContainsKey(pos + Vector2i.Right);
-                bool east_obscured = directionSign.X < 0 || east_neighbour;
+                bool east_shadowed = GetDirRelativeToEdge(Vector2i.Right).X < 0;
+                bool east_obscured = east_shadowed || east_neighbour;
 
                 bool west_neighbour = objMap.ContainsKey(pos + Vector2i.Left);
-                bool west_obscured = directionSign.X > 0 || west_neighbour;
+                bool west_shadowed = GetDirRelativeToEdge(Vector2i.Left).X > 0;
+                bool west_obscured = west_shadowed || west_neighbour;
 
                 // SW corner
-                if (south_obscured && west_obscured)
+                if (south_obscured && west_obscured && !(!south_shadowed && !west_shadowed))
                 {
                     DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(0));
                 }
 
                 // SE corner
-                if (south_obscured && east_obscured)
+                if (south_obscured && east_obscured && !(!south_shadowed && !east_shadowed))
                 {
                     DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(90));
                 }
 
                 // NE corner
-                if (north_obscured && east_obscured)
+                if (north_obscured && east_obscured && !(!north_shadowed && !east_shadowed))
                 {
                     DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(180));
                 }
 
                 // NW corner
-                if (north_obscured && west_obscured)
+                if (north_obscured && west_obscured && !(!north_shadowed && !west_shadowed))
                 {
                     DrawFoVCorner(worldPosition, gridRot + Angle.FromDegrees(270));
                 }
