@@ -1,6 +1,8 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.SS220.CCVars;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.SS220.MapMigration;
@@ -10,16 +12,23 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
+    private bool _rotateDoors = false;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        //SubscribeLocalEvent<AirlockComponent, MapInitEvent>(OnMapInit);
+        _cfg.OnValueChanged(CCVars220.MigrationAlignDoors, value => { _rotateDoors = value; }, true);
+        SubscribeLocalEvent<AirlockComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnMapInit(Entity<AirlockComponent> entity, ref MapInitEvent args)
     {
+        if (!_rotateDoors)
+            return;
+
         RotateAirlock(entity);
     }
 
