@@ -86,8 +86,8 @@
   - type: LightBulb
     bulb: Bulb
     color: "#FFAA66" # SS220-lighting
-    lightEnergy: 1.0
-    lightRadius: 6
+    lightEnergy: 0.9 # SS220-lighting
+    lightRadius: 3.5 # SS220-lighting
     lightSoftness: 1.1
 
 - type: entity
