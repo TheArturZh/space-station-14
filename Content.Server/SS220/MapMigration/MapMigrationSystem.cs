@@ -1,3 +1,4 @@
+using Content.Server.GameTicking;
 using Content.Shared.Doors.Components;
 using Content.Shared.SS220.CCVars;
 using Content.Shared.Tag;
@@ -21,13 +22,16 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
         base.Initialize();
 
         _cfg.OnValueChanged(CCVars220.MigrationAlignDoors, value => { _rotateDoors = value; }, true);
-        SubscribeLocalEvent<AirlockComponent, MapInitEvent>(OnMapInit);
+        //SubscribeLocalEvent<AirlockComponent, PostGameMapLoad>(OnCompInit);
     }
 
-    private void OnMapInit(Entity<AirlockComponent> entity, ref MapInitEvent args)
+    private void OnCompInit(Entity<AirlockComponent> entity, ref PostGameMapLoad args)
     {
         if (!_rotateDoors)
             return;
+
+        //if (args.Map != Transform(entity).MapID)
+        //    return;
 
         RotateAirlock(entity);
     }

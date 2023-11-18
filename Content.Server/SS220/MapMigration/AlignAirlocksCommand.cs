@@ -1,22 +1,19 @@
 using Content.Server.Administration;
-using Content.Server.Power.Components;
 using Content.Shared.Administration;
-using Content.Shared.Construction;
 using Content.Shared.Doors.Components;
-using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 
-namespace Content.Server.Construction.Commands
+namespace Content.Server.SS220.MapMigration
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed class FixRotationsCommand : IConsoleCommand
+    public sealed class AlignAirlocksCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         // ReSharper disable once StringLiteralTypo
-        public string Command => "fixrotations";
-        public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
+        public string Command => "alignairlocks";
+        public string Description => "Aligns all airlocks with walls or neighburing airlocks";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
         public void Execute(IConsoleShell shell, string argsOther, string[] args)
@@ -25,10 +22,12 @@ namespace Content.Server.Construction.Commands
             EntityUid? gridId;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
+            var mapMigration = _entManager.EntitySysManager.GetEntitySystem<MapMigrationSystem_SS220>();
+
             switch (args.Length)
             {
                 case 0:
-                    if (player?.AttachedEntity is not {Valid: true} playerEntity)
+                    if (player?.AttachedEntity is not { Valid: true } playerEntity)
                     {
                         shell.WriteError("Only a player can run this command.");
                         return;
@@ -62,8 +61,7 @@ namespace Content.Server.Construction.Commands
                 return;
             }
 
-            var changed = 0;
-            var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
+            var processed = 0;
 
             foreach (var child in xformQuery.GetComponent(gridId.Value).ChildEntities)
             {
@@ -72,37 +70,18 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                var valid = false;
-
-                // Occluders should only count if the state of it right now is enabled.
-                // This prevents issues with edge firelocks.
-                if (_entManager.TryGetComponent<OccluderComponent>(child, out var occluder))
-                {
-                    valid |= occluder.Enabled;
-                }
-                // low walls & grilles
-                valid |= _entManager.HasComponent<SharedCanBuildWindowOnTopComponent>(child);
-                // cables
-                valid |= _entManager.HasComponent<CableComponent>(child);
-                // anything else that might need this forced
-                valid |= tagSystem.HasTag(child, "ForceFixRotations");
-                // override
-                valid &= !tagSystem.HasTag(child, "ForceNoFixRotations");
-                valid &= !_entManager.HasComponent<AirlockComponent>(child); //SS220 airlock-resprite
+                var valid = _entManager.HasComponent<AirlockComponent>(child);
 
                 if (!valid)
                     continue;
 
                 var childXform = xformQuery.GetComponent(child);
 
-                if (childXform.LocalRotation != Angle.Zero)
-                {
-                    childXform.LocalRotation = Angle.Zero;
-                    changed++;
-                }
+                mapMigration.RotateAirlock(child, gridId);
+                processed++;
             }
 
-            shell.WriteLine($"Changed {changed} entities. If things seem wrong, reconnect.");
+            shell.WriteLine($"Processed {processed} entities. If things seem wrong, reconnect.");
         }
     }
 }
