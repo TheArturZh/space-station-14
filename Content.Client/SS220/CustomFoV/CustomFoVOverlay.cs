@@ -70,6 +70,9 @@ public sealed class CustomFoVOverlay : Overlay
                 _entMapDict.Add(xform.GridUid.Value, gridDict);
             }
 
+            if (gridDict.ContainsKey(tile))
+                continue;
+
             var entityEntry = new Entity<TransformComponent>(entity, xform);
             gridDict.Add(tile, entityEntry);
         }
