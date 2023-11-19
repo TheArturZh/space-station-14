@@ -21,8 +21,13 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
     {
         base.Initialize();
 
-        _cfg.OnValueChanged(CCVars220.MigrationAlignDoors, value => { _rotateDoors = value; }, true);
-        //SubscribeLocalEvent<AirlockComponent, PostGameMapLoad>(OnCompInit);
+        _cfg.OnValueChanged(CCVars220.MigrationAlignDoors, value =>
+        {
+            _rotateDoors = value;
+
+            if (value)
+                SubscribeLocalEvent<AirlockComponent, PostGameMapLoad>(OnCompInit);
+        }, true);
     }
 
     private void OnCompInit(Entity<AirlockComponent> entity, ref PostGameMapLoad args)
@@ -30,10 +35,7 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
         if (!_rotateDoors)
             return;
 
-        //if (args.Map != Transform(entity).MapID)
-        //    return;
-
-        RotateAirlock(entity);
+        RotateDoor(entity);
     }
 
     private bool CheckTileOccupied(Vector2i pos, EntityUid gridUid, MapGridComponent grid)
@@ -64,7 +66,7 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
         return false;
     }
 
-    public void RotateAirlock(EntityUid airlockUid, EntityUid? gridUid = null)
+    public void RotateDoor(EntityUid airlockUid, EntityUid? gridUid = null)
     {
         var transform = Transform(airlockUid);
         if (!gridUid.HasValue)
@@ -76,8 +78,11 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return;
 
-        // Игнорируем некоторые Airlock структуры
+        // Игнорируем некоторые структуры
         var proto = MetaData(airlockUid).EntityPrototype;
+        if (proto.ID == "FirelockEdge")
+            return;
+
         if (proto != null && proto.Parents != null)
         {
             if (Array.IndexOf(proto.Parents, "BaseWindoor") > -1 ||
@@ -116,18 +121,6 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
                 _transform.SetLocalRotationNoLerp(airlockUid, Angle.FromDegrees(0), transform);
                 return;
             }
-        }
-    }
-
-    public void RotateAirlocksOnGrid(EntityUid gridUid)
-    {
-        if (!TryComp<MapGridComponent>(gridUid, out var grid))
-            return;
-
-        var airlockQuery = EntityQueryEnumerator<AirlockComponent>();
-        while (airlockQuery.MoveNext(out var airlockUid, out var airlockComp))
-        {
-            RotateAirlock(airlockUid, gridUid);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Content.Server.SS220.MapMigration
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         // ReSharper disable once StringLiteralTypo
-        public string Command => "alignairlocks";
-        public string Description => "Aligns all airlocks with walls or neighburing airlocks";
+        public string Command => "aligndoors";
+        public string Description => "Aligns all doors with walls or neighburing doors";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
         public void Execute(IConsoleShell shell, string argsOther, string[] args)
@@ -70,14 +70,14 @@ namespace Content.Server.SS220.MapMigration
                     continue;
                 }
 
-                var valid = _entManager.HasComponent<AirlockComponent>(child);
+                var valid = _entManager.HasComponent<DoorComponent>(child);
 
                 if (!valid)
                     continue;
 
                 var childXform = xformQuery.GetComponent(child);
 
-                mapMigration.RotateAirlock(child, gridId);
+                mapMigration.RotateDoor(child, gridId);
                 processed++;
             }
 
