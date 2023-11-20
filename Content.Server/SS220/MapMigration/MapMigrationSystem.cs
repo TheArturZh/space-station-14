@@ -80,7 +80,7 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
 
         // Игнорируем некоторые структуры
         var proto = MetaData(airlockUid).EntityPrototype;
-        if (proto.ID == "FirelockEdge")
+        if (proto?.ID == "FirelockEdge")
             return;
 
         if (proto != null && proto.Parents != null)
