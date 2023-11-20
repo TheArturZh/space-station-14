@@ -26,11 +26,11 @@ public sealed class MapMigrationSystem_SS220 : EntitySystem
             _rotateDoors = value;
 
             if (value)
-                SubscribeLocalEvent<AirlockComponent, PostGameMapLoad>(OnCompInit);
+                SubscribeLocalEvent<AirlockComponent, MapInitEvent>(OnCompInit);
         }, true);
     }
 
-    private void OnCompInit(Entity<AirlockComponent> entity, ref PostGameMapLoad args)
+    private void OnCompInit(Entity<AirlockComponent> entity, ref MapInitEvent args)
     {
         if (!_rotateDoors)
             return;

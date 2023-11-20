@@ -5,6 +5,7 @@
   name: firelock
   description: Apply crowbar.
   components:
+    - type: FoVOverlay # SS220 perspective-wall-fov
     - type: AtmosAlarmable
       syncWith:
         - FireAlarm
