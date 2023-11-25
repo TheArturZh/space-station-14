@@ -106,7 +106,6 @@
   - type: Transform
     noRot: false
   - type: Sprite
-    drawdepth: AboveFovOverlay #SS220 Perpective-wall-fov
     noRot: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
