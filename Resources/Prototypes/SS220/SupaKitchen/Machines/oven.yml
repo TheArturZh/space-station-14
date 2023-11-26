@@ -88,7 +88,7 @@
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine
-    board: StoveMachineCircuitboard
+    board: OvenMachineCircuitboard
   - type: ContainerContainer
     containers:
       cooking_machine_entity_container: !type:Container
@@ -100,14 +100,14 @@
     - Chef
 
 - type: entity
-  id: StoveMachineCircuitboard
+  id: OvenMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: stove machine board
+  name: oven machine board
   components:
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: KitchenStove
+      prototype: KitchenOven
       requirements:
         Capacitor: 1
       materialRequirements:
