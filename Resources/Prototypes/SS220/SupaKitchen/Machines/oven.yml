@@ -1,7 +1,7 @@
 - type: entity
-  id: KitchenStove
+  id: KitchenOven
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: stove
+  name: oven
   description: It's magic.
   components:
   - type: CookingInstrument
@@ -21,9 +21,21 @@
     visuals:
       enum.PowerDeviceVisuals.VisualState:
         enum.CookingMachineVisualizerLayers.Base:
-          Idle: { state: "stove_idle" }
-          Broken: { state: "stove_idle" }
-          Cooking: { state: "stove_cooking" }
+          Idle: { state: "oven_base" }
+          Broken: { state: "oven_damaged" }
+          Cooking: { state: "oven_base" }
+        oven_door:
+          Idle: { visible: true }
+          Broken: { visible: false }
+          Cooking: { visible: true }
+        oven_toggle:
+          Idle: { state: "oven_off" }
+          Broken: { state: "oven_off" }
+          Cooking: { state: "oven_on" }
+        oven_toggle_unshaded:
+          Idle: { visible: false }
+          Broken: { visible: false }
+          Cooking: { visible: true }
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -37,11 +49,19 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    sprite: SS220/Structures/Machines/stove.rsi
+    sprite: SS220/Structures/Machines/oven.rsi
+    offset: 0,-0.5
     snapCardinals: true
     layers:
-    - state: stove_idle
+    - state: oven_base
       map: ["enum.CookingMachineVisualizerLayers.Base"]
+    - state: oven_door_closed
+      map: ["oven_door"]
+    - state: oven_off
+      map: ["oven_toggle"]
+    - state: oven_on_unshaded
+      map: ["oven_toggle_unshaded"]
+      shader: unshaded
   - type: Destructible
     thresholds:
     - trigger:
