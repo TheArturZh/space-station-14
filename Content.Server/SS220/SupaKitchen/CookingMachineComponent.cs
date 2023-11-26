@@ -67,6 +67,12 @@ public sealed partial class CookingMachineComponent : Component
     public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
     #endregion
 
+
+    [DataField]
+    public bool AltActivationUI = false;
+    [DataField]
+    public bool UseEntityStorage = false;
+
     public Container Storage = default!;
 }
 

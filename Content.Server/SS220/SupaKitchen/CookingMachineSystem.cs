@@ -3,6 +3,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -34,6 +35,7 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly CookingInstrumentSystem _cookingInstrument = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
 
     public override void Initialize()
     {
@@ -54,9 +56,14 @@ public sealed class CookingMachineSystem : EntitySystem
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineSelectCookTimeMessage>(OnSelectTime);
     }
 
+
     private void OnInit(EntityUid uid, CookingMachineComponent component, ComponentInit ags)
     {
-        component.Storage = _container.EnsureContainer<Container>(uid, "cooking_machine_entity_container");
+        if (component.UseEntityStorage)
+            component.Storage = _container.EnsureContainer<Container>(uid, EntityStorageSystem.ContainerName);
+        else
+            component.Storage = _container.EnsureContainer<Container>(uid, "cooking_machine_entity_container");
+
     }
 
     private void OnPowerChanged(EntityUid uid, CookingMachineComponent component, ref PowerChangedEvent args)
@@ -65,7 +72,8 @@ public sealed class CookingMachineSystem : EntitySystem
         {
             SetAppearance(uid, CookingMachineVisualState.Idle, component);
             StopCooking(uid, component);
-            _sharedContainer.EmptyContainer(component.Storage);
+            if (!component.UseEntityStorage)
+                _sharedContainer.EmptyContainer(component.Storage);
         }
         UpdateUserInterfaceState(uid, component);
     }
@@ -73,6 +81,9 @@ public sealed class CookingMachineSystem : EntitySystem
     private void OnInteractUsing(EntityUid uid, CookingMachineComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
+            return;
+
+        if (component.UseEntityStorage)
             return;
 
         if (!(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
@@ -116,7 +127,12 @@ public sealed class CookingMachineSystem : EntitySystem
         component.Broken = true;
         SetAppearance(uid, CookingMachineVisualState.Broken, component);
         StopCooking(uid, component);
-        _sharedContainer.EmptyContainer(component.Storage);
+
+        if (component.UseEntityStorage)
+            _entityStorage.OpenStorage(uid);
+        else
+            _sharedContainer.EmptyContainer(component.Storage);
+
         UpdateUserInterfaceState(uid, component);
     }
 
@@ -137,7 +153,9 @@ public sealed class CookingMachineSystem : EntitySystem
         if (!HasContents(component) || component.Active)
             return;
 
-        _sharedContainer.EmptyContainer(component.Storage);
+        if (!component.UseEntityStorage)
+            _sharedContainer.EmptyContainer(component.Storage);
+
         _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVolume(-2));
         UpdateUserInterfaceState(uid, component);
     }
@@ -303,7 +321,11 @@ public sealed class CookingMachineSystem : EntitySystem
                 }
             }
 
-            _sharedContainer.EmptyContainer(component.Storage);
+            if (component.UseEntityStorage)
+                _entityStorage.OpenStorage(uid);
+            else
+                _sharedContainer.EmptyContainer(component.Storage);
+
             StopCooking(uid, component);
             _audio.PlayPvs(component.FoodDoneSound, uid, AudioParams.Default.WithVolume(-1));
         }

@@ -4,14 +4,29 @@
   name: oven
   description: It's magic.
   components:
+  - type: Transform
+    noRot: true
+
+  # Make it behave like a closet
+  - type: EntityStorage
+  - type: EntityStorageVisuals
+    #stateBaseClosed: generic
+    stateDoorOpen: oven_door_open
+    stateDoorClosed: oven_door_closed
+  - type: PlaceableSurface
+    placeCentered: true
+    isPlaceable: false
+
   - type: CookingInstrument
     instrumentType: oven
   - type: CookingMachine
     beginCookingSound: "/Audio/SS220/SupaKitchen/oven/oven_loop_start.ogg"
     loopingSound: "/Audio/SS220/SupaKitchen/oven/oven_loop_mid.ogg"
     foodDoneSound: "/Audio/SS220/SupaKitchen/ring.ogg"
+    useEntityStorage: true
   - type: ActivatableUI
     key: enum.CookingMachineUiKey.Key
+    altentativeOnly: true
   - type: UserInterface
     interfaces:
     - key: enum.CookingMachineUiKey.Key
@@ -24,7 +39,7 @@
           Idle: { state: "oven_base" }
           Broken: { state: "oven_damaged" }
           Cooking: { state: "oven_base" }
-        oven_door:
+        enum.StorageVisualLayers.Door:
           Idle: { visible: true }
           Broken: { visible: false }
           Cooking: { visible: true }
@@ -56,7 +71,7 @@
     - state: oven_base
       map: ["enum.CookingMachineVisualizerLayers.Base"]
     - state: oven_door_closed
-      map: ["oven_door"]
+      map: ["enum.StorageVisualLayers.Door"]
     - state: oven_off
       map: ["oven_toggle"]
     - state: oven_on_unshaded
@@ -79,6 +94,7 @@
       cooking_machine_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+      entity_storage: !type:Container
   - type: GuideHelp
     guides:
     - Chef
