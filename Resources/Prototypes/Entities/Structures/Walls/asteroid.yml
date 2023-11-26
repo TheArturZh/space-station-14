@@ -8,6 +8,8 @@
   description: A rocky asteroid.
   components:
   - type: FoVOverlay # SS220 perspective-wall-fov
+  - type: PlacementReplacement
+    key: walls
   - type: SoundOnGather
   - type: Gatherable
     whitelist:
