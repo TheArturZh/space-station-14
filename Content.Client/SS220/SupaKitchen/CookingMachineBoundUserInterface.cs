@@ -81,6 +81,8 @@ namespace Content.Client.SS220.SupaKitchen.UI
                 : cState.CurrentCookTime.ToString();
             _menu.CookTimeInfoLabel.Text = Loc.GetString("cooking-machine-bound-user-interface-cook-time-label",
                                                          ("time", cookTime));
+
+            _menu.EjectButton.Visible = !cState.EjectUnavailable;
         }
 
         private void RefreshContentsDisplay(EntityUid[] containedSolids)

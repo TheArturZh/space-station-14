@@ -53,14 +53,16 @@ public sealed class CookingMachineUpdateUserInterfaceState : BoundUserInterfaceS
     public bool IsMachineBusy;
     public int ActiveButtonIndex;
     public uint CurrentCookTime;
+    public bool EjectUnavailable;
 
     public CookingMachineUpdateUserInterfaceState(NetEntity[] containedSolids,
-        bool isMachineBusy, int activeButtonIndex, uint currentCookTime)
+        bool isMachineBusy, int activeButtonIndex, uint currentCookTime, bool ejectUnavailable)
     {
         ContainedSolids = containedSolids;
         IsMachineBusy = isMachineBusy;
         ActiveButtonIndex = activeButtonIndex;
         CurrentCookTime = currentCookTime;
+        EjectUnavailable = ejectUnavailable;
     }
 
 }

@@ -4,8 +4,6 @@ using Content.Shared.SS220.SupaKitchen;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 
 namespace Content.Server.SS220.SupaKitchen;
 
