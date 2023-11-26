@@ -16,6 +16,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.SS220.SupaKitchen;
+using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -48,6 +49,8 @@ public sealed class CookingMachineSystem : EntitySystem
         SubscribeLocalEvent<CookingMachineComponent, BreakageEventArgs>(OnBreak);
         SubscribeLocalEvent<CookingMachineComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<CookingMachineComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+        SubscribeLocalEvent<CookingMachineComponent, StorageAfterOpenEvent>(OnStorageOpen);
+        SubscribeLocalEvent<CookingMachineComponent, StorageAfterCloseEvent>(OnStorageClosed);
 
         // UI event listeners
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineStartCookMessage>((u, c, m) => StartCooking(u, c, m.Session.AttachedEntity));
@@ -56,6 +59,16 @@ public sealed class CookingMachineSystem : EntitySystem
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineSelectCookTimeMessage>(OnSelectTime);
     }
 
+    private void OnStorageOpen(EntityUid uid, CookingMachineComponent component, StorageAfterOpenEvent args)
+    {
+        StopCooking(uid, component);
+        UpdateUserInterfaceState(uid, component);
+    }
+
+    private void OnStorageClosed(EntityUid uid, CookingMachineComponent component, StorageAfterCloseEvent args)
+    {
+        UpdateUserInterfaceState(uid, component);
+    }
 
     private void OnInit(EntityUid uid, CookingMachineComponent component, ComponentInit ags)
     {
@@ -125,8 +138,8 @@ public sealed class CookingMachineSystem : EntitySystem
     private void OnBreak(EntityUid uid, CookingMachineComponent component, BreakageEventArgs args)
     {
         component.Broken = true;
-        SetAppearance(uid, CookingMachineVisualState.Broken, component);
         StopCooking(uid, component);
+        SetAppearance(uid, CookingMachineVisualState.Broken, component);
 
         if (component.UseEntityStorage)
             _entityStorage.OpenStorage(uid);
@@ -206,7 +219,8 @@ public sealed class CookingMachineSystem : EntitySystem
             GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
             component.Active,
             component.CurrentCookTimeButtonIndex,
-            component.CookingTimer
+            component.CookingTimer,
+            component.UseEntityStorage
         ));
     }
 
