@@ -132,18 +132,18 @@
     FoodMeatLizard: 1
     FoodKebabSkewer: 1
 
-- type: cookingRecipe
-  id: RecipeFoodMealTaco
-  name: taco recipe
-  result: FoodMealTaco
-  instrumentType: grill
-  time: 10
-  solids:
-    FoodDoughSlice: 1
-    FoodTomato: 1
-    FoodOnionSlice: 2
-    FoodCheeseSlice: 1
-    FoodMeatCutlet: 1
+# - type: cookingRecipe
+#   id: RecipeFoodMealTaco
+#   name: taco recipe
+#   result: FoodMealTaco
+#   instrumentType: grill
+#   time: 10
+#   solids:
+#     FoodDoughSlice: 1
+#     FoodTomato: 1
+#     FoodOnionSlice: 2
+#     FoodCheeseSlice: 1
+#     FoodMeatCutlet: 1
 
 - type: cookingRecipe
   id: RecipeFoodBakedChevreChaud
