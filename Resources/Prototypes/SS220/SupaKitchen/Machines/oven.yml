@@ -89,6 +89,9 @@
     powerLoad: 400
   - type: Machine
     board: OvenMachineCircuitboard
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - entity_storage
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
