@@ -55,6 +55,9 @@
     powerLoad: 400
   - type: Machine
     board: GrillMachineCircuitboard
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - cooking_machine_entity_container
   - type: ContainerContainer
     containers:
       cooking_machine_entity_container: !type:Container
