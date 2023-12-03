@@ -19,10 +19,12 @@ using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using System.Linq;
 
 namespace Content.Server.SS220.SupaKitchen;
+
 public sealed class CookingMachineSystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
@@ -287,8 +289,8 @@ public sealed class CookingMachineSystem : EntitySystem
 
         SetAppearance(uid, CookingMachineVisualState.Cooking, component);
 
-        component.PlayingStream =
-            _audio.PlayPvs(component.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+        if (_audio.PlayPvs(component.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5)) is { } stream)
+            component.PlayingStream = stream.Entity;
 
         component.Active = true;
     }
@@ -300,7 +302,7 @@ public sealed class CookingMachineSystem : EntitySystem
         component.CurrentlyCookingRecipe = (null, 0);
         UpdateUserInterfaceState(uid, component);
         SetAppearance(uid, CookingMachineVisualState.Idle, component);
-        component.PlayingStream?.Stop();
+        component.PlayingStream = _audio.Stop(uid);
     }
 
     public override void Update(float frameTime)

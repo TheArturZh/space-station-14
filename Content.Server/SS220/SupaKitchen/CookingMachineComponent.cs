@@ -60,7 +60,7 @@ public sealed partial class CookingMachineComponent : Component
     [DataField]
     public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
-    public IPlayingAudioStream? PlayingStream { get; set; }
+    public EntityUid? PlayingStream { get; set; }
     [DataField]
     public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
     #endregion

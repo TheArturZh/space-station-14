@@ -7,6 +7,7 @@ using Robust.Shared.Containers;
 using System.Linq;
 
 namespace Content.Server.SS220.SupaKitchen;
+
 public sealed class CookingInstrumentSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
