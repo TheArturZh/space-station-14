@@ -145,6 +145,8 @@ namespace Content.Client.Options.UI.Tabs
             ShowHeldItemCheckBox.OnToggled += OnCheckBoxToggled;
             ShowCombatModeIndicatorsCheckBox.OnToggled += OnCheckBoxToggled;
             ShowLoocAboveHeadCheckBox.OnToggled += OnCheckBoxToggled;
+            FancySpeechBubblesCheckBox.OnToggled += OnCheckBoxToggled;
+            FancyNameBackgroundsCheckBox.OnToggled += OnCheckBoxToggled;
             IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
             ParallaxLowQualityCheckBox.OnToggled += OnCheckBoxToggled;
@@ -165,6 +167,8 @@ namespace Content.Client.Options.UI.Tabs
             ShowHeldItemCheckBox.Pressed = _cfg.GetCVar(CCVars.HudHeldItemShow);
             ShowCombatModeIndicatorsCheckBox.Pressed = _cfg.GetCVar(CCVars.CombatModeIndicatorsPointShow);
             ShowLoocAboveHeadCheckBox.Pressed = _cfg.GetCVar(CCVars.LoocAboveHeadShow);
+            FancySpeechBubblesCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatEnableFancyBubbles);
+            FancyNameBackgroundsCheckBox.Pressed = _cfg.GetCVar(CCVars.ChatFancyNameBackground);
             ViewportWidthSlider.Value = _cfg.GetCVar(CCVars.ViewportWidth);
             BloomLightingCheckBox.Pressed = _cfg.GetCVar(CCVars220.BloomLightingEnabled);  // SS220 Grafon-lighting
 
@@ -214,6 +218,8 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SetCVar(CCVars.HudHeldItemShow, ShowHeldItemCheckBox.Pressed);
             _cfg.SetCVar(CCVars.CombatModeIndicatorsPointShow, ShowCombatModeIndicatorsCheckBox.Pressed);
             _cfg.SetCVar(CCVars.LoocAboveHeadShow, ShowLoocAboveHeadCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.ChatEnableFancyBubbles, FancySpeechBubblesCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.ChatFancyNameBackground, FancyNameBackgroundsCheckBox.Pressed);
             _cfg.SetCVar(CCVars.HudFpsCounterVisible, FpsCounterCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ViewportWidth, (int) ViewportWidthSlider.Value);
             _cfg.SetCVar(CCVars220.BloomLightingEnabled, BloomLightingCheckBox.Pressed); // SS220 Grafon-lighting
@@ -253,6 +259,8 @@ namespace Content.Client.Options.UI.Tabs
             var isShowHeldItemSame = ShowHeldItemCheckBox.Pressed == _cfg.GetCVar(CCVars.HudHeldItemShow);
             var isCombatModeIndicatorsSame = ShowCombatModeIndicatorsCheckBox.Pressed == _cfg.GetCVar(CCVars.CombatModeIndicatorsPointShow);
             var isLoocShowSame = ShowLoocAboveHeadCheckBox.Pressed == _cfg.GetCVar(CCVars.LoocAboveHeadShow);
+            var isFancyChatSame = FancySpeechBubblesCheckBox.Pressed == _cfg.GetCVar(CCVars.ChatEnableFancyBubbles);
+            var isFancyBackgroundSame = FancyNameBackgroundsCheckBox.Pressed == _cfg.GetCVar(CCVars.ChatFancyNameBackground);
             var isFpsCounterVisibleSame = FpsCounterCheckBox.Pressed == _cfg.GetCVar(CCVars.HudFpsCounterVisible);
             var isWidthSame = (int) ViewportWidthSlider.Value == _cfg.GetCVar(CCVars.ViewportWidth);
             var isLayoutSame = HudLayoutOption.SelectedMetadata is string opt && opt == _cfg.GetCVar(CCVars.UILayout);
@@ -271,6 +279,8 @@ namespace Content.Client.Options.UI.Tabs
                                    isShowHeldItemSame &&
                                    isCombatModeIndicatorsSame &&
                                    isLoocShowSame &&
+                                   isFancyChatSame &&
+                                   isFancyBackgroundSame &&
                                    isFpsCounterVisibleSame &&
                                    isWidthSame &&
                                    isLayoutSame &&
