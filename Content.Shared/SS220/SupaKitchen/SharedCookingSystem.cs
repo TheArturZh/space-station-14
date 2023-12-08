@@ -1,14 +1,12 @@
-// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.SS220.SupaKitchen;
 using Robust.Shared.Containers;
 using System.Linq;
 
-namespace Content.Server.SS220.SupaKitchen;
+namespace Content.Shared.SS220.SupaKitchen;
 
-public sealed class CookingInstrumentSystem : EntitySystem
+public abstract class SharedCookingSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SupaRecipeManager _recipeManager = default!;
@@ -26,14 +24,55 @@ public sealed class CookingInstrumentSystem : EntitySystem
         uint cookingTimer
         )
     {
+        return CanSatisfyRecipe(component.InstrumentType, component.IgnoreTime ? 0 : cookingTimer, recipe, solids, reagents);
+    }
+
+    public void TryAddIngredientToDicts(
+        Dictionary<string, int> solidsDict,
+        Dictionary<string, FixedPoint2> reagentDict,
+        EntityUid item
+        )
+    {
+        var metaData = MetaData(item); //this still begs for cooking refactor
+        if (metaData.EntityPrototype == null)
+            return;
+
+        if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
+            solidsDict[metaData.EntityPrototype.ID]++;
+        else
+            solidsDict.Add(metaData.EntityPrototype.ID, 1);
+
+        if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
+            return;
+
+        foreach (var (_, solution) in solMan.Solutions)
+        {
+            foreach (var (reagent, quantity) in solution.Contents)
+            {
+                if (reagentDict.ContainsKey(reagent.Prototype))
+                    reagentDict[reagent.Prototype] += quantity;
+                else
+                    reagentDict.Add(reagent.Prototype, quantity);
+            }
+        }
+    }
+
+    public static (CookingRecipePrototype, int) CanSatisfyRecipe(
+        string instrumentType,
+        uint? cookingTimer,
+        CookingRecipePrototype recipe,
+        Dictionary<string, int> solids,
+        Dictionary<string, FixedPoint2> reagents
+        )
+    {
         var portions = 0;
 
-        if (component.InstrumentType != recipe.InstrumentType)
+        if (instrumentType != recipe.InstrumentType)
             return (recipe, 0);
 
         if (
+            cookingTimer is not null &&
             cookingTimer % recipe.CookTime != 0
-            && !component.IgnoreTime
             )
         {
             //can't be a multiple of this recipe
@@ -67,8 +106,8 @@ public sealed class CookingInstrumentSystem : EntitySystem
         }
 
         //cook only as many of those portions as time allows
-        if (!component.IgnoreTime)
-            portions = (int) Math.Min(portions, cookingTimer / recipe.CookTime);
+        if (cookingTimer is uint cookingTimerValid)
+            portions = (int) Math.Min(portions, cookingTimerValid / recipe.CookTime);
 
 
         return (recipe, portions);
@@ -142,5 +181,16 @@ public sealed class CookingInstrumentSystem : EntitySystem
     {
         return _recipeManager.Recipes.Select(r =>
             CanSatisfyRecipe(component, r, solidsDict, reagentDict, cookingTimer)).FirstOrDefault(r => r.Item2 > 0);
+    }
+
+    public (CookingRecipePrototype, int) GetSatisfiedPortionedRecipe(
+        string instrumentType,
+        Dictionary<string, int> solidsDict,
+        Dictionary<string, FixedPoint2> reagentDict,
+        uint? cookingTimer
+        )
+    {
+        return _recipeManager.Recipes.Select(r =>
+            CanSatisfyRecipe(instrumentType, cookingTimer, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
     }
 }

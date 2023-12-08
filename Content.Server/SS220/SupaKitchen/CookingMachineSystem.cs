@@ -34,7 +34,7 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly CookingInstrumentSystem _cookingInstrument = default!;
+    [Dependency] private readonly CookingSystem _cooking = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
@@ -279,7 +279,7 @@ public sealed class CookingMachineSystem : EntitySystem
         }
 
         // Check recipes
-        var portionedRecipe = _cookingInstrument.GetSatisfiedPortionedRecipe(
+        var portionedRecipe = _cooking.GetSatisfiedPortionedRecipe(
             cookingInstrument, solidsDict, reagentDict, component.CookingTimer);
 
         _audio.PlayPvs(component.BeginCookingSound, uid);
@@ -331,7 +331,7 @@ public sealed class CookingMachineSystem : EntitySystem
                 var coords = Transform(uid).Coordinates;
                 for (var i = 0; i < component.CurrentlyCookingRecipe.Item2; i++)
                 {
-                    _cookingInstrument.SubtractContents(component.Storage, component.CurrentlyCookingRecipe.Item1);
+                    _cooking.SubtractContents(component.Storage, component.CurrentlyCookingRecipe.Item1);
                     Spawn(component.CurrentlyCookingRecipe.Item1.Result, coords);
                 }
             }

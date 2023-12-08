@@ -1,4 +1,6 @@
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.SS220.SupaKitchen;
 using Robust.Server.Containers;
@@ -11,6 +13,7 @@ public sealed class FoodIngredientSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly CookingSystem _cooking = default!;
 
     public override void Initialize()
     {
@@ -79,7 +82,33 @@ public sealed class FoodIngredientSystem : EntitySystem
             return false;
 
         _container.Insert(add.Owner, addTo.Comp.IngredientContainer);
-        UpdateIngredientName(addTo);
+
+        // TODO: Assembly support for cooking methods (adding main item to dict via method should automatically add ingredients)
+        // TODO: "Cook item" method, that focuses on singular item instead of container
+        // TODO: Extra item support (add as ingredients, ensure FoodIngredientComponent)
+        // Recipe check
+        var solidsDict = new Dictionary<string, int>();
+        var reagentDict = new Dictionary<string, FixedPoint2>();
+
+        // Add main item to solids
+        _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, addTo);
+
+        foreach (var ingredient in addTo.Comp.IngredientContainer.ContainedEntities)
+        {
+            _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, ingredient);
+        }
+
+        var portionedRecipe = _cooking.GetSatisfiedPortionedRecipe(
+            string.Empty, solidsDict, reagentDict, null);
+
+        if (portionedRecipe.Item1 != null)
+        {
+            // swap entity and transfer ingredients
+        }
+        else
+        {
+            UpdateIngredientName(addTo);
+        }
 
         return true;
     }
