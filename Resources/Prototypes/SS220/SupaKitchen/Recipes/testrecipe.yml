@@ -2,8 +2,7 @@
   id: RecipeBunTest
   name: bun recipe
   result: FoodBreadBun
-  instrumentType: microwave
-  time: 5
+  time: 0
   solids:
     FoodDough: 1
     FoodApple: 1

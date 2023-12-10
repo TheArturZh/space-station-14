@@ -144,7 +144,7 @@ public sealed partial class GuideCookingRecipeEmbed : BoxContainer, IDocumentTag
         ProductsLabel.SetMarkup(Loc.GetString("guidebook-cooking-recipes-ingredient-display",
             ("reagent", product.Name), ("ratio", 1)));
 
-        if (!_prototype.TryIndex<CookingInstrumentTypePrototype>(recipe.InstrumentType, out var instrumentProto))
+        if (recipe.InstrumentType is null || !_prototype.TryIndex<CookingInstrumentTypePrototype>(recipe.InstrumentType, out var instrumentProto))
             return;
 
         var instrumentMsg = new FormattedMessage();

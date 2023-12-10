@@ -2,6 +2,8 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Shared.SS220.SupaKitchen;
@@ -27,38 +29,95 @@ public abstract class SharedCookingSystem : EntitySystem
         return CanSatisfyRecipe(component.InstrumentType, component.IgnoreTime ? 0 : cookingTimer, recipe, solids, reagents);
     }
 
-    public void TryAddIngredientToDicts(
+    public bool TryAddIngredientToDicts(
         Dictionary<string, int> solidsDict,
         Dictionary<string, FixedPoint2> reagentDict,
-        EntityUid item
-        )
+        EntityUid item,
+        bool recursive)
     {
         var metaData = MetaData(item); //this still begs for cooking refactor
         if (metaData.EntityPrototype == null)
-            return;
+            return false;
 
-        if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
-            solidsDict[metaData.EntityPrototype.ID]++;
+        var id = metaData.EntityPrototype.ID;
+
+        if (solidsDict.ContainsKey(id))
+            solidsDict[id]++;
         else
-            solidsDict.Add(metaData.EntityPrototype.ID, 1);
+            solidsDict.Add(id, 1);
 
-        if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
-            return;
-
-        foreach (var (_, solution) in solMan.Solutions)
+        if (TryComp<SolutionContainerManagerComponent>(item, out var solMan))
         {
-            foreach (var (reagent, quantity) in solution.Contents)
+            foreach (var (_, solution) in solMan.Solutions)
             {
-                if (reagentDict.ContainsKey(reagent.Prototype))
-                    reagentDict[reagent.Prototype] += quantity;
-                else
-                    reagentDict.Add(reagent.Prototype, quantity);
+                foreach (var (reagent, quantity) in solution.Contents)
+                {
+                    if (reagentDict.ContainsKey(reagent.Prototype))
+                        reagentDict[reagent.Prototype] += quantity;
+                    else
+                        reagentDict.Add(reagent.Prototype, quantity);
+                }
             }
         }
+
+        if (recursive && TryComp<FoodIngredientComponent>(item, out var ingredientComponent))
+        {
+            foreach (var ingredient in ingredientComponent.IngredientContainer.ContainedEntities)
+            {
+                TryAddIngredientToDicts(solidsDict, reagentDict, ingredient, true);
+            }
+        }
+
+        return true;
+    }
+
+    public bool TryCookContainerByRecipe(Container storage, CookingRecipePrototype recipe, [NotNullWhen(true)] out EntityUid? result)
+    {
+        if (storage.ContainedEntities.Count == 0)
+        {
+            result = null;
+            return false;
+        }
+
+        var anyEnt = storage.ContainedEntities[0];
+        var coords = Transform(anyEnt).Coordinates;
+
+        SubtractContents(storage, recipe);
+        result = Spawn(recipe.Result, coords);
+        return true;
+    }
+
+    public bool TryCookEntityByRecipe(EntityUid entityToCook, CookingRecipePrototype recipe, [NotNullWhen(true)] out EntityUid? result)
+    {
+        var coords = Transform(entityToCook).Coordinates;
+
+        EntityManager.DeleteEntity(entityToCook);
+        result = Spawn(recipe.Result, coords);
+        return true;
+    }
+
+    public bool TryCookEntity(EntityUid entityToCook, string? instrumentType, [NotNullWhen(true)] out EntityUid? result)
+    {
+        result = null;
+
+        var solidsDict = new Dictionary<string, int>();
+        var reagentDict = new Dictionary<string, FixedPoint2>();
+        if (!TryAddIngredientToDicts(solidsDict, reagentDict, entityToCook, true))
+            return false;
+
+        var portionedRecipe = GetSatisfiedPortionedRecipe(
+            instrumentType, solidsDict, reagentDict, null);
+        if (portionedRecipe.Item1 == null)
+            return false;
+
+        var coords = Transform(entityToCook).Coordinates;
+        EntityManager.DeleteEntity(entityToCook);
+        result = Spawn(portionedRecipe.Item1.Result, coords);
+        return true;
     }
 
     public static (CookingRecipePrototype, int) CanSatisfyRecipe(
-        string instrumentType,
+        string? instrumentType,
         uint? cookingTimer,
         CookingRecipePrototype recipe,
         Dictionary<string, int> solids,
@@ -184,7 +243,7 @@ public abstract class SharedCookingSystem : EntitySystem
     }
 
     public (CookingRecipePrototype, int) GetSatisfiedPortionedRecipe(
-        string instrumentType,
+        string? instrumentType,
         Dictionary<string, int> solidsDict,
         Dictionary<string, FixedPoint2> reagentDict,
         uint? cookingTimer

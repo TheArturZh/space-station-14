@@ -254,28 +254,7 @@ public sealed class CookingMachineSystem : EntitySystem
                 return;
             }
 
-            var metaData = MetaData(item); //this still begs for cooking refactor
-            if (metaData.EntityPrototype == null)
-                continue;
-
-            if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
-                solidsDict[metaData.EntityPrototype.ID]++;
-            else
-                solidsDict.Add(metaData.EntityPrototype.ID, 1);
-
-            if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
-                continue;
-
-            foreach (var (_, solution) in solMan.Solutions)
-            {
-                foreach (var (reagent, quantity) in solution.Contents)
-                {
-                    if (reagentDict.ContainsKey(reagent.Prototype))
-                        reagentDict[reagent.Prototype] += quantity;
-                    else
-                        reagentDict.Add(reagent.Prototype, quantity);
-                }
-            }
+            _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, item, true);
         }
 
         // Check recipes
@@ -302,7 +281,7 @@ public sealed class CookingMachineSystem : EntitySystem
         component.CurrentlyCookingRecipe = (null, 0);
         UpdateUserInterfaceState(uid, component);
         SetAppearance(uid, CookingMachineVisualState.Idle, component);
-        component.PlayingStream = _audio.Stop(uid);
+        component.PlayingStream = _audio.Stop(component.PlayingStream);
     }
 
     public override void Update(float frameTime)
@@ -328,11 +307,9 @@ public sealed class CookingMachineSystem : EntitySystem
 
             if (component.CurrentlyCookingRecipe.Item1 != null)
             {
-                var coords = Transform(uid).Coordinates;
                 for (var i = 0; i < component.CurrentlyCookingRecipe.Item2; i++)
                 {
-                    _cooking.SubtractContents(component.Storage, component.CurrentlyCookingRecipe.Item1);
-                    Spawn(component.CurrentlyCookingRecipe.Item1.Result, coords);
+                    _cooking.TryCookContainerByRecipe(component.Storage, component.CurrentlyCookingRecipe.Item1, out _);
                 }
             }
 
@@ -365,6 +342,7 @@ public sealed class CookingMachineSystem : EntitySystem
 
             if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                 continue;
+
             foreach (var (_, solution) in solutions.Solutions)
             {
                 if (solution.Temperature > machine.TemperatureUpperThreshold)
