@@ -60,15 +60,9 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Core",
             "Marathon",
-            "Kettle",
             "Gemini",
 			"MeteorArena",
 			"Atlas",
-
-            // Corvax Maps
-            "CorvaxAvrite",
-            "CorvaxDelta",
-            "CorvaxIshimura",
 
             // SS220 Maps
             "220Delta",
@@ -79,6 +73,7 @@ namespace Content.IntegrationTests.Tests
             "220Gate",
             "Nox",
             "Snout",
+            "220Avrite",
         };
 
         /// <summary>

@@ -284,7 +284,6 @@
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
-      - WeaponTaser
       - WeaponEnergyCrossbow #SS220 Energy Crossbow
 
 - type: entity
@@ -373,10 +372,12 @@
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
       - AnomalyVesselCircuitboard
+      - AnomalyVesselExperimentalCircuitboard
       - AnomalySynchronizerCircuitboard
       - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - ArtifactCrusherMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
@@ -591,7 +592,6 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponLaserCarbinePractice
-      - WeaponTaser
       - WeaponXrayCannon
       - WeaponEnergyCrossbow #SS220 Energy Crossbow
   - type: MaterialStorage
