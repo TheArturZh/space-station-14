@@ -75,14 +75,13 @@ public sealed class FoodIngredientSystem : EntitySystem
             _metaData.SetEntityName(entity, newName);
     }
 
-    public bool TryAddIngredient(Entity<FoodIngredientComponent> addTo, Entity<FoodIngredientComponent> add, EntityUid? user = null)
+    public bool TryAddIngredient(Entity<FoodIngredientComponent> addTo, Entity<FoodIngredientComponent> add, bool tryCook = true, EntityUid? user = null)
     {
         if (_openable.IsClosed(add, user) || _openable.IsClosed(addTo, user))
             return false;
 
         _container.Insert(add.Owner, addTo.Comp.IngredientContainer);
 
-        // TODO: "Cook item" method, that focuses on singular item instead of container
         // TODO: Extra item support (add as ingredients, ensure FoodIngredientComponent)
         // Recipe check
         var solidsDict = new Dictionary<string, int>();
@@ -93,7 +92,7 @@ public sealed class FoodIngredientSystem : EntitySystem
         //var portionedRecipe = _cooking.GetSatisfiedPortionedRecipe(
         //    string.Empty, solidsDict, reagentDict, null);
 
-        if (!_cooking.TryCookEntity(addTo, null, out _))
+        if (tryCook && !_cooking.TryCookEntity(addTo, null, out _))
         {
             UpdateIngredientName(addTo);
         }
@@ -109,7 +108,7 @@ public sealed class FoodIngredientSystem : EntitySystem
         if (!TryComp<FoodIngredientComponent>(args.Used, out var otherIngredient))
             return;
 
-        TryAddIngredient(entity, new(args.Used, otherIngredient));
+        TryAddIngredient(entity, new(args.Used, otherIngredient), true, args.User);
         args.Handled = true;
     }
 }

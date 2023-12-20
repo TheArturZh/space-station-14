@@ -91,8 +91,9 @@ public abstract class SharedCookingSystem : EntitySystem
     {
         var coords = Transform(entityToCook).Coordinates;
 
-        EntityManager.DeleteEntity(entityToCook);
         result = Spawn(recipe.Result, coords);
+
+        EntityManager.DeleteEntity(entityToCook);
         return true;
     }
 
@@ -110,10 +111,7 @@ public abstract class SharedCookingSystem : EntitySystem
         if (portionedRecipe.Item1 == null)
             return false;
 
-        var coords = Transform(entityToCook).Coordinates;
-        EntityManager.DeleteEntity(entityToCook);
-        result = Spawn(portionedRecipe.Item1.Result, coords);
-        return true;
+        return TryCookEntityByRecipe(entityToCook, portionedRecipe.Item1, out result);
     }
 
     public static (CookingRecipePrototype, int) CanSatisfyRecipe(
@@ -170,6 +168,21 @@ public abstract class SharedCookingSystem : EntitySystem
 
 
         return (recipe, portions);
+    }
+
+
+    // TODO: I need this whole logic revamped. It should subtract reagents and solids from ingredient container too.
+    // Note: the assembly is being destroyed if core item is in the recipe. But if it isnt?..
+
+    public void TryMoveSolutions(EntityUid from, EntityUid to)
+    {
+        if (!TryComp<SolutionContainerManagerComponent>(from, out var fromSolMan))
+            return;
+
+        if (!TryComp<SolutionContainerManagerComponent>(to, out var toSolMan))
+            return;
+
+
     }
 
     public void SubtractContents(Container container, CookingRecipePrototype recipe)
