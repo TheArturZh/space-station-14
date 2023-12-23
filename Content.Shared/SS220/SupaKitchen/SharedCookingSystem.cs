@@ -29,6 +29,23 @@ public abstract class SharedCookingSystem : EntitySystem
         return CanSatisfyRecipe(component.InstrumentType, component.IgnoreTime ? 0 : cookingTimer, recipe, solids, reagents);
     }
 
+    public void TransferInjectedSolution(EntityUid to, EntityUid from)
+    {
+        if (!TryComp<InjectableSolutionComponent>(to, out var injectCompTo))
+            return;
+
+        var targetSolution = _solutionContainer.EnsureSolution(to, injectCompTo.Solution);
+
+        if (
+            TryComp<InjectableSolutionComponent>(to, out var injectCompFrom) &&
+            _solutionContainer.TryGetSolution(to, injectCompFrom.Solution, out var solutionFrom)
+            )
+        {
+            _solutionContainer.SetCapacity(to, targetSolution, targetSolution.MaxVolume + solutionFrom.Volume);
+            _solutionContainer.TryTransferSolution(from, to, solutionFrom, targetSolution, solutionFrom.Volume);
+        }
+    }
+
     public bool TryAddIngredientToDicts(
         Dictionary<string, int> solidsDict,
         Dictionary<string, FixedPoint2> reagentDict,
@@ -91,6 +108,7 @@ public abstract class SharedCookingSystem : EntitySystem
     {
         var coords = Transform(entityToCook).Coordinates;
         var result = Spawn(recipe.Result, coords);
+        TransferInjectedSolution(result, entityToCook);
         EntityManager.DeleteEntity(entityToCook);
 
         return result;

@@ -1,4 +1,7 @@
+using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.SS220.SupaKitchen;
@@ -16,6 +19,7 @@ public sealed class FoodIngredientSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly CookingSystem _cooking = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
@@ -105,16 +109,30 @@ public sealed class FoodIngredientSystem : EntitySystem
 
         _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, addTo, true);
 
-        if (tryCook)
+        if (tryCook && _cooking.TryCookEntity(addTo, null, out var cookResult))
         {
-            if (_cooking.TryCookEntity(addTo, null, out var cookResult))
+            result = cookResult.Value;
+        }
+        else
+        {
+            UpdateIngredientName(addTo);
+
+            // transfer food solution
+            if (TryComp<FoodComponent>(addTo, out var foodCompTo))
             {
-                result = cookResult.Value;
+                var targetSolution = _solutionContainer.EnsureSolution(addTo, foodCompTo.Solution);
+
+                if (
+                    TryComp<FoodComponent>(add, out var foodCompFrom) &&
+                    _solutionContainer.TryGetSolution(add, foodCompFrom.Solution, out var solutionFrom)
+                    )
+                {
+                    _solutionContainer.SetCapacity(addTo, targetSolution, targetSolution.MaxVolume + solutionFrom.Volume);
+                    _solutionContainer.TryTransferSolution(add, addTo, solutionFrom, targetSolution, solutionFrom.Volume);
+                }
             }
-            else
-            {
-                UpdateIngredientName(addTo);
-            }
+
+            _cooking.TransferInjectedSolution(addTo, add);
         }
 
         return true;
