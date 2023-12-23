@@ -10,6 +10,9 @@ anomaly-particles-omega = Омега-частицы
 anomaly-scanner-component-scan-complete = Сканирование завершено!
 anomaly-scanner-ui-title = сканер аномалий
 anomaly-scanner-no-anomaly = Нет просканированной аномалии.
+# BEGIN SS220 no anomaly msg for anomalyscanner
+anomaly-scanner-isnt-anomaly = [bold][color = red]ОШИБКА:[/color][/bold] ОБЪЕКТ НЕ ЯВЛЯЕТСЯ АНОМАЛИЕЙ!
+# END SS220 no anomaly msg for anomalyscanner
 anomaly-scanner-severity-percentage = Текущая опасность: [color=gray]{ $percent }[/color]
 anomaly-scanner-stability-low = Текущее состояние аномалии: [color=gold]Распад[/color]
 anomaly-scanner-stability-medium = Текущее состояние аномалии: [color=forestgreen]Стабильное[/color]
@@ -22,6 +25,11 @@ anomaly-scanner-particle-containment = - [color=goldenrod]Сдерживающи
 anomaly-scanner-pulse-timer = Время до следующего импульса: [color=gray]{ $time }[/color]
 anomaly-sync-connected = Аномалия успешно привязана
 anomaly-sync-disconnected = Соединение с аномалией было потеряно!
+anomaly-sync-no-anomaly = Отсутствует аномалия в пределах диапазона.
+anomaly-sync-examine-connected = Он [color=darkgreen]присоединён[/color] к аномалии.
+anomaly-sync-examine-not-connected = Он [color=darkred]не присоединён[/color] к аномалии.
+anomaly-sync-connect-verb-text = Присоединить аномалию
+anomaly-sync-connect-verb-message = Присоединить близлежащую аномалию к { $machine }.
 anomaly-generator-ui-title = генератор аномалий
 anomaly-generator-fuel-display = Топливо:
 anomaly-generator-cooldown = Перезарядка: [color=gray]{ $time }[/color]

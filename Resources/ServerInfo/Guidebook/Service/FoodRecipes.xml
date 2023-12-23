@@ -1,15 +1,18 @@
 <Document>
 ## Смешивание:
 - Тесто = 15 муки, 10 воды
-- Кукурузное тесто = 1 яйцо (6 ю), 10 молока, 15 кукурузной муки
+- Кукурузное тесто = 1 яйцо (6 ед.), 10 молока, 15 кукурузной муки
+- Tortila Dough = 15 Cornmeal, 10 Water
 - Тофу = 5 универсального фермента, 30 соевого молока
 - Тесто для пирога = 2 яйца (12 ю), 15 муки, 5 поваренной соли
 - Тесто для торта = 2 яйца(12 ю), 15 муки, 5 сахара
 - Веганское тесто для торта = 15 соевого молока, 15 муки, 5 сахара
 - Масло = 30 молока, 5 поваренной соли
 - Головка сыра = 5 универсального фермента, 40 молока
-- Фрикаделька = 1 яйцо (6 ю), 5 муки, 5 непрожаренных животных протеинов
-- Непрожаренные животные протеины: перемолоть сырое мясо
+- Chèvre Log = 5 Enzyme (Catalyst), 10 Goat Milk
+- Фрикаделька = 1 яйцо (6 ед.), 5 муки, 5 непрожаренные животные протеины
+- Chocolate = 6 Cocoa Powder, 2 Milk, 2 Sugar
+- Непрожаренные животные протеины: измельчить сырое мясо
 
 <Box>
 <GuideEntityEmbed Entity="FoodDough"/>
@@ -18,12 +21,15 @@
 <GuideEntityEmbed Entity="FoodDoughPie"/>
 <GuideEntityEmbed Entity="FoodCakeBatter"/>
 <GuideEntityEmbed Entity="FoodDoughFlat"/>
+<GuideEntityEmbed Entity="FoodDoughTortilla"/>
 </Box>
 
 <Box>
 <GuideEntityEmbed Entity="FoodButter"/>
 <GuideEntityEmbed Entity="FoodMeatMeatball"/>
 <GuideEntityEmbed Entity="FoodCheese"/>
+<GuideEntityEmbed Entity="FoodChevre"/>
+<GuideEntityEmbed Entity="FoodSnackChocolateBar"/>
 </Box>
 
 ## Прочее
@@ -33,6 +39,9 @@
 - Сырая котлета: нарезать сырое мясо
 - Сырный ломтик: нарезать головку сыра
 - Плоское тесто: раскатайте тесто скалкой либо другим крыглым объектом (огнетушитель, жестяная банка, бутылка).
+- Tortilla Dough Slice: cut Tortilla Dough
+- Flat Tortilla Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Tortilla Dough Slice
+- Taco Shell: Microwave Flat Tortilla Dough for 5 Seconds
 
 ## Рецепты
 <GuideCookingRecipeGroupEmbed/>
