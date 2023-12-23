@@ -2,7 +2,6 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -11,6 +10,7 @@ namespace Content.Shared.SS220.SupaKitchen;
 public abstract class SharedCookingSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SupaRecipeManager _recipeManager = default!;
 
     public override void Initialize()
@@ -87,14 +87,13 @@ public abstract class SharedCookingSystem : EntitySystem
         return true;
     }
 
-    public bool TryCookEntityByRecipe(EntityUid entityToCook, CookingRecipePrototype recipe, [NotNullWhen(true)] out EntityUid? result)
+    public EntityUid CookEntityByRecipe(EntityUid entityToCook, CookingRecipePrototype recipe)
     {
         var coords = Transform(entityToCook).Coordinates;
-
-        result = Spawn(recipe.Result, coords);
-
+        var result = Spawn(recipe.Result, coords);
         EntityManager.DeleteEntity(entityToCook);
-        return true;
+
+        return result;
     }
 
     public bool TryCookEntity(EntityUid entityToCook, string? instrumentType, [NotNullWhen(true)] out EntityUid? result)
@@ -111,7 +110,8 @@ public abstract class SharedCookingSystem : EntitySystem
         if (portionedRecipe.Item1 == null)
             return false;
 
-        return TryCookEntityByRecipe(entityToCook, portionedRecipe.Item1, out result);
+        result = CookEntityByRecipe(entityToCook, portionedRecipe.Item1);
+        return true;
     }
 
     public static (CookingRecipePrototype, int) CanSatisfyRecipe(
@@ -235,7 +235,7 @@ public abstract class SharedCookingSystem : EntitySystem
 
                     if (metaData.EntityPrototype.ID == recipeSolid.Key)
                     {
-                        container.Remove(item);
+                        _container.Remove(item, container);
                         EntityManager.DeleteEntity(item);
                         break;
                     }

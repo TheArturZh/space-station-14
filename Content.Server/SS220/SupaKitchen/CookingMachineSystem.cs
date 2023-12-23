@@ -179,7 +179,11 @@ public sealed class CookingMachineSystem : EntitySystem
         if (!HasContents(component) || component.Active)
             return;
 
-        component.Storage.Remove(GetEntity(args.EntityID));
+        var entityToRemove = GetEntity(args.EntityID);
+        if (!entityToRemove.Valid)
+            return;
+
+        _container.Remove(entityToRemove, component.Storage);
         UpdateUserInterfaceState(uid, component);
     }
 

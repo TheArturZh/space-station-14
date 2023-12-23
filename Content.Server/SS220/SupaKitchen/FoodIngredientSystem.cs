@@ -9,6 +9,9 @@ namespace Content.Server.SS220.SupaKitchen;
 
 public sealed class FoodIngredientSystem : EntitySystem
 {
+    // limit ingrdient name getter recursion depth just in cause someone decides to do a funny.
+    const int MAX_INGREDIENT_NAME_DEPTH = 10;
+
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -28,7 +31,7 @@ public sealed class FoodIngredientSystem : EntitySystem
         UpdateIngredientName(entity);
     }
 
-    public string GetIngredientName(EntityUid entity, bool includeSubIngredients, FoodIngredientComponent? component = null)
+    private string GetIngredientNameWithDepth(EntityUid entity, bool includeSubIngredients, FoodIngredientComponent? component = null, int depth = 1)
     {
         var proto = MetaData(entity).EntityPrototype;
         if (proto is null)
@@ -42,29 +45,34 @@ public sealed class FoodIngredientSystem : EntitySystem
                 return name;
         }
 
-        if (!includeSubIngredients)
-            return name;
-
         var ingredientListString = "";
         var goodIngredientNames = 0;
 
-        foreach (var ingredient in component.IngredientContainer.ContainedEntities)
+        if (includeSubIngredients && depth < MAX_INGREDIENT_NAME_DEPTH)
         {
-            var ingredientName = GetIngredientName(ingredient, false);
-            if (string.IsNullOrEmpty(ingredientName))
-                continue;
+            foreach (var ingredient in component.IngredientContainer.ContainedEntities)
+            {
+                var ingredientName = GetIngredientName(ingredient, includeSubIngredients);
+                if (string.IsNullOrEmpty(ingredientName))
+                    continue;
 
-            if (goodIngredientNames > 0)
-                ingredientListString += ", ";
+                if (goodIngredientNames > 0)
+                    ingredientListString += ", ";
 
-            ingredientListString += ingredientName;
-            goodIngredientNames++;
+                ingredientListString += ingredientName;
+                goodIngredientNames++;
+            }
         }
 
         if (string.IsNullOrWhiteSpace(ingredientListString))
             return name;
 
         return name + " с " + ingredientListString;
+    }
+
+    public string GetIngredientName(EntityUid entity, bool includeSubIngredients, FoodIngredientComponent? component = null)
+    {
+        return GetIngredientNameWithDepth(entity, includeSubIngredients, component);
     }
 
     public void UpdateIngredientName(Entity<FoodIngredientComponent> entity)
@@ -75,8 +83,16 @@ public sealed class FoodIngredientSystem : EntitySystem
             _metaData.SetEntityName(entity, newName);
     }
 
-    public bool TryAddIngredient(Entity<FoodIngredientComponent> addTo, Entity<FoodIngredientComponent> add, bool tryCook = true, EntityUid? user = null)
+    public bool TryAddIngredient(Entity<FoodIngredientComponent> addTo, Entity<FoodIngredientComponent> add, out EntityUid result, bool tryCook = true, EntityUid? user = null)
     {
+        result = addTo;
+
+        if (!EntityManager.EntityExists(addTo) || !EntityManager.EntityExists(add))
+            return false;
+
+        if (!addTo.Comp.CanAddIngredients)
+            return false;
+
         if (_openable.IsClosed(add, user) || _openable.IsClosed(addTo, user))
             return false;
 
@@ -89,12 +105,16 @@ public sealed class FoodIngredientSystem : EntitySystem
 
         _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, addTo, true);
 
-        //var portionedRecipe = _cooking.GetSatisfiedPortionedRecipe(
-        //    string.Empty, solidsDict, reagentDict, null);
-
-        if (tryCook && !_cooking.TryCookEntity(addTo, null, out _))
+        if (tryCook)
         {
-            UpdateIngredientName(addTo);
+            if (_cooking.TryCookEntity(addTo, null, out var cookResult))
+            {
+                result = cookResult.Value;
+            }
+            else
+            {
+                UpdateIngredientName(addTo);
+            }
         }
 
         return true;
@@ -108,7 +128,7 @@ public sealed class FoodIngredientSystem : EntitySystem
         if (!TryComp<FoodIngredientComponent>(args.Used, out var otherIngredient))
             return;
 
-        TryAddIngredient(entity, new(args.Used, otherIngredient), true, args.User);
+        TryAddIngredient(entity, new(args.Used, otherIngredient), out _, true, args.User);
         args.Handled = true;
     }
 }
