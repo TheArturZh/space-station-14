@@ -102,13 +102,6 @@ public sealed class FoodIngredientSystem : EntitySystem
 
         _container.Insert(add.Owner, addTo.Comp.IngredientContainer);
 
-        // TODO: Extra item support (add as ingredients, ensure FoodIngredientComponent)
-        // Recipe check
-        var solidsDict = new Dictionary<string, int>();
-        var reagentDict = new Dictionary<string, FixedPoint2>();
-
-        _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, addTo, true);
-
         if (tryCook && _cooking.TryCookEntity(addTo, null, out var cookResult))
         {
             result = cookResult.Value;

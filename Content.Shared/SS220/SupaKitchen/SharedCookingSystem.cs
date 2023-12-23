@@ -187,22 +187,6 @@ public abstract class SharedCookingSystem : EntitySystem
 
         return (recipe, portions);
     }
-
-
-    // TODO: I need this whole logic revamped. It should subtract reagents and solids from ingredient container too.
-    // Note: the assembly is being destroyed if core item is in the recipe. But if it isnt?..
-
-    public void TryMoveSolutions(EntityUid from, EntityUid to)
-    {
-        if (!TryComp<SolutionContainerManagerComponent>(from, out var fromSolMan))
-            return;
-
-        if (!TryComp<SolutionContainerManagerComponent>(to, out var toSolMan))
-            return;
-
-
-    }
-
     public void SubtractContents(Container container, CookingRecipePrototype recipe)
     {
         var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
