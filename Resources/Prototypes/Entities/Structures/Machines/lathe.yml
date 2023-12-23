@@ -146,7 +146,6 @@
        - CartridgeMagnum
        - ShellShotgun
        - ShellShotgunFlare
-       - ShellTranquilizer
        - CartridgeLightRifle
        - CartridgeRifle
        - MagazineBoxPistol
@@ -212,8 +211,6 @@
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
-      - RCD
-      - RCDAmmo
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -267,7 +264,9 @@
       - SyringeBluespace
       - WeaponCrusher
       - WeaponCrusherDagger
+      - WeaponCrusherGlaive
       - WeaponForceGun
+      - WeaponLaserSvalinn
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
       - WeaponGrapplingGun
@@ -277,6 +276,9 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+      - FauxTileAstroGrass
+      - FauxTileAstroIce
+      - OreBagOfHolding
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -285,6 +287,7 @@
       - WeaponLaserCannon
       - WeaponXrayCannon
       - WeaponEnergyCrossbow #SS220 Energy Crossbow
+      - WeaponTaser #SS220 taserback
 
 - type: entity
   id: CircuitImprinter
@@ -309,6 +312,10 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
+    staticRecipes:
+    - ElectrolysisUnitMachineCircuitboard
+    - CentrifugeMachineCircuitboard
+    - CondenserMachineCircuitBoard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
@@ -536,11 +543,9 @@
       - Zipties
       - Stunbaton
       - ForensicPad
-      - ClothingEyesGlassesSecurity
       - RiotShield
       - ShellShotgun
       - ShellShotgunFlare
-      - ShellTranquilizer
       - MagazinePistol
       - MagazinePistolSubMachineGun
       - MagazinePistolSubMachineGunTopMounted
@@ -563,6 +568,7 @@
       - CartridgeMagnumRubber
       - CartridgePistolRubber
       - CartridgeRifleRubber
+      - ClothingEyesGlassesSecurity
       - ExplosivePayload
       - FlashPayload
       - HoloprojectorSecurity
@@ -594,6 +600,7 @@
       - WeaponLaserCarbinePractice
       - WeaponXrayCannon
       - WeaponEnergyCrossbow #SS220 Energy Crossbow
+      - WeaponTaser #SS220 taserback
   - type: MaterialStorage
     whitelist:
       tags:
@@ -630,7 +637,6 @@
         - CartridgeMagnum
         - ShellShotgun
         - ShellShotgunFlare
-        - ShellTranquilizer
         - CartridgeLightRifle
         - CartridgeRifle
         - MagazineBoxPistol
@@ -763,6 +769,8 @@
       - ClothingUniformJumpskirtHoS
       - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
+      - ClothingUniformJumpsuitHoSParadeMale
+      - ClothingUniformJumpskirtHoSParadeMale
       - ClothingUniformJumpsuitHydroponics
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
