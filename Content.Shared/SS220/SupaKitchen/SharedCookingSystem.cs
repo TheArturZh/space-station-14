@@ -37,8 +37,8 @@ public abstract class SharedCookingSystem : EntitySystem
         var targetSolution = _solutionContainer.EnsureSolution(to, injectCompTo.Solution);
 
         if (
-            TryComp<InjectableSolutionComponent>(to, out var injectCompFrom) &&
-            _solutionContainer.TryGetSolution(to, injectCompFrom.Solution, out var solutionFrom)
+            TryComp<InjectableSolutionComponent>(from, out var injectCompFrom) &&
+            _solutionContainer.TryGetSolution(from, injectCompFrom.Solution, out var solutionFrom)
             )
         {
             _solutionContainer.SetCapacity(to, targetSolution, targetSolution.MaxVolume + solutionFrom.Volume);
@@ -88,6 +88,37 @@ public abstract class SharedCookingSystem : EntitySystem
         return true;
     }
 
+    public bool TryCookContainer(Container storage, string? instrumentType, uint cookingTimer, [NotNullWhen(true)] out EntityUid? result)
+    {
+        result = null;
+
+        if (storage.ContainedEntities.Count == 0)
+            return false;
+
+        // Check recipes
+        var solidsDict = new Dictionary<string, int>();
+        var reagentDict = new Dictionary<string, FixedPoint2>();
+
+        foreach (var item in storage.ContainedEntities.ToList())
+        {
+            TryAddIngredientToDicts(solidsDict, reagentDict, item, true);
+        }
+
+        var (recipe, resultAmount) = GetSatisfiedPortionedRecipe(
+            instrumentType, solidsDict, reagentDict, cookingTimer);
+
+        if (recipe == null || resultAmount == 0)
+            return false;
+
+        var success = false;
+        for (var i = 0; i < resultAmount; i++)
+        {
+            success |= TryCookContainerByRecipe(storage, recipe, out result);
+        }
+
+        return success;
+    }
+
     public bool TryCookContainerByRecipe(Container storage, CookingRecipePrototype recipe, [NotNullWhen(true)] out EntityUid? result)
     {
         if (storage.ContainedEntities.Count == 0)
@@ -99,8 +130,8 @@ public abstract class SharedCookingSystem : EntitySystem
         var anyEnt = storage.ContainedEntities[0];
         var coords = Transform(anyEnt).Coordinates;
 
-        SubtractContents(storage, recipe);
         result = Spawn(recipe.Result, coords);
+        SubtractContents(storage, recipe, result);
         return true;
     }
 
@@ -114,7 +145,7 @@ public abstract class SharedCookingSystem : EntitySystem
         return result;
     }
 
-    public bool TryCookEntity(EntityUid entityToCook, string? instrumentType, [NotNullWhen(true)] out EntityUid? result)
+    public bool TryCookEntity(EntityUid entityToCook, string? instrumentType, uint? cookingTimer, [NotNullWhen(true)] out EntityUid? result)
     {
         result = null;
 
@@ -124,7 +155,7 @@ public abstract class SharedCookingSystem : EntitySystem
             return false;
 
         var portionedRecipe = GetSatisfiedPortionedRecipe(
-            instrumentType, solidsDict, reagentDict, null);
+            instrumentType, solidsDict, reagentDict, cookingTimer);
         if (portionedRecipe.Item1 == null)
             return false;
 
@@ -187,7 +218,7 @@ public abstract class SharedCookingSystem : EntitySystem
 
         return (recipe, portions);
     }
-    public void SubtractContents(Container container, CookingRecipePrototype recipe)
+    public void SubtractContents(Container container, CookingRecipePrototype recipe, EntityUid? transferInjectedTo = null)
     {
         var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
 
@@ -237,6 +268,11 @@ public abstract class SharedCookingSystem : EntitySystem
 
                     if (metaData.EntityPrototype.ID == recipeSolid.Key)
                     {
+                        // transfer whatever we haven't removed previously.
+                        // need it so you can inject poison into dough etc.
+                        if (transferInjectedTo.HasValue)
+                            TransferInjectedSolution(transferInjectedTo.Value, item);
+
                         _container.Remove(item, container);
                         EntityManager.DeleteEntity(item);
                         break;

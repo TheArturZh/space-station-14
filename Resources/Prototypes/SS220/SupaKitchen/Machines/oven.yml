@@ -24,6 +24,7 @@
     loopingSound: "/Audio/SS220/SupaKitchen/oven/oven_loop_mid.ogg"
     foodDoneSound: "/Audio/SS220/SupaKitchen/ring.ogg"
     useEntityStorage: true
+    cookItemsIndividually: true
   - type: ActivatableUI
     key: enum.CookingMachineUiKey.Key
     altentativeOnly: true

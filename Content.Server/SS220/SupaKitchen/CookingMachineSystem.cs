@@ -9,7 +9,6 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
-using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
@@ -244,9 +243,6 @@ public sealed class CookingMachineSystem : EntitySystem
         if (!HasContents(component) || component.Active)
             return;
 
-        var solidsDict = new Dictionary<string, int>();
-        var reagentDict = new Dictionary<string, FixedPoint2>();
-
         foreach (var item in component.Storage.ContainedEntities.ToList())
         {
             var ev = new ProcessedInCookingMachineEvent(uid, component, item, whoStarted);
@@ -257,17 +253,10 @@ public sealed class CookingMachineSystem : EntitySystem
                 UpdateUserInterfaceState(uid, component);
                 return;
             }
-
-            _cooking.TryAddIngredientToDicts(solidsDict, reagentDict, item, true);
         }
-
-        // Check recipes
-        var portionedRecipe = _cooking.GetSatisfiedPortionedRecipe(
-            cookingInstrument, solidsDict, reagentDict, component.CookingTimer);
 
         _audio.PlayPvs(component.BeginCookingSound, uid);
         component.CookTimeRemaining = component.CookingTimer * component.CookTimeMultiplier;
-        component.CurrentlyCookingRecipe = portionedRecipe;
         UpdateUserInterfaceState(uid, component);
 
         SetAppearance(uid, CookingMachineVisualState.Cooking, component);
@@ -281,8 +270,6 @@ public sealed class CookingMachineSystem : EntitySystem
     public void StopCooking(EntityUid uid, CookingMachineComponent component)
     {
         component.Active = false;
-        component.CookTimeRemaining = 0;
-        component.CurrentlyCookingRecipe = (null, 0);
         UpdateUserInterfaceState(uid, component);
         SetAppearance(uid, CookingMachineVisualState.Idle, component);
         component.PlayingStream = _audio.Stop(component.PlayingStream);
@@ -309,11 +296,18 @@ public sealed class CookingMachineSystem : EntitySystem
 
             AddTemperature(component, component.CookingTimer);
 
-            if (component.CurrentlyCookingRecipe.Item1 != null)
+            if (TryComp<CookingInstrumentComponent>(uid, out var instrument))
             {
-                for (var i = 0; i < component.CurrentlyCookingRecipe.Item2; i++)
+                if (component.CookItemsIndividually)
                 {
-                    _cooking.TryCookContainerByRecipe(component.Storage, component.CurrentlyCookingRecipe.Item1, out _);
+                    foreach (var item in component.Storage.ContainedEntities.ToList())
+                    {
+                        _cooking.TryCookEntity(item, instrument.InstrumentType, null, out _);
+                    }
+                }
+                else
+                {
+                    _cooking.TryCookContainer(component.Storage, instrument.InstrumentType, component.CookingTimer, out _);
                 }
             }
 

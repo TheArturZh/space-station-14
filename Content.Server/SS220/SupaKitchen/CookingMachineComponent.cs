@@ -14,10 +14,10 @@ public sealed partial class CookingMachineComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public uint MaxCookingTimer = 30;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float TemperatureUpperThreshold = 373.15f;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HeatPerSecond = 100;
     #endregion
 
@@ -36,9 +36,6 @@ public sealed partial class CookingMachineComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float CookTimeRemaining;
-
-    [ViewVariables]
-    public (CookingRecipePrototype?, int) CurrentlyCookingRecipe = (null, 0);
 
     [ViewVariables]
     public int CurrentCookTimeButtonIndex;
@@ -68,8 +65,12 @@ public sealed partial class CookingMachineComponent : Component
 
     [DataField]
     public bool AltActivationUI = false;
-    [DataField]
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public bool UseEntityStorage = false;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool CookItemsIndividually = false;
 
     public Container Storage = default!;
 }

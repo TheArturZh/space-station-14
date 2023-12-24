@@ -102,7 +102,7 @@ public sealed class FoodIngredientSystem : EntitySystem
 
         _container.Insert(add.Owner, addTo.Comp.IngredientContainer);
 
-        if (tryCook && _cooking.TryCookEntity(addTo, null, out var cookResult))
+        if (tryCook && _cooking.TryCookEntity(addTo, null, null, out var cookResult))
         {
             result = cookResult.Value;
         }
