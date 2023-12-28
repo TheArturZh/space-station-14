@@ -11,6 +11,9 @@
         "name": "panel",
         "directions": 4
     },
+	{
+      "name": "static"
+    },
     {
         "name": "on",
         "directions": 4,
