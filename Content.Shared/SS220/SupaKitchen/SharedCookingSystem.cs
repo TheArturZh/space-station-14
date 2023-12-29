@@ -29,18 +29,15 @@ public abstract class SharedCookingSystem : EntitySystem
         return CanSatisfyRecipe(component.InstrumentType, component.IgnoreTime ? 0 : cookingTimer, recipe, solids, reagents);
     }
 
-    public void TransferInjectedSolution(EntityUid to, EntityUid from)
+    // TODO: refactor FoodComponent to make it shared, PR it to main build,
+    // afterwards refactor this method to use FoodComponent.Solution, delet this constant.
+    private const string FoodSolutionKey = "food";
+
+    public void TransferFoodSolution(EntityUid to, EntityUid from)
     {
-        if (!TryComp<InjectableSolutionComponent>(to, out var injectCompTo))
-            return;
-
-        var targetSolution = _solutionContainer.EnsureSolution(to, injectCompTo.Solution);
-
-        if (
-            TryComp<InjectableSolutionComponent>(from, out var injectCompFrom) &&
-            _solutionContainer.TryGetSolution(from, injectCompFrom.Solution, out var solutionFrom)
-            )
+        if (_solutionContainer.TryGetSolution(from, FoodSolutionKey, out var solutionFrom))
         {
+            var targetSolution = _solutionContainer.EnsureSolution(to, FoodSolutionKey);
             _solutionContainer.SetCapacity(to, targetSolution, targetSolution.MaxVolume + solutionFrom.Volume);
             _solutionContainer.TryTransferSolution(from, to, solutionFrom, targetSolution, solutionFrom.Volume);
         }
@@ -139,7 +136,7 @@ public abstract class SharedCookingSystem : EntitySystem
     {
         var coords = Transform(entityToCook).Coordinates;
         var result = Spawn(recipe.Result, coords);
-        TransferInjectedSolution(result, entityToCook);
+        TransferFoodSolution(result, entityToCook);
         EntityManager.DeleteEntity(entityToCook);
 
         return result;
@@ -218,7 +215,7 @@ public abstract class SharedCookingSystem : EntitySystem
 
         return (recipe, portions);
     }
-    public void SubtractContents(Container container, CookingRecipePrototype recipe, EntityUid? transferInjectedTo = null)
+    public void SubtractContents(Container container, CookingRecipePrototype recipe, EntityUid? transferSolutionTo = null)
     {
         var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
 
@@ -270,8 +267,9 @@ public abstract class SharedCookingSystem : EntitySystem
                     {
                         // transfer whatever we haven't removed previously.
                         // need it so you can inject poison into dough etc.
-                        if (transferInjectedTo.HasValue)
-                            TransferInjectedSolution(transferInjectedTo.Value, item);
+                        // as a bonus a product won't have lower nutritional value than a sum of its ingredients.
+                        if (transferSolutionTo.HasValue)
+                            TransferFoodSolution(transferSolutionTo.Value, item);
 
                         _container.Remove(item, container);
                         EntityManager.DeleteEntity(item);

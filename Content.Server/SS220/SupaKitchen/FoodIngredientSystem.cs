@@ -125,7 +125,7 @@ public sealed class FoodIngredientSystem : EntitySystem
                 }
             }
 
-            _cooking.TransferInjectedSolution(addTo, add);
+            _cooking.TransferFoodSolution(addTo, add);
         }
 
         return true;
