@@ -179,3 +179,10 @@ TransmitterSubspaceStockPart: null
 
 # 2024-01-10
 ClothingHeadHatHoodRad: null
+
+# 2024-01-12 - SS220 Handheld Radio
+RadioHandheld: HandheldRadio
+
+# 2024-01-20 - ss220 engineering rebalance
+TegCenter: null
+TegCirculator: null
