@@ -30,12 +30,10 @@
         <Label Text="{Loc 'shlepovend-discord-not-linked'}" Modulate="#ff0000" Name="NotLinkedLabel"/>
         <Button Name="DiscordButton"
             Text="{Loc 'shlepovend-go-to-discord'}"
-            HorizontalExpand="False"
-            Disabled="True"/>
+            HorizontalExpand="False"/>
         <Button Name="BoostyButton"
             Text="{Loc 'shlepovend-go-to-boosty'}"
-            HorizontalExpand="False"
-            Disabled="True"/>
+            HorizontalExpand="False"/>
     </BoxContainer>
 </BoxContainer>
 

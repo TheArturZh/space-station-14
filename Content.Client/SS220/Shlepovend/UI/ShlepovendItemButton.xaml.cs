@@ -17,6 +17,7 @@ public sealed partial class ShlepovendItemButton : ContainerButton
     private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
     private static readonly Color ColorHovered = Color.FromHex("#9699bb");
     private static readonly Color ColorPressed = Color.FromHex("#789B8C");
+    private static readonly Color ColorInvactive = Color.FromHex("#6E6F7E");
 
     private readonly StyleBoxFlat _styleBox = new()
     {
@@ -25,6 +26,8 @@ public sealed partial class ShlepovendItemButton : ContainerButton
 
     public EntProtoId? ItemPrototypeId { get; private set; }
     public ProtoId<ShlepaRewardGroupPrototype>? GroupProtoId;
+    private EntityUid? _itemInstance;
+
     private int _price;
     public int Price
     {
@@ -35,7 +38,6 @@ public sealed partial class ShlepovendItemButton : ContainerButton
             PriceLabel.Text = Loc.GetString("shlepovend-price", ("tokens", value));
         }
     }
-    private EntityUid? _itemInstance;
 
     public ShlepovendItemButton()
     {
@@ -79,6 +81,7 @@ public sealed partial class ShlepovendItemButton : ContainerButton
                 break;
 
             case DrawModeEnum.Disabled:
+                _styleBox.BackgroundColor = ColorInvactive;
                 break;
         }
     }

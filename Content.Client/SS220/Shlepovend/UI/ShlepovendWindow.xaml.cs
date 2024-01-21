@@ -169,6 +169,7 @@ public sealed partial class ShlepovendWindow : FancyWindow
             {
                 var isEnough = button.Price <= _shlepovendSys.Tokens;
                 button.AvailableLabel.Visible = !(isAvailable && isEnough);
+                button.Disabled = !isAvailable || !isEnough;
 
                 if (!isAvailable)
                     button.AvailableLabel.Text = notAvailableText;
