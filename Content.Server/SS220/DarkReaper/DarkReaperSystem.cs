@@ -1,10 +1,12 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Server.Actions;
+using Content.Server.AlertLevel;
+using Content.Server.Chat.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Shared.Alert;
-using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.SS220.DarkReaper;
@@ -20,10 +22,12 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     private readonly ISawmill _sawmill = Logger.GetSawmill("DarkReaper");
 
@@ -67,13 +71,28 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
             {
                 if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
                 {
-                    container.Insert(target);
+                    _container.Insert(target, container);
                 }
 
                 _damageable.TryChangeDamage(uid, comp.HealPerConsume, true, origin: args.Args.User);
 
                 comp.Consumed++;
+
+                var stageBefore = comp.CurrentStage;
                 UpdateStage(uid, comp);
+                // warn a crew
+                if (comp.CurrentStage > stageBefore && comp.CurrentStage == comp.AlertStage)
+                {
+                    var reaperXform = Transform(uid);
+                    var stationUid = _station.GetStationInMap(reaperXform.MapID);
+                    if (stationUid != null)
+                        _alertLevel.SetLevel(stationUid.Value, comp.AlertLevelOnAlertStage, true, true, true, false);
+
+                    var announcement = Loc.GetString("dark-reaper-component-announcement");
+                    var sender = Loc.GetString("comms-console-announcement-title-centcom");
+                    _chat.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, Color.Red);
+                }
+
                 UpdateAlert(uid, comp);
                 Dirty(uid, comp);
             }
