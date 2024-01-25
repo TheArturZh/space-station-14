@@ -1,4 +1,5 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+using System.Numerics;
 using Content.Server.Actions;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
@@ -8,9 +9,12 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.SS220.DarkReaper;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.SS220.DarkReaper;
@@ -28,6 +32,10 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private readonly ISawmill _sawmill = Logger.GetSawmill("DarkReaper");
 
@@ -69,18 +77,47 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
         {
             if (comp.PhysicalForm && target.IsValid() && !EntityManager.IsQueuedForDeletion(target) && _mobState.IsDead(target))
             {
-                if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
+                if (!_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
+                    return;
+
+                if (!_container.CanInsert(target, container))
+                    return;
+
+                // spawn gore
+                Spawn(comp.EntityToSpawnAfterConsuming, Transform(target).Coordinates);
+
+                // randomly drop inventory items
+                if (_inventory.TryGetContainerSlotEnumerator(target, out var slots))
                 {
-                    _container.Insert(target, container);
+                    while (slots.MoveNext(out var containerSlot))
+                    {
+                        if (containerSlot.ContainedEntity is not { } containedEntity)
+                            continue;
+
+                        if (!_random.Prob(comp.InventoryDropProbabilityOnConsumed))
+                            continue;
+
+                        if (!_container.TryRemoveFromContainer(containedEntity))
+                            continue;
+
+                        // set random rotation
+                        _transform.SetLocalRotationNoLerp(containedEntity, Angle.FromDegrees(_random.NextDouble(0, 360)));
+
+                        // apply random impulse
+                        var maxAxisImp = comp.SpawnOnDeathImpulseStrength;
+                        var impulseVec = new Vector2(_random.NextFloat(-maxAxisImp, maxAxisImp), _random.NextFloat(-maxAxisImp, maxAxisImp));
+                        _physics.ApplyLinearImpulse(containedEntity, impulseVec);
+                    }
                 }
 
+                _container.Insert(target, container);
                 _damageable.TryChangeDamage(uid, comp.HealPerConsume, true, origin: args.Args.User);
 
                 comp.Consumed++;
-
                 var stageBefore = comp.CurrentStage;
                 UpdateStage(uid, comp);
-                // warn a crew
+
+                // warn a crew if alert stage is reached
                 if (comp.CurrentStage > stageBefore && comp.CurrentStage == comp.AlertStage)
                 {
                     var reaperXform = Transform(uid);
@@ -93,6 +130,7 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
                     _chat.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, Color.Red);
                 }
 
+                // update consoom counter alert
                 UpdateAlert(uid, comp);
                 Dirty(uid, comp);
             }
