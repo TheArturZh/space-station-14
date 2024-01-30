@@ -1351,6 +1351,8 @@
     arc: 180
   - type: Fixtures
     fixtures: {}
+  - type: Physics
+    canCollide: false
   - type: Transform
     noRot: false
 
