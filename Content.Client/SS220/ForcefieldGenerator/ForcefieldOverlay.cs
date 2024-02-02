@@ -1,6 +1,6 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using System.Numerics;
 using Content.Shared.SS220.ForcefieldGenerator;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
