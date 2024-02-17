@@ -1,6 +1,6 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.SS220.SupaKitchen;
 using Robust.Shared.Containers;
@@ -11,6 +11,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SupaRecipeManager _recipeManager = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -84,8 +85,9 @@ public sealed class CookingInstrumentSystem : EntitySystem
                 continue;
 
             // go over every solution
-            foreach (var (_, solution) in solMan.Solutions)
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
             {
+                var solution = soln.Comp.Solution;
                 foreach (var (reagent, _) in recipe.IngredientsReagents)
                 {
                     // removed everything
@@ -104,7 +106,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
                         totalReagentsToRemove[reagent] -= quant;
                     }
 
-                    _solutionContainer.RemoveReagent(item, solution, reagent, quant);
+                    _solutionContainer.RemoveReagent(soln, reagent, quant);
                 }
             }
         }
@@ -123,7 +125,7 @@ public sealed class CookingInstrumentSystem : EntitySystem
 
                     if (metaData.EntityPrototype.ID == recipeSolid.Key)
                     {
-                        container.Remove(item);
+                        _container.Remove(item, container);
                         EntityManager.DeleteEntity(item);
                         break;
                     }

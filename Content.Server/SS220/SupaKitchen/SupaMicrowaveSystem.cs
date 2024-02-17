@@ -1,3 +1,4 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
@@ -6,7 +7,9 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.SS220.SupaKitchen;
 using Content.Shared.Tag;
+using Robust.Server.Audio;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.SS220.SupaKitchen;
@@ -16,7 +19,8 @@ public sealed class SupaMicrowaveSystem : EntitySystem
     [Dependency] private readonly CookingMachineSystem _cookingMachine = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -51,7 +55,7 @@ public sealed class SupaMicrowaveSystem : EntitySystem
         if (_tag.HasTag(args.Item, "MicrowaveSelfUnsafe") || _tag.HasTag(args.Item, "Plastic"))
         {
             var junk = Spawn(instrument.FailureResult, Transform(uid).Coordinates);
-            args.CookingMachine.Storage.Insert(junk);
+            _sharedContainer.Insert(junk, args.CookingMachine.Storage);
             QueueDel(args.Item);
         }
     }
@@ -74,7 +78,7 @@ public sealed class SupaMicrowaveSystem : EntitySystem
 
             foreach (var part in headSlots)
             {
-                cookingMachine.Storage.Insert(part.Id);
+                _sharedContainer.Insert(part.Id, cookingMachine.Storage);
                 headCount++;
             }
         }

@@ -1,4 +1,5 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
@@ -16,6 +17,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.SS220.SupaKitchen;
 using Content.Shared.Storage.Components;
+using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -31,7 +33,7 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly CookingInstrumentSystem _cookingInstrument = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
@@ -177,7 +179,7 @@ public sealed class CookingMachineSystem : EntitySystem
         if (!HasContents(component) || component.Active)
             return;
 
-        component.Storage.Remove(GetEntity(args.EntityID));
+        _container.Remove(GetEntity(args.EntityID), component.Storage);
         UpdateUserInterfaceState(uid, component);
     }
 
@@ -264,14 +266,17 @@ public sealed class CookingMachineSystem : EntitySystem
             if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
                 continue;
 
-            foreach (var (_, solution) in solMan.Solutions)
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
             {
-                foreach (var (reagent, quantity) in solution.Contents)
+                var solution = soln.Comp.Solution;
                 {
-                    if (reagentDict.ContainsKey(reagent.Prototype))
-                        reagentDict[reagent.Prototype] += quantity;
-                    else
-                        reagentDict.Add(reagent.Prototype, quantity);
+                    foreach (var (reagent, quantity) in solution.Contents)
+                    {
+                        if (reagentDict.ContainsKey(reagent.Prototype))
+                            reagentDict[reagent.Prototype] += quantity;
+                        else
+                            reagentDict.Add(reagent.Prototype, quantity);
+                    }
                 }
             }
         }
@@ -287,8 +292,8 @@ public sealed class CookingMachineSystem : EntitySystem
 
         SetAppearance(uid, CookingMachineVisualState.Cooking, component);
 
-        component.PlayingStream =
-            _audio.PlayPvs(component.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+        var audioStream = _audio.PlayPvs(component.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+        component.PlayingStream = audioStream.Value.Entity;
 
         component.Active = true;
     }
@@ -300,7 +305,7 @@ public sealed class CookingMachineSystem : EntitySystem
         component.CurrentlyCookingRecipe = (null, 0);
         UpdateUserInterfaceState(uid, component);
         SetAppearance(uid, CookingMachineVisualState.Idle, component);
-        component.PlayingStream?.Stop();
+        _audio.Stop(component.PlayingStream);
     }
 
     public override void Update(float frameTime)
@@ -363,12 +368,14 @@ public sealed class CookingMachineSystem : EntitySystem
 
             if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                 continue;
-            foreach (var (_, solution) in solutions.Solutions)
+
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
             {
+                var solution = soln.Comp.Solution;
                 if (solution.Temperature > machine.TemperatureUpperThreshold)
                     continue;
 
-                _solutionContainer.AddThermalEnergy(entity, solution, heatToAdd);
+                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
             }
         }
     }
