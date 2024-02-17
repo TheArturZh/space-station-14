@@ -69,6 +69,7 @@
     containers:
     - machine_parts
     - machine_board
+    - entity_storage
   - type: GuideHelp
     guides:
     - Chef
