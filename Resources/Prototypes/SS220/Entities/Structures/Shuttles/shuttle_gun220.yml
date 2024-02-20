@@ -131,6 +131,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       ballistic-ammo: !type:Container
+      gun_magazine: !type:ContainerSlot
   - type: Destructible
     thresholds:
     - trigger:
