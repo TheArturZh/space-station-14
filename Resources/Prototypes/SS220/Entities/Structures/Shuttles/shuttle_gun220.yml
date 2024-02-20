@@ -154,7 +154,6 @@
       path: /Audio/SS220/Weapons/Guns/Gunshots/pkt_shot.ogg # SS220 Shuttle-Gun-Sounds
       params:
         variation: 0.2
-        intensity: 0.8
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: MagazineAmmoProvider
