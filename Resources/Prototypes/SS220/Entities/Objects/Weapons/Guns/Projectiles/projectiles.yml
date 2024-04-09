@@ -74,7 +74,7 @@
 
 - type: entity
   id: BulletGrenadeSuperArta
-  name: снаряд пробивной
+  name: пробивной снаряд
   parent: BaseBulletTriggerArta
   noSpawn: true
   components:
