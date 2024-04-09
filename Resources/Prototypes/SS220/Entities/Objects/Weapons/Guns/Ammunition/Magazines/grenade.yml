@@ -39,9 +39,6 @@
     zeroVisible: false
   - type: Appearance
 
-- type: Tag
-  id: MagazineGrenadeArta
-
 - type: entity
   id: MagazineGrenadeSuperArta
   name: artillery penetrator cartridge
