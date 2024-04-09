@@ -11,9 +11,6 @@
     size: Small
   - type: Sprite
 
-- type: Tag
-  id: GrenadeDusterArta
-
 - type: entity
   id: GrenadeSuperArta
   name: artillery penetrator
