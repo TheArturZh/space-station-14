@@ -266,7 +266,7 @@
         priority: 2
         whitelist:
           tags:
-          - MagazineGrenadeArta
+          - MagazineGrenadeArta #modet by MIXnikita for SS220
         insertSound:
           path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
           params:
