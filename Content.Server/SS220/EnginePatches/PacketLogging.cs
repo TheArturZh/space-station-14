@@ -58,7 +58,7 @@ public static class NetPeer_ReceiveSocketData_CheckForErrors_Patch
         }
 
         if (throwStart == 0 || throwEnd == 0 || warningStart == 0 || warningEnd == 0)
-            throw new Exception("Failed to patch NetPeer.ReceiveSocketData. Check if engine has been updated.");
+            throw new Exception("Failed to patch NetPeer.ReceiveSocketData. Check if engine has been updated. INDEXES: warningStart: " + warningStart + ", warningEnd: " + warningEnd + ", throwStart: " + throwStart + ", throwEnd: " + throwEnd);
 
         for (var i = warningStart; i <= warningEnd; i++)
         {
