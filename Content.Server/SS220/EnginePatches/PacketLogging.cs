@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using Lidgren.Network;
@@ -9,7 +10,8 @@ namespace Content.Server.SS220.EnginePatches;
 /// This is a workaround for the issue when any client can easily DOS the server with IO operations of logger.
 /// It simply removes logging calls by modifying IL code via Harmony transplier so there is no overhead.
 ///
-/// IMPORTANT: Call indexes must be re-verified every time the engine is updated.
+/// IMPORTANT: Code must be re-verified every time Lidgren is updated.
+/// - TheArturZh
 /// </summary>
 [HarmonyPatch(typeof(NetPeer))]
 [HarmonyPatch("ReceiveSocketData")]
@@ -20,13 +22,47 @@ public static class NetPeer_ReceiveSocketData_CheckForErrors_Patch
         var codes = new List<CodeInstruction>(instructions);
 
         // Cut out the warning message construction & log call.
-        for (var i = 242; i <= 284; i++)
+        var warningStart = 0;
+        var warningEnd = 0;
+        var throwStart = 0;
+        var throwEnd = 0;
+
+        for (var i = 0; i < codes.Count; i++)
+        {
+            if (codes[i].opcode == OpCodes.Ldstr
+                && codes[i].operand is string s)
+            {
+                if (s == "Malformed packet from ")
+                    warningStart = i - 5; // -5 is offset to ldarg.0
+                else if (s == "Unexpected NetMessageType: ")
+                    throwStart = i - 1; // -1 is offset to ldarg.0
+            }
+
+
+            if (codes[i].opcode == OpCodes.Call
+                && codes[i].operand is MethodInfo methodInfo)
+            {
+                if (methodInfo.Name == "LogWarning")
+                    warningEnd = i;
+                else if (methodInfo.Name == "ThrowOrLog")
+                    throwEnd = i;
+            }
+        }
+
+        FileLog.Log("Warning start: " + warningStart);
+        FileLog.Log("Warning end: " + warningEnd);
+        FileLog.Log("Throw start: " + throwStart);
+        FileLog.Log("Throw end: " + throwEnd);
+
+        if (throwStart == 0 || throwEnd == 0 || warningStart == 0 || warningEnd == 0)
+            throw new Exception("Failed to patch NetPeer.ReceiveSocketData. Check if engine has been updated.");
+
+        for (var i = warningStart; i <= warningEnd; i++)
         {
             codes[i].opcode = OpCodes.Nop;
         }
 
-        // Cut out the error message construction & ThrowOrLog call.
-        for (var i = 300; i <= 308; i++)
+        for (var i = throwStart; i <= throwEnd; i++)
         {
             codes[i].opcode = OpCodes.Nop;
         }

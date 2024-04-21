@@ -60,7 +60,7 @@ namespace Content.Server.Entry
             var res = IoCManager.Resolve<IResourceManager>();
             var logManager = IoCManager.Resolve<ILogManager>();
 
-            PatchManager.Patch(logManager); // SS220 Harmony-Patching
+            Patcher.Patch(logManager); // SS220 Harmony-Patching
 
             LoadConfigPresets(cfg, res, logManager.GetSawmill("configpreset"));
 
