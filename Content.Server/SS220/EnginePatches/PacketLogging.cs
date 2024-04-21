@@ -49,10 +49,13 @@ public static class NetPeer_ReceiveSocketData_CheckForErrors_Patch
             }
         }
 
-        FileLog.Log("Warning start: " + warningStart);
-        FileLog.Log("Warning end: " + warningEnd);
-        FileLog.Log("Throw start: " + throwStart);
-        FileLog.Log("Throw end: " + throwEnd);
+        if (Patcher.HARMONY_LOGGING)
+        {
+            FileLog.Log("Warning start: " + warningStart);
+            FileLog.Log("Warning end: " + warningEnd);
+            FileLog.Log("Throw start: " + throwStart);
+            FileLog.Log("Throw end: " + throwEnd);
+        }
 
         if (throwStart == 0 || throwEnd == 0 || warningStart == 0 || warningEnd == 0)
             throw new Exception("Failed to patch NetPeer.ReceiveSocketData. Check if engine has been updated.");
