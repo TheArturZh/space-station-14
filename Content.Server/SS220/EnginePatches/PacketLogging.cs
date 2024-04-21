@@ -32,7 +32,9 @@ public static class NetPeer_ReceiveSocketData_CheckForErrors_Patch
             if (codes[i].opcode == OpCodes.Ldstr
                 && codes[i].operand is string s)
             {
-                if (s == "Malformed packet from ")
+                if (s == Patcher.MAGIC)
+                    return codes.AsEnumerable(); // Only apply patch once. If magic string is present, it's already patched.
+                else if (s == "Malformed packet from ")
                     warningStart = i - 5; // -5 is offset to ldarg.0
                 else if (s == "Unexpected NetMessageType: ")
                     throwStart = i - 1; // -1 is offset to ldarg.0
@@ -69,6 +71,13 @@ public static class NetPeer_ReceiveSocketData_CheckForErrors_Patch
         {
             codes[i].opcode = OpCodes.Nop;
         }
+
+        // Put in the magic string to mark the assembly as patched.
+        // This is done because Content can be loaded multiple times via same engine assembly.
+        // Integration tests do it, for example.
+        codes[warningEnd - 1].opcode = OpCodes.Ldstr;
+        codes[warningEnd - 1].operand = Patcher.MAGIC;
+        codes[warningEnd].opcode = OpCodes.Pop;
 
         return codes.AsEnumerable();
     }
