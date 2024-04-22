@@ -33,7 +33,13 @@ public sealed class Patcher
         sawmill.Info("Clearning message queues...");
         try
         {
-            var netMan = IoCManager.Resolve<IServerNetManager>() as NetManager;
+            var netMan = IoCManager.Resolve<IServerNetManager>();
+
+            if (netMan is not NetManager)
+            {
+                sawmill.Info("IServerNetManager is not NetManager, skipping message queue clearing");
+                return;
+            }
 
             var peerListField = netMan!.GetType().GetField("_netPeers", BindingFlags.Instance | BindingFlags.NonPublic);
             var peerList = peerListField!.GetValue(netMan) as IEnumerable<object>;
