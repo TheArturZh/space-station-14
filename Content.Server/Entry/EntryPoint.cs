@@ -56,6 +56,7 @@ namespace Content.Server.Entry
         {
             var logManager = IoCManager.Resolve<ILogManager>(); // SS220 Harmony-Patching
             Patcher.Patch(logManager); // SS220 Harmony-Patching
+            Patcher.ClearMessageQueues(logManager);
 
             base.Init();
 
