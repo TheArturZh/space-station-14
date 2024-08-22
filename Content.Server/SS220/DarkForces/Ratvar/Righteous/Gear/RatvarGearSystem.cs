@@ -1,7 +1,5 @@
-﻿using System;
-using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Server.Power.Components;
-using Content.Server.SS220.DarkForces.Ratvar.Righteous.Gear;
 using Content.Server.Wires;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
@@ -10,10 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.SS220.DarkForces.Ratvar.Events;
 using Content.Shared.Wires;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Gear;
