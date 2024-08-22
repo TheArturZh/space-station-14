@@ -12,7 +12,7 @@
   components:
     - type: Sharp
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Effects/axe.rsi
+      sprite: SS220/DarkForces/Cult/Effects/axe.rsi
       state: icon
     - type: MeleeWeapon
       attackRate: 1.0
@@ -34,7 +34,7 @@
   components:
     - type: Sharp
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Weapons/sword.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Weapons/sword.rsi
       state: icon
     - type: MeleeWeapon
       attackRate: 0.75
@@ -56,7 +56,7 @@
   components:
     - type: Sharp
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Weapons/axe.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Weapons/axe.rsi
       state: icon
     - type: MeleeWeapon
       attackRate: 1.0
@@ -78,7 +78,7 @@
   components:
     - type: Sharp
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Weapons/keule.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Weapons/keule.rsi
       state: icon
     - type: MeleeWeapon
       attackRate: 1.2

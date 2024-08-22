@@ -2,7 +2,7 @@
   id: NarsiBalfire
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Effects/blood.rsi
+    sprite: SS220/DarkForces/Cult/Effects/blood.rsi
     noRot: true
     drawdepth: Effects
     layers:
@@ -26,7 +26,7 @@
   id: NarsiBloodBoom
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Effects/blood_boom.rsi
+    sprite: SS220/DarkForces/Cult/Effects/blood_boom.rsi
     noRot: true
     drawdepth: Effects
     layers:
@@ -50,7 +50,7 @@
   id: NarsiPentagrama
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Effects/pentagrama.rsi
+    sprite: SS220/DarkForces/Cult/Effects/pentagrama.rsi
     noRot: true
     drawdepth: Effects
     layers:

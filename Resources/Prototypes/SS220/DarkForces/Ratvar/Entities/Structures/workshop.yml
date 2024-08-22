@@ -16,10 +16,10 @@
   - type: RatvarworkShop
   - type: PlaceableSurface
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/workshop.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/workshop.rsi
     state: workshop
   - type: Icon
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/workshop.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/workshop.rsi
     state: workshop
   - type: MaterialStorage
     whitelist:
@@ -63,7 +63,7 @@
     - RatvarRighteous
   description: "В мастерской праведники благословленными латунными инструментами создают оружие и снаряжение, что поможет им нести просветления Ратвара заблудшим душам."
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/workshop.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/workshop.rsi
     state: workshop
   conditions:
   - !type:TileNotBlocked

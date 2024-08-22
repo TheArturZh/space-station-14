@@ -13,7 +13,7 @@
     building: Pilon
   - type: SpriteFade
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/pilon.rsi
+    sprite: SS220/DarkForces/Cult/Structures/pilon.rsi
     state: pilon
   - type: NarsiCultPilon
   - type: Construction

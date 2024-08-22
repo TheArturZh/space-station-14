@@ -8,7 +8,7 @@
     noRot: true
   - type: Sprite
     drawdepth: Ghosts
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Mobs/ratvar.rsi
+    sprite: SS220/DarkForces/Ratvar/Mobs/ratvar.rsi
     noRot: true
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]

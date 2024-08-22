@@ -26,7 +26,7 @@ public sealed class NarsiCultistBlindnessVisualizeSystem : VisualizerSystem<Nars
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("DarkStation/MainGame/DarkForces/Cult/Effects/blindness.rsi"), "blindness"));
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("SS220/DarkForces/Cult/Effects/blindness.rsi"), "blindness"));
         sprite.LayerMapSet(NarsiCultistBlindnessLayers.Blindness, layer);
     }
 

@@ -17,7 +17,7 @@
   subDescription: "Для жертвы (включая цель) нужен труп"
   buttonText: "Начертить"
   buttonState: enum.ButtonState.Enabled
-  icon: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/rune.rsi/offering.png
+  icon: SS220/DarkForces/Cult/Entities/Runes/rune.rsi/offering.png
 
 - type: secretListing
   id: NarsiTeleportRune
@@ -26,7 +26,7 @@
   subDescription: "Чтобы установить тег руны, нажмите ПКМ по нарисованной руне"
   buttonText: "Начертить"
   buttonState: enum.ButtonState.Enabled
-  icon: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/rune.rsi/teleport.png
+  icon: SS220/DarkForces/Cult/Entities/Runes/rune.rsi/teleport.png
 
 - type: secretListing
   id: NarsiReviveRune
@@ -35,7 +35,7 @@
   subDescription: "Требуется заряд, который можно получить, пожертвовав труп на руне Предложения"
   buttonText: "Начертить"
   buttonState: enum.ButtonState.Enabled
-  icon: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/revive_rune.rsi/idle.png
+  icon: SS220/DarkForces/Cult/Entities/Runes/revive_rune.rsi/idle.png
 
 - type: secretListing
   id: NarsiSummoningRune
@@ -44,7 +44,7 @@
   subDescription: "Требуется 2 культиста у руны\nЦель призыва может быть связана, но ее не должны держать"
   buttonText: "Начертить"
   buttonState: enum.ButtonState.Enabled
-  icon: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/summon_rune.rsi/idle.png
+  icon: SS220/DarkForces/Cult/Entities/Runes/summon_rune.rsi/idle.png
 
 - type: secretListing
   id: NarsiRitualRune
@@ -53,4 +53,4 @@
   subDescription: "Требуется 7 культистов у руны\nВсе цели должны быть выполнены"
   buttonText: "Начертить"
   buttonState: enum.ButtonState.Enabled
-  icon: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/narsi_summon_rune.rsi/idle.png
+  icon: SS220/DarkForces/Cult/Entities/Runes/narsi_summon_rune.rsi/idle.png

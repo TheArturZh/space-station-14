@@ -15,7 +15,7 @@
   powerCost: 0
   craftingTime: 3
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
     state: clock_slab
   entityProduce: RatvarSlab
 
@@ -26,7 +26,7 @@
   powerCost: 400
   craftingTime: 10
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/ratvar_spear.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/ratvar_spear.rsi
     state: spear
   entityProduce: RatvarSpear
 
@@ -37,7 +37,7 @@
   powerCost: 400
   craftingTime: 10
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clock_hammer.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/clock_hammer.rsi
     state: icon
   entityProduce: RatvarHammer
 
@@ -48,7 +48,7 @@
   powerCost: 200
   craftingTime: 4
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clock_sword.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/clock_sword.rsi
     state: icon
   entityProduce: RatvarSword
 
@@ -72,7 +72,7 @@
   powerCost: 200
   craftingTime: 4
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/brass_buckler.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/brass_buckler.rsi
     state: brass-buckler
   entityProduce: RatvarShield
 
@@ -83,7 +83,7 @@
   powerCost: 80
   craftingTime: 10
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/robe.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/robe.rsi
     state: icon
   entityProduce: ClothingOuterRobesRatvar
 
@@ -94,7 +94,7 @@
   powerCost: 400
   craftingTime: 20
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/cuirass.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/cuirass.rsi
     state: icon
   entityProduce: ClothingOuterCuirassRatvar
 
@@ -105,7 +105,7 @@
   powerCost: 200
   craftingTime: 5
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/gloves.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/gloves.rsi
     state: icon
   entityProduce: ClothingHandsRatvar
 
@@ -116,7 +116,7 @@
   powerCost: 50
   craftingTime: 5
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/treads.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/treads.rsi
     state: icon
   entityProduce: ClothingShoesRatvar
 
@@ -127,7 +127,7 @@
   powerCost: 100
   craftingTime: 5
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/helmet.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/helmet.rsi
     state: icon
   entityProduce: ClothingHeadHelmetRatvar
 
@@ -149,7 +149,7 @@
   powerCost: 0
   craftingTime: 3
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/integration_cog.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/integration_cog.rsi
     state: gear
   entityProduce: RatvarIntegrationCog
 
@@ -160,7 +160,7 @@
   powerCost: 100
   craftingTime: 5
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/soul_vessel.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/soul_vessel.rsi
     state: soul_vessel
   entityProduce: RatvarSoulVesselGhost
 
@@ -171,7 +171,7 @@
   powerCost: 300
   craftingTime: 20
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Mobs/marauder.rsi
+    sprite: SS220/DarkForces/Ratvar/Mobs/marauder.rsi
     state: marauder_shell
   entityProduce: MobRatvarMarauder
 
@@ -182,6 +182,6 @@
   powerCost: 600
   craftingTime: 15
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/shard.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/shard.rsi
     state: shard
   entityProduce: RatvarShard

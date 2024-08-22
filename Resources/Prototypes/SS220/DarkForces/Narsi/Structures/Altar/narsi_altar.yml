@@ -5,7 +5,7 @@
   components:
   - type: Climbable
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/altar.rsi
+    sprite: SS220/DarkForces/Cult/Structures/altar.rsi
     layers:
     - state: narsi
     - state: narsi_lightning

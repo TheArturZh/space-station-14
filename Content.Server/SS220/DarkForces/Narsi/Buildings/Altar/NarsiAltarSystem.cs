@@ -73,7 +73,7 @@ public sealed partial class NarsiAltarSystem : EntitySystem
             Act = () => OpenAltarWindow(args.User, uid, component),
             DoContactInteraction = true,
             Text = "Алтарь Нар'Си",
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/DarkStation/MainGame/DarkForces/Cult/Structures/altar.rsi"), "narsi")
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/SS220/DarkForces/Cult/Structures/altar.rsi"), "narsi")
         };
         args.Verbs.Add(altarVerb);
     }

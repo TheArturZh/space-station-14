@@ -34,7 +34,7 @@
     baseSprintSpeed: 4.5
   - type: Sprite
     drawdepth: Mobs
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Mobs/cyborg.rsi
+    sprite: SS220/DarkForces/Ratvar/Mobs/cyborg.rsi
     noRot: true
     layers:
     - state: cyborg

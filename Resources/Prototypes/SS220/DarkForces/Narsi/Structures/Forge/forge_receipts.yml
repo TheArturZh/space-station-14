@@ -6,7 +6,7 @@
     Sword:
       name: Кровавый меч
       description: Мощное оружие
-      icon: /Textures/DarkStation/MainGame/DarkForces/Cult/Entities/Weapons/sword.rsi/icon.png
+      icon: /Textures/SS220/DarkForces/Cult/Entities/Weapons/sword.rsi/icon.png
       cost: 60
       itemToSpawn: NarsiCultSword
       requiredMaterial: RunicPlasteel
@@ -14,7 +14,7 @@
     Keule:
       name: Кровавая булава
       description: Самое слабое оружие
-      icon: /Textures/DarkStation/MainGame/DarkForces/Cult/Entities/Weapons/keule.rsi/icon.png
+      icon: /Textures/SS220/DarkForces/Cult/Entities/Weapons/keule.rsi/icon.png
       cost: 15
       itemToSpawn: NarsiCultKeule
       requiredMaterial: RunicPlasteel
@@ -22,7 +22,7 @@
     Axe:
       name: Кровавый топор
       description: Среднее оружие
-      icon: /Textures/DarkStation/MainGame/DarkForces/Cult/Entities/Weapons/axe.rsi/icon.png
+      icon: /Textures/SS220/DarkForces/Cult/Entities/Weapons/axe.rsi/icon.png
       cost: 30
       itemToSpawn: NarsuCultAxe
       requiredMaterial: RunicPlasteel

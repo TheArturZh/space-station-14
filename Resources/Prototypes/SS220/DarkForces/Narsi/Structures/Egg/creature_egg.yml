@@ -6,7 +6,7 @@
   suffix: Narsi
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/creature_egg.rsi
+    sprite: SS220/DarkForces/Cult/Structures/creature_egg.rsi
     layers:
     - state: stage-1
       map: [ "enum.CreatureVisuals.Egg" ]
@@ -20,7 +20,7 @@
           StageFour: { state: stage-4 }
   - type: Appearance
   - type: Icon
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/creature_egg.rsi
+    sprite: SS220/DarkForces/Cult/Structures/creature_egg.rsi
     state: stage-1
   - type: ItemSlots
     slots:

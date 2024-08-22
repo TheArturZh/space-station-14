@@ -26,7 +26,7 @@ public sealed class NarsiCultistMuzzleVisualizerSystem : VisualizerSystem<NarsiC
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("DarkStation/MainGame/DarkForces/Cult/Effects/muzzle.rsi"), "muzzle"));
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("SS220/DarkForces/Cult/Effects/muzzle.rsi"), "muzzle"));
         sprite.LayerMapSet(NarsiCultistMuzzleLayers.Muzzle, layer);
     }
 

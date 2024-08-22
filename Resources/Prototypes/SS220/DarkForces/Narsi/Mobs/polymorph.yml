@@ -48,7 +48,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Ghosts
-    sprite: DarkStation/MainGame/DarkForces/Cult/Mobs/eye.rsi
+    sprite: SS220/DarkForces/Cult/Mobs/eye.rsi
     layers:
     - state: eye
   - type: ContentEye
@@ -140,7 +140,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: DarkStation/MainGame/DarkForces/Cult/Mobs/skeleton.rsi
+    sprite: SS220/DarkForces/Cult/Mobs/skeleton.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: skeleton
@@ -196,7 +196,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: DarkStation/MainGame/DarkForces/Cult/Mobs/flesh.rsi
+    sprite: SS220/DarkForces/Cult/Mobs/flesh.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: base
@@ -263,7 +263,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: DarkStation/MainGame/DarkForces/Cult/Mobs/charger.rsi
+    sprite: SS220/DarkForces/Cult/Mobs/charger.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: base

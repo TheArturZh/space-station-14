@@ -8,7 +8,7 @@
     - type: Item
       size: Tiny
     - type: Handcuff
-      cuffedRSI: DarkStation/MainGame/DarkForces/Cult/Entities/Items/shadow_handcuff.rsi
+      cuffedRSI: SS220/DarkForces/Cult/Entities/Items/shadow_handcuff.rsi
       bodyIconState: body-overlay
       state: handcuff
       deleteOnRemove: true

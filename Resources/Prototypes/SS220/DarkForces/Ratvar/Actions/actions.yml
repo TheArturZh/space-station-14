@@ -9,7 +9,7 @@
     checkCanInteract: true
     interactOnMiss: false
     icon:
-      sprite: DarkStation/MainGame/DarkForces/Ratvar/actions.rsi
+      sprite: SS220/DarkForces/Ratvar/actions.rsi
       state: clocked_hand
     useDelay: 10
     range: 6
@@ -29,7 +29,7 @@
     checkCanInteract: true
     interactOnMiss: false
     icon:
-      sprite: DarkStation/MainGame/DarkForces/Ratvar/actions.rsi
+      sprite: SS220/DarkForces/Ratvar/actions.rsi
       state: carve
     useDelay: 10
     range: 6

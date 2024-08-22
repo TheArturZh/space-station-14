@@ -6,7 +6,7 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/treads.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/treads.rsi
   - type: Clothing
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/treads.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/treads.rsi
   - type: RatvarItem

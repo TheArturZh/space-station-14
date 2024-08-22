@@ -5,10 +5,10 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/brass_buckler.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/brass_buckler.rsi
     state: brass-buckler
   - type: Item
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/brass_buckler.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/brass_buckler.rsi
     heldPrefix: brass
   - type: Blocking
     passiveBlockModifier:

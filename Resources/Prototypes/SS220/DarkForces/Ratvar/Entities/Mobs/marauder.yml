@@ -26,7 +26,7 @@
     - Ratvar
   - type: Sprite
     drawdepth: Mobs
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Mobs/marauder.rsi
+    sprite: SS220/DarkForces/Ratvar/Mobs/marauder.rsi
     noRot: true
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]

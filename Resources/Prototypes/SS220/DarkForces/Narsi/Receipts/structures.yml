@@ -11,7 +11,7 @@
     - NarsiCultist
   description: Лечит культистов в радиусе 4 тайлов. Если в радиусе 10 тайлов больше двух пилонов, все пилоны отключаются и не работают.
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/pilon.rsi
+    sprite: SS220/DarkForces/Cult/Structures/pilon.rsi
     state: pilon
   conditions:
   - !type:TileNotBlocked
@@ -32,7 +32,7 @@
     - NarsiCultist
   description: Рунический шлюз. Только культисты имеют доступ к нему. Также только культисты видят его истинный вид. Для простых членов экипажа выглядит как шлюз технических помещений.
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/door.rsi
+    sprite: SS220/DarkForces/Cult/Structures/door.rsi
     state: assembly
   conditions:
   - !type:TileNotBlocked
@@ -53,7 +53,7 @@
     - NarsiCultist
   description: Кузня необходима для создания брони, оружия и рунического металла.
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/forge.rsi
+    sprite: SS220/DarkForces/Cult/Structures/forge.rsi
     state: forge
   conditions:
   - !type:TileNotBlocked
@@ -74,7 +74,7 @@
     - NarsiCultist
   description: "Яйцо необходимо для выращивания различных сущностей"
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/creature_egg.rsi
+    sprite: SS220/DarkForces/Cult/Structures/creature_egg.rsi
     state: stage-1
   conditions:
   - !type:TileNotBlocked
@@ -95,7 +95,7 @@
     - NarsiCultist
   description: Алтарь необходим для провеления ритуалов
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/altar.rsi
+    sprite: SS220/DarkForces/Cult/Structures/altar.rsi
     state: narsi
   conditions:
   - !type:TileNotBlocked

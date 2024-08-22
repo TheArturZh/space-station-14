@@ -18,10 +18,10 @@
         - GlassLayer
   - type: Airtight
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Chaplain/barrier.rsi
+    sprite: SS220/DarkForces/Chaplain/barrier.rsi
     state: barrier
   - type: Icon
-    sprite: DarkStation/MainGame/DarkForces/Chaplain/barrier.rsi
+    sprite: SS220/DarkForces/Chaplain/barrier.rsi
     state: barrier
 
 - type: entity

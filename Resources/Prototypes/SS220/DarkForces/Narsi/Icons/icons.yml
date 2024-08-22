@@ -8,7 +8,7 @@
     - NarsiCultistLeader
     - NarsiCultCreature
   icon:
-    sprite: /Textures/DarkStation/MainGame/DarkForces/Cult/Icons/cultist.rsi
+    sprite: /Textures/SS220/DarkForces/Cult/Icons/cultist.rsi
     state: cultist
 
 - type: statusIcon
@@ -21,5 +21,5 @@
     - NarsiCultistLeader
     - NarsiCultCreature
   icon:
-    sprite: /Textures/DarkStation/MainGame/DarkForces/Cult/Icons/cultist.rsi
+    sprite: /Textures/SS220/DarkForces/Cult/Icons/cultist.rsi
     state: cultistLeader

@@ -6,9 +6,9 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/helmet.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/helmet.rsi
   - type: Clothing
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Clothing/helmet.rsi
+    sprite: SS220/DarkForces/Ratvar/Clothing/helmet.rsi
   - type: Armor
     modifiers:
       coefficients:

@@ -6,7 +6,7 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/shard.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/shard.rsi
     layers:
     - state: shard
   - type: GenericVisualizer
@@ -24,13 +24,13 @@
     - action: RatvarShardReconstruct
       name: "Реконструкция"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/shard.rsi
+        sprite: SS220/DarkForces/Ratvar/Items/shard.rsi
         state: shard_overlay_1
       visuals: Reconstruct
     - action: RatvarShardEmp
       name: "Электромагнитный импульс"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/shard.rsi
+        sprite: SS220/DarkForces/Ratvar/Items/shard.rsi
         state: shard_overlay_2
       visuals: Emp
   - type: Appearance

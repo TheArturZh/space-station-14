@@ -114,7 +114,7 @@ public sealed class NarsiRitualDaggerSystem : EntitySystem
             Act = () => DrawRune(args.User, uid),
             DoContactInteraction = true,
             Text = "Руны",
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/DarkStation/MainGame/DarkForces/Cult/Entities/Runes/rune.rsi"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/SS220/DarkForces/Cult/Entities/Runes/rune.rsi"),
                 "offering")
         };
 

@@ -13,7 +13,7 @@
   components:
     - type: NarsiOfferingRune
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/rune.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Runes/rune.rsi
       layers:
         - state: offering
 
@@ -24,7 +24,7 @@
   components:
     - type: NarsiTeleportRune
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/rune.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Runes/rune.rsi
       layers:
         - state: teleport
 
@@ -35,7 +35,7 @@
   components:
     - type: NarsiReviveRune
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/revive_rune.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Runes/revive_rune.rsi
       layers:
         - state: idle
           map: ["enum.NarsiRuneVisualLayers.Idle"]
@@ -52,7 +52,7 @@
   components:
     - type: NarsiSummonRune
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/summon_rune.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Runes/summon_rune.rsi
       layers:
         - state: idle
     - type: UserInterface
@@ -67,7 +67,7 @@
   components:
     - type: NarsiSpawnRune
     - type: Sprite
-      sprite: DarkStation/MainGame/DarkForces/Cult/Entities/Runes/narsi_summon_rune.rsi
+      sprite: SS220/DarkForces/Cult/Entities/Runes/narsi_summon_rune.rsi
       layers:
         - state: idle
           map: ["enum.NarsiRuneVisualLayers.Idle"]

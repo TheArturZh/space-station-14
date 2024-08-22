@@ -6,7 +6,7 @@
   components:
   - type: Sharp
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clock_hammer.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/clock_hammer.rsi
     state: icon
   - type: Appearance
   - type: GenericVisualizer
@@ -37,7 +37,7 @@
     - action: RatvarHammmerKnockOff
       name: "Отбрасывание"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clock_hammer.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/clock_hammer.rsi
         state: icon-yellow
       visuals: KnockOff
   - type: RatvarItem

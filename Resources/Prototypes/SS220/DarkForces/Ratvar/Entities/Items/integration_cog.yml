@@ -6,7 +6,7 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/integration_cog.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/integration_cog.rsi
     state: gear
   - type: Item
     size: Small

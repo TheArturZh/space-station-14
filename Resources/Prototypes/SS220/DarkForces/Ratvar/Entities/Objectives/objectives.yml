@@ -8,7 +8,7 @@
     issuer: "Ратвар"
     unique: false
     icon:
-      sprite: DarkStation/MainGame/DarkForces/Ratvar/actions.rsi
+      sprite: SS220/DarkForces/Ratvar/actions.rsi
       state: ratvar
   - type: RatvarConvertObjective
 
@@ -22,7 +22,7 @@
     issuer: "Ратвар"
     unique: false
     icon:
-      sprite: DarkStation/MainGame/DarkForces/Ratvar/actions.rsi
+      sprite: SS220/DarkForces/Ratvar/actions.rsi
       state: ratvar
   - type: RatvarBeaconObjective
 
@@ -36,7 +36,7 @@
     issuer: "Ратвар"
     unique: false
     icon:
-      sprite: DarkStation/MainGame/DarkForces/Ratvar/actions.rsi
+      sprite: SS220/DarkForces/Ratvar/actions.rsi
       state: ratvar
   - type: RatvarPowerObjective
 
@@ -50,6 +50,6 @@
     issuer: "Ратвар"
     unique: false
     icon:
-      sprite: DarkStation/MainGame/DarkForces/Ratvar/actions.rsi
+      sprite: SS220/DarkForces/Ratvar/actions.rsi
       state: ratvar
   - type: RatvarSummonObjective

@@ -5,7 +5,7 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/ratvar_spear.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/ratvar_spear.rsi
     state: spear
   - type: MeleeWeapon
     wideAnimationRotation: -135
@@ -32,7 +32,7 @@
     - action: RatvarSpearElectricalTouch
       name: "Электрошок"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/ratvar_spear.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/ratvar_spear.rsi
         state: icon-blue
       visuals: ElectricalTouch
   - type: RatvarItem

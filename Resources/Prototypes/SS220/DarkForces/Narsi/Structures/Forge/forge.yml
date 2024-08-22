@@ -5,7 +5,7 @@
   suffix: Narsi
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Cult/Structures/forge.rsi
+    sprite: SS220/DarkForces/Cult/Structures/forge.rsi
     layers:
     - state: icon
       map: [ "NarsiForgeState" ]

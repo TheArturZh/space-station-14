@@ -5,12 +5,12 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/heralds_beacon.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/heralds_beacon.rsi
     layers:
     - state: beacon
       map: [ "base" ]
   - type: Icon
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/heralds_beacon.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/heralds_beacon.rsi
     state: beacon
   - type: GenericVisualizer
     visuals:
@@ -57,7 +57,7 @@
     - RatvarRighteous
   description: "Маяк — часть задания и малый добытчик энергий и восстановления здоровья вокруг."
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/heralds_beacon.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/heralds_beacon.rsi
     state: beacon
   conditions:
   - !type:TileNotBlocked

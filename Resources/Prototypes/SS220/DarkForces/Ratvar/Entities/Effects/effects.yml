@@ -12,7 +12,7 @@
     anchored: true
   - type: Sprite
     layers:
-    - sprite: DarkStation/MainGame/DarkForces/Ratvar/Effects/floor.rsi
+    - sprite: SS220/DarkForces/Ratvar/Effects/floor.rsi
       state: ratvarfloorglow
       shader: unshaded
     netsync: false
@@ -35,7 +35,7 @@
     anchored: true
   - type: Sprite
     layers:
-    - sprite: DarkStation/MainGame/DarkForces/Ratvar/Effects/wall.rsi
+    - sprite: SS220/DarkForces/Ratvar/Effects/wall.rsi
       state: ratvarwallglow
       shader: unshaded
     netsync: false
@@ -58,7 +58,7 @@
     anchored: true
   - type: Sprite
     layers:
-    - sprite: DarkStation/MainGame/DarkForces/Ratvar/Effects/altar.rsi
+    - sprite: SS220/DarkForces/Ratvar/Effects/altar.rsi
       state: altar-glow
       offset: "0, 0.05"
       shader: unshaded

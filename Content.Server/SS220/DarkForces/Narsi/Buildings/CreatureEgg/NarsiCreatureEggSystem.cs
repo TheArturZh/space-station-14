@@ -94,7 +94,7 @@ public sealed class NarsiCreatureEggSystem : EntitySystem
         {
             Text = Loc.GetString("narsi-creature-egg-get-out-creature"),
             Icon = new SpriteSpecifier.Rsi(
-                new ResPath("/Textures/DarkStation/MainGame/DarkForces/Cult/Structures/creature_egg.rsi"), "stage-1"),
+                new ResPath("/Textures/SS220/DarkForces/Cult/Structures/creature_egg.rsi"), "stage-1"),
             Act = () => CreateCreature((uid, component))
         };
         args.Verbs.Add(verb);

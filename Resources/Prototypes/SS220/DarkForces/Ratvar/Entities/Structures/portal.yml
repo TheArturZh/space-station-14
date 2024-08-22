@@ -9,7 +9,7 @@
   - type: Clickable
   - type: Sprite
     noRot: true
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/portal.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/portal.rsi
     layers:
     - state: spatial_gateway
   - type: Physics

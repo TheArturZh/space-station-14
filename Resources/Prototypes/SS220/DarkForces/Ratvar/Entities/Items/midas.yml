@@ -11,7 +11,7 @@
   item: RatvarSlab
   name: "Заводная плита"
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
     state: clock_slab
 
 - type: ratvarMidasTouch
@@ -19,5 +19,5 @@
   item: RatvarIntegrationCog
   name: "Шестерня интеграции"
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/integration_cog.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/integration_cog.rsi
     state: gear

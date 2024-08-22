@@ -12,7 +12,7 @@
     anchored: true
   - type: Sprite
     layers:
-    - sprite: DarkStation/MainGame/DarkForces/Ratvar/Effects/smoke.rsi
+    - sprite: SS220/DarkForces/Ratvar/Effects/smoke.rsi
       state: chemsmoke
     netsync: false
     drawdepth: WallMountedItems

@@ -8,7 +8,7 @@
   - type: Transform
     noRot: true
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Items/soul_vessel.rsi
+    sprite: SS220/DarkForces/Ratvar/Items/soul_vessel.rsi
     noRot: true
     layers:
     - state: soul_vessel

@@ -11,7 +11,7 @@
     speechVerb: SmallMob
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Mobs/mouse.rsi
+    sprite: SS220/DarkForces/Ratvar/Mobs/mouse.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: icon
@@ -22,7 +22,7 @@
     size: Tiny
   - type: Clothing
     quickEquip: false
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Mobs/mouse.rsi
+    sprite: SS220/DarkForces/Ratvar/Mobs/mouse.rsi
     slots:
     - HEAD
   - type: HTN

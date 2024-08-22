@@ -6,7 +6,7 @@
   suffix: Ratvar
   components:
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+    sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
     layers:
     - state: clock_slab
   - type: Item
@@ -31,31 +31,31 @@
     - action: ActionRatvarSlabStun
       name: "Оглушение"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
         state: clock_slab_overlay_1
       visuals: Stun
     - action: ActionRatvarSlabDoors
       name: "Создание прохода"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
         state: clock_slab_overlay_2
       visuals: Doors
     - action: ActionRatvarSlabWalls
       name: "Терраформ"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
         state: clock_slab_overlay_3
       visuals: Walls
     - action: ActionRatvarSlabTeleport
       name: "Телепортация"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
         state: clock_slab_overlay_4
       visuals: Teleport
     - action: ActionRatvarSlabHidings
       name: "Сокрытие шестерней"
       icon:
-        sprite: DarkStation/MainGame/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
+        sprite: SS220/DarkForces/Ratvar/Weapons/clockwork_slab.rsi
         state: clock_slab_overlay_6
       visuals: Hidings
   - type: Appearance

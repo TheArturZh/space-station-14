@@ -27,7 +27,7 @@ public sealed class NarsiCultistFireArmsVisualizerSystem : VisualizerSystem<Nars
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("DarkStation/MainGame/DarkForces/Cult/Effects/fire_arms.rsi/"), "fire_arms"));
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("SS220/DarkForces/Cult/Effects/fire_arms.rsi/"), "fire_arms"));
         sprite.LayerMapSet(NarsiCultistFireArmsLayers.Fire, layer);
     }
 

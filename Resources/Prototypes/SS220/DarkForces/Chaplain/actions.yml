@@ -5,7 +5,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: DarkStation/MainGame/DarkForces/Chaplain/actions.rsi, state: great-prayer }
+    icon: { sprite: SS220/DarkForces/Chaplain/actions.rsi, state: great-prayer }
     useDelay: 120
     event: !type:ChaplainGreatPrayerEvent
 
@@ -16,7 +16,7 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: { sprite: DarkStation/MainGame/DarkForces/Chaplain/actions.rsi, state: barrier }
+    icon: { sprite: SS220/DarkForces/Chaplain/actions.rsi, state: barrier }
     useDelay: 180
     event: !type:ChaplainDefenceBarrierEvent
 
@@ -35,7 +35,7 @@
       components:
       - MobState
     itemIconStyle: BigAction
-    icon: { sprite: DarkStation/MainGame/DarkForces/Chaplain/actions.rsi, state: exorcism }
+    icon: { sprite: SS220/DarkForces/Chaplain/actions.rsi, state: exorcism }
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
     event: !type:ChaplainStartExorcismEvent

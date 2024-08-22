@@ -9,13 +9,13 @@
     tool: RatvarAnchoring
   - type: PlaceableSurface
   - type: Sprite
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/altar.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/altar.rsi
     noRot: true
     layers:
     - state: altar
       map: [ "base" ]
   - type: Icon
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/altar.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/altar.rsi
     state: altar
   - type: GenericVisualizer
     visuals:
@@ -70,7 +70,7 @@
     - RatvarRighteous
   description: Алтарь необходим для провеления ритуалов
   icon:
-    sprite: DarkStation/MainGame/DarkForces/Ratvar/Structures/altar.rsi
+    sprite: SS220/DarkForces/Ratvar/Structures/altar.rsi
     state: altar
   conditions:
   - !type:TileNotBlocked
