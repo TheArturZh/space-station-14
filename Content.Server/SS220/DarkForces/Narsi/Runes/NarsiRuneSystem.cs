@@ -9,7 +9,7 @@ using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using static Content.Shared.SS220.Cult.Runes.SharedNarsiRuneComponent;
+using Content.Shared.SS220.DarkForces.Runes;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 

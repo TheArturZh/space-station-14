@@ -1,5 +1,4 @@
-﻿using Content.Server.Emp;
-using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
 using Content.Shared.Actions;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Weapons;
@@ -24,7 +23,6 @@ public sealed partial class RatvarAbilitiesSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly EmpSystem _empSystem = default!;
 
     public override void Initialize()
     {

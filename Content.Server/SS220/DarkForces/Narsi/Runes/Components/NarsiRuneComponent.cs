@@ -1,4 +1,4 @@
-using Content.Shared.SS220.Cult.Runes;
+using Content.Shared.SS220.DarkForces.Runes;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Convert;
 using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Beacon;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Random;

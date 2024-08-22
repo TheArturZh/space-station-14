@@ -6,10 +6,7 @@ using Content.Server.Objectives;
 using Content.Shared.GameTicking;
 using Content.Shared.Objectives.Components;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;

@@ -3,7 +3,7 @@ using Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 using Content.Server.SS220.DarkForces.Narsi.Runes.Events;
 //using Content.Server.SS220.Utils;
 using Content.Shared.DoAfter;
-using SpawnNarsiDoAfterEvent = Content.Shared.SS220.Cult.Runes.SpawnNarsiDoAfterEvent;
+using Content.Shared.SS220.DarkForces.Narsi.Runes;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 

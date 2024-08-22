@@ -103,7 +103,7 @@ public sealed partial class NarsiCultProgressSystem
         if (objective.Completed)
             return;
 
-        if (_activeProgress is not {} progress)
+        if (_activeProgress is not { } progress)
             return;
 
         var bloodPoints = objective.BloodScore;

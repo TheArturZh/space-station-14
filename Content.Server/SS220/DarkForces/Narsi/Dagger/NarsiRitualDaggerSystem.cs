@@ -14,7 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using CreateNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.CreateNarsiRuneDoAfterEvent;
+//using CreateNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.CreateNarsiRuneDoAfterEvent;
 using NarsiDaggerClearRuneDoAfterEvent =
     Content.Shared.SS220.DarkForces.Narsi.Dagger.NarsiDaggerClearRuneDoAfterEvent;
 
@@ -35,7 +35,7 @@ public sealed class NarsiRitualDaggerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<NarsiRitualDaggerComponent, GetVerbsEvent<Verb>>(AddVerbToRitualDagger);
-        SubscribeLocalEvent<NarsiRitualDaggerComponent, SelectItemMessage>(OnSelectedItemMessage);
+        //SubscribeLocalEvent<NarsiRitualDaggerComponent, SelectItemMessage>(OnSelectedItemMessage);
         SubscribeLocalEvent<NarsiRitualDaggerComponent, UseInHandEvent>(OnUseInHand);
 
         //for clear runes
@@ -97,13 +97,13 @@ public sealed class NarsiRitualDaggerSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 
-    private void OnSelectedItemMessage(EntityUid uid, NarsiRitualDaggerComponent component, SelectItemMessage args)
-    {
-        if (args.Key != "NarsiRuneListing")
-            return;
+    // private void OnSelectedItemMessage(EntityUid uid, NarsiRitualDaggerComponent component, SelectItemMessage args)
+    // {
+    //     if (args.Key != "NarsiRuneListing")
+    //         return;
 
-        SendCreateNarsiRuneEvent(uid, args.Actor, args.Data.ID);
-    }
+    //     SendCreateNarsiRuneEvent(uid, args.Actor, args.Data.ID);
+    // }
 
     private void AddVerbToRitualDagger(EntityUid uid, NarsiRitualDaggerComponent component, GetVerbsEvent<Verb> args)
     {

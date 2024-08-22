@@ -1,4 +1,6 @@
-﻿namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations;
+
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 
 [RegisterComponent]
 public sealed partial class RatvarProgressComponent : Component

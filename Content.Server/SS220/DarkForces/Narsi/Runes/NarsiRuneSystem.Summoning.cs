@@ -7,7 +7,7 @@ using Content.Shared.SS220.DarkForces.Narsi.Roles;
 //using Content.Shared.SS220.FastUI;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using SummonNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.SummonNarsiRuneDoAfterEvent;
+using Content.Shared.SS220.DarkForces.Narsi.Runes;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 

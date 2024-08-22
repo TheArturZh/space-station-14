@@ -1,6 +1,6 @@
 using Content.Client.SS220.DarkForces.Narsi;
 using Robust.Client.GameObjects;
-using static Content.Shared.SS220.DarkForces.Runes.SharedNarsiRuneComponent;
+using Content.Shared.SS220.DarkForces.Runes;
 
 namespace Content.Client.SS220.DarkForces.Narsi;
 

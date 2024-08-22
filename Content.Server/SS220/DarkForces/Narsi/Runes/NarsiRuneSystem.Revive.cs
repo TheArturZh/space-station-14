@@ -5,7 +5,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Player;
 using NarsiReviveRuneComponent = Content.Server.SS220.DarkForces.Narsi.Runes.Components.NarsiReviveRuneComponent;
-using ReviveNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.ReviveNarsiRuneDoAfterEvent;
+using Content.Shared.SS220.DarkForces.Narsi.Runes;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 
@@ -38,7 +38,7 @@ public sealed partial class NarsiRuneSystem
         }
 
         HandleRuneUsed(uid, false);
-        RaiseLocalEvent((EntityUid) args.Target, new RejuvenateEvent());
+        RaiseLocalEvent((EntityUid)args.Target, new RejuvenateEvent());
 
         args.Handled = true;
         _runesCharge -= 1;
