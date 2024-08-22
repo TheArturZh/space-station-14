@@ -73,7 +73,7 @@ public sealed class RatvarAltarSystem : EntitySystem
     public void ForceMakeRatvarRighteous(ICommonSession session)
     {
         // TODO: Switch to MakeAntag
-        // _antagSelection.ForceMakeAntag<RatvarRuleComponent>(session, DefaultRatvarRule);
+        _antagSelection.ForceMakeAntag<RatvarRuleComponent>(session, DefaultRatvarRule);
     }
 
     public void ForceMakeRatvarRighteous(EntityUid uid)
