@@ -1,7 +1,7 @@
 using Content.Server.SS220.DarkForces.Narsi.Progress;
 using Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 using Content.Server.SS220.DarkForces.Narsi.Runes.Events;
-//using Content.Server.SS220.Utils;
+using Content.Server.SS220.Utils;
 using Content.Shared.DoAfter;
 using Content.Shared.SS220.DarkForces.Narsi.Runes;
 
@@ -10,6 +10,7 @@ namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 public sealed partial class NarsiRuneSystem
 {
     [Dependency] private readonly NarsiCultProgressSystem _progressSystem = default!;
+    [Dependency] private readonly StationUtils _stationUtils = default!;
 
     private NarsiSummoningState _narsiSummoningState = NarsiSummoningState.Idle;
 
@@ -25,7 +26,7 @@ public sealed partial class NarsiRuneSystem
 
     private void SpawnNarsi(EntityUid rune, EntityUid user)
     {
-        if (!StationUtils.IsEntityOnMainStationOnly(rune, EntityManager))
+        if (!_stationUtils.IsOnMainStationGrid(rune))
         {
             _popupSystem.PopupEntity("Призыв доступен только на станции", rune);
             return;

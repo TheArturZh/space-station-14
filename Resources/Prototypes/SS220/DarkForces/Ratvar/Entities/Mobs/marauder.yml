@@ -116,7 +116,7 @@
   - type: Reflect
     reflectProb: 0.40
   - type: Pullable
-  - type: LanguageSpeaker
+  #- type: LanguageSpeaker
     understands:
     - GalacticCommon
     - Ratvar

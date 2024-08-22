@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.SS220.DarkForces.Narsi.Buildings.CreatureEgg;
+using Content.Shared.Objectives.Components;
 using Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

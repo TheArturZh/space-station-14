@@ -1,10 +1,10 @@
-﻿- type: radioChannel
-  id: SCP
-  name: Отдел SCP
-  keycode: 'р'
-  frequency: 1451
-  color: "#b9f9c9"
-  longRange: true
+﻿# - type: radioChannel
+#   id: SCP
+#   name: Отдел SCP
+#   keycode: 'р'
+#   frequency: 1451
+#   color: "#b9f9c9"
+#   longRange: true
 
 - type: radioChannel
   id: NarsiCult
@@ -17,7 +17,7 @@
 - type: radioChannel
   id: Ratvar
   name: "Праведники Ратвара"
-  keycode: 'у'
+  keycode: 'р'
   frequency: 3636
   color: "#b87333"
   longRange: true

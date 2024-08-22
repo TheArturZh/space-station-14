@@ -389,7 +389,6 @@ public sealed partial class PolymorphSystem : EntitySystem
 }
 
 // SS220-Dark-Forces begin
-[Serializable, NetSerializable]
 public sealed class PolymorphRevertedEvent : EntityEventArgs
 {
     public EntityUid Original;

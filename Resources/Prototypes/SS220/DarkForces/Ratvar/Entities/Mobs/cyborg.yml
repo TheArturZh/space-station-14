@@ -216,15 +216,15 @@
     - Ratvar
   - type: NameIdentifier
     group: GenericNumber
-  - type: LanguageSpeaker
-    speaks:
-    - GalacticCommon
-    - RobotTalk
-    - Ratvar
-    understands:
-    - GalacticCommon
-    - RobotTalk
-    - Ratvar
+  # - type: LanguageSpeaker
+  #   speaks:
+  #   - GalacticCommon
+  #   - RobotTalk
+  #   - Ratvar
+  #   understands:
+  #   - GalacticCommon
+  #   - RobotTalk
+  #   - Ratvar
 
 - type: entity
   id: RatvarBorgWeaponModule

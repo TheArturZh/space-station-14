@@ -6,6 +6,7 @@ using Content.Shared.Roles.Jobs;
 using Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
 using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Shared.Random;
+using Content.Shared.Objectives.Components;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Offering;
 

@@ -21,7 +21,7 @@
     slots:
     - back
   - type: DisarmMalus
-  - type: NarsiRitaulDagger # SS220 Dark-Forces
+  - type: NarsiRitualDagger # SS220 Dark-Forces
 
 - type: entity
   name: eldritch blade

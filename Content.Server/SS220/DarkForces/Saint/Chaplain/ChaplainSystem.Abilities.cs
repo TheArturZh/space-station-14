@@ -1,6 +1,5 @@
 ﻿using Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
 using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
-//using Content.Server.SS220.Utils;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -9,6 +8,7 @@ using Content.Shared.SS220.DarkForces.Saint.Chaplain.Events;
 using Content.Shared.SS220.DarkForces.Saint.Chaplain.Events.Narsi;
 using Robust.Server.Audio;
 using Robust.Shared.Player;
+using Content.Server.SS220.Utils;
 
 namespace Content.Server.SS220.DarkForces.Saint.Chaplain;
 
@@ -19,6 +19,7 @@ public sealed partial class ChaplainSystem
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly StationUtils _stationUtils = default!;
 
     private static readonly TimeSpan NarsiExileDelay = TimeSpan.FromSeconds(240);
     private static readonly TimeSpan GreatPrayerDelay = TimeSpan.FromSeconds(80);
@@ -130,7 +131,7 @@ public sealed partial class ChaplainSystem
         if (args.Handled)
             return;
 
-        if (!StationUtils.IsEntityOnMainStationOnly(args.Performer, EntityManager))
+        if (!_stationUtils.IsOnMainStationGrid(args.Performer))
         {
             _popupSystem.PopupEntity(Loc.GetString("chaplain-narsi-exile-at-station"), args.Performer);
             return;
