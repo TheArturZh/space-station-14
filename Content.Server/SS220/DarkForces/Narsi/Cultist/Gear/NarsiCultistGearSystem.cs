@@ -1,11 +1,9 @@
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Gear;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Gear;
 
 public sealed class NarsiCultistGearSystem : EntitySystem
 {

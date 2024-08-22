@@ -1,10 +1,9 @@
-﻿using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Weapons;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Weapons;
 using Content.Shared.Humanoid;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Components;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public sealed partial class RatvarAbilitiesSystem
 {

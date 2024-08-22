@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Items.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Item;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
-namespace Content.SecretStationClient.DarkForces.Ratvar.Enchantment.Visuals;
+namespace Content.Client.SS220.DarkForces.Ratvar.Enchantment.Visuals;
 
 public sealed class RatvarEnchantableVisualSystem : EntitySystem
 {

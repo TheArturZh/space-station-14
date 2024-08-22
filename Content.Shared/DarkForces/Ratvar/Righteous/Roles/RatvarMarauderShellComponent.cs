@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class RatvarMarauderShellComponent : Component

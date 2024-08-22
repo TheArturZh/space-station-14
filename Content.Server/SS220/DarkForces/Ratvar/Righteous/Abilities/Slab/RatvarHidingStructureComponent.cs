@@ -1,7 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Slab;
+﻿namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Slab;
 
 [RegisterComponent]
 public sealed partial class RatvarHidingStructureComponent : Component

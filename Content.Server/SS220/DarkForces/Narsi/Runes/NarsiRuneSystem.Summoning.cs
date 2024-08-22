@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Runes.Components;
+using Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Content.Shared.SecretStation.FastUI;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
+//using Content.Shared.SS220.FastUI;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using SummonNarsiRuneDoAfterEvent = Content.Shared.SecretStation.Cult.Runes.SummonNarsiRuneDoAfterEvent;
+using SummonNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.SummonNarsiRuneDoAfterEvent;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 
 public sealed partial class NarsiRuneSystem
 {

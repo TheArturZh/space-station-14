@@ -1,7 +1,7 @@
 ﻿using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Events;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Events;
 
 [Serializable, NetSerializable]
 public sealed partial class RatvarGearOpenPanelDoAfterEvent : DoAfterEvent

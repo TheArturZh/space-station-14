@@ -1,9 +1,8 @@
-﻿using Content.Shared.SecretStation.DarkForces.Narsi.Cultist.Muzzle;
+﻿using Content.Shared.SS220.DarkForces.Narsi.Cultist.Muzzle;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Cultist.Visualizers;
+namespace Content.Client.SS220.DarkForces.Narsi.Cultist.Visualizers;
 
 public sealed class NarsiCultistMuzzleVisualizerSystem : VisualizerSystem<NarsiCultistMuzzleVisualizerComponent>
 {

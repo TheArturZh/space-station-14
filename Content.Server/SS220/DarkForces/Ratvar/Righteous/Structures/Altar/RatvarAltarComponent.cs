@@ -1,10 +1,7 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Altar;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Altar;
 
 [RegisterComponent]
 public sealed partial class RatvarAltarComponent : Component

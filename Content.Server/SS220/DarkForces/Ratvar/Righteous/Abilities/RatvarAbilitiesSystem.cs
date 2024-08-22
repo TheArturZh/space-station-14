@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
+﻿using Content.Server.Emp;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
 using Content.Shared.Actions;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Weapons;
-using Content.Shared.SecretStation.DarkForces.Ratvar.UI;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Weapons;
+using Content.Shared.SS220.DarkForces.Ratvar.UI;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Wieldable.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using RatvarEnchantmentableComponent =
-    Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.RatvarEnchantmentableComponent;
+    Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.RatvarEnchantmentableComponent;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public sealed partial class RatvarAbilitiesSystem : EntitySystem
 {
@@ -28,6 +24,7 @@ public sealed partial class RatvarAbilitiesSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly EmpSystem _empSystem = default!;
 
     public override void Initialize()
     {

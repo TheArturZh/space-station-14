@@ -1,9 +1,6 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.Stealth;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Stealth;
 
 [RegisterComponent]
 public sealed partial class NarsiCultistStealthComponent : Component

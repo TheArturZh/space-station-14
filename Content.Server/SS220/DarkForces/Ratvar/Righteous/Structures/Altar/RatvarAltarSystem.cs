@@ -1,22 +1,18 @@
-﻿using System;
-using System.Linq;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
+﻿using System.Linq;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Server.Mind;
-using Content.Server.SecretStation.Bridges;
+using Content.Server.SS220.Bridges;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Structures;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Structures;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Altar;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Altar;
 
 public sealed class RatvarAltarSystem : EntitySystem
 {

@@ -1,11 +1,11 @@
 ﻿using Content.Server.ExternalSources.Frontier.Language;
 using Content.Shared.ExternalSources.Frontier.Language;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 
 public sealed partial class RatvarProgressSystem
 {

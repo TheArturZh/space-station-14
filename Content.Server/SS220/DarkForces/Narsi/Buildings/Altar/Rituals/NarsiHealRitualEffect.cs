@@ -1,10 +1,8 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
+﻿using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
 using Content.Shared.Rejuvenate;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
 [DataDefinition]
 public sealed partial class NarsiHealRitualEffect : NarsiRitualEffect

@@ -1,10 +1,7 @@
-﻿using System;
-using Content.Shared.Objectives.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+﻿using Content.Shared.Objectives.Components;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Power;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Power;
 
 public sealed class RatvarPowerObjectiveSystem : EntitySystem
 {
@@ -23,7 +20,7 @@ public sealed class RatvarPowerObjectiveSystem : EntitySystem
     private void OnGetProgress(EntityUid uid, RatvarPowerObjectiveComponent component,
         ref ObjectiveGetProgressEvent args)
     {
-        var progress = (float) _progressSystem.GetCurrentPower() / component.RequiredCount;
+        var progress = (float)_progressSystem.GetCurrentPower() / component.RequiredCount;
         if (progress >= 1f)
         {
             progress = 1f;

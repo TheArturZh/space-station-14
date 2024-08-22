@@ -1,20 +1,18 @@
-using Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities;
-using Content.SecretStationServer.DarkForces.Narsi.Progress;
+using Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities;
+using Content.Server.SS220.DarkForces.Narsi.Progress;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar;
 
 public sealed partial class NarsiAltarSystem : EntitySystem
 {

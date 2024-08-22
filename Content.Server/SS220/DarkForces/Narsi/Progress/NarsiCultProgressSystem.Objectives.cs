@@ -1,13 +1,10 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Narsi.Progress.Components;
+﻿using Content.Server.SS220.DarkForces.Narsi.Progress.Components;
 using Content.Shared.Objectives.Components;
-using Content.Shared.SecretStation.DarkForces.Narsi.Progress.Objectives;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
+using Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress;
 
 public sealed partial class NarsiCultProgressSystem
 {

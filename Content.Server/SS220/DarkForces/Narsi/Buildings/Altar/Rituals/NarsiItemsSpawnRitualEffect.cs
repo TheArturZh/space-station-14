@@ -1,9 +1,7 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
-using Robust.Shared.GameObjects;
+﻿using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
 [DataDefinition]
 public sealed partial class NarsiItemsSpawnRitualEffect : NarsiRitualEffect

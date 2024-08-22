@@ -1,11 +1,8 @@
-﻿using System;
-using Content.Shared.SecretStation.DarkForces.Ratvar.UI;
+﻿using Content.Shared.SS220.DarkForces.Ratvar.UI;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.SecretStationClient.DarkForces.Ratvar.Enchantment;
+namespace Content.Client.SS220.DarkForces.Ratvar.Enchantment;
 
 public sealed class RatvarEnchantmentBUI : BoundUserInterface
 {

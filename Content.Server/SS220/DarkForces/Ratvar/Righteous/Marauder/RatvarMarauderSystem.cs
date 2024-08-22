@@ -1,13 +1,11 @@
 ﻿using Content.Server.Mind;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Items;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Items;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Marauder;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Marauder;
 
 public sealed class RatvarMarauderSystem : EntitySystem
 {

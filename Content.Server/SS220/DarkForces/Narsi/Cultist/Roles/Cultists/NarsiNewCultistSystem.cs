@@ -1,10 +1,9 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
-using Content.SecretStationServer.DarkForces.Narsi.Cultist.Roles.Narsi;
+﻿using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
+using Content.Server.SS220.DarkForces.Narsi.Cultist.Roles.Narsi;
 using Content.Shared.Damage;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Roles.Cultists;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Roles.Cultists;
 
 public sealed class NarsiNewCultistSystem : EntitySystem
 {

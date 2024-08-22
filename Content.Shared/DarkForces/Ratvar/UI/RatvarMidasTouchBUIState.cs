@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.UI;
+namespace Content.Shared.SS220.DarkForces.Ratvar.UI;
 
 [Serializable, NetSerializable]
 public sealed class RatvarMidasTouchBUIState : BoundUserInterfaceState

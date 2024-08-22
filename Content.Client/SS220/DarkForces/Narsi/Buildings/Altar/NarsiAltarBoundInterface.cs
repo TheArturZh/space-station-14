@@ -1,8 +1,8 @@
 using System;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar;
 using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Buildings.Altar;
+namespace Content.Client.SS220.DarkForces.Narsi.Buildings.Altar;
 
 public sealed class NarsiAltarBoundInterface : BoundUserInterface
 {

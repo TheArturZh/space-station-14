@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Buildings.Altar.Rituals;
+namespace Content.Client.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
 [GenerateTypedNameReferences]
 public sealed partial class NarsiRitualControl : Control

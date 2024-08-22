@@ -1,12 +1,9 @@
 ﻿using System.Linq;
-using Content.Shared.Objectives.Components;
-using Content.Shared.SecretStation.DarkForces.Narsi.Progress.Objectives;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Rituals;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Rituals;
 
 public sealed class NarsiCultRitualObjectiveSystem : EntitySystem
 {

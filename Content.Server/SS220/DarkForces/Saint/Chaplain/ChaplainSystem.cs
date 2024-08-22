@@ -1,9 +1,7 @@
-﻿using Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
+﻿using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
 using Content.Server.Actions;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain;
 
 public sealed partial class ChaplainSystem : EntitySystem
 {
@@ -17,7 +15,7 @@ public sealed partial class ChaplainSystem : EntitySystem
         SubscribeLocalEvent<ChaplainComponent, ComponentShutdown>(OnChaplainShutdown);
 
         InitializeNarsi();
-        InitializeVampire();
+        // InitializeVampire();
         InitializeAbilities();
         InitializeForceWall();
     }

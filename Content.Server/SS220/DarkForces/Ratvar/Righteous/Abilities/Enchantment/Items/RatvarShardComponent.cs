@@ -1,8 +1,4 @@
-﻿using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Items;
+﻿namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Items;
 
 [RegisterComponent]
 public sealed partial class RatvarShardComponent : Component

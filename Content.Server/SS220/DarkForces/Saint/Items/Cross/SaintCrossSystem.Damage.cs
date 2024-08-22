@@ -1,9 +1,8 @@
-﻿using Content.Server.SecretStation.DarkForces.Saint.Items.Cross;
+﻿using Content.Server.SS220.DarkForces.Saint.Items.Cross;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Items.Cross;
+namespace Content.Server.SS220.DarkForces.Saint.Items.Cross;
 
 public sealed partial class SaintCrossSystem
 {

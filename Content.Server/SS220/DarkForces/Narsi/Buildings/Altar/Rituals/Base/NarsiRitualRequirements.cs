@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Whitelist;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Content.Shared.Whitelist;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
 
 [DataDefinition]
 public sealed partial class NarsiRitualRequirements

@@ -1,15 +1,11 @@
 using System;
 using Content.Shared.Materials;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Forge;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Forge;
 
 [RegisterComponent]
 public sealed partial class NarsiCultForgeComponent : Component

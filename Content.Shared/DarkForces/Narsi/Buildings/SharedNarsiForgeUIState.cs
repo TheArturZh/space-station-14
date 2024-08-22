@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Narsi.Buildings;
+namespace Content.Shared.SS220.DarkForces.Narsi.Buildings;
 
 [Serializable, NetSerializable]
 public enum SharedNarsiForgeInterfaceKey

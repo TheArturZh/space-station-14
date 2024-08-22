@@ -1,9 +1,9 @@
-﻿using Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
+﻿using Content.Shared.SS220.DarkForces.Saint.Chaplain.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
-using ChaplainBarrierComponent = Content.Shared.SecretStation.DarkForces.Saint.Chaplain.Components.ChaplainBarrierComponent;
+using ChaplainBarrierComponent = Content.Shared.SS220.DarkForces.Saint.Chaplain.Components.ChaplainBarrierComponent;
 
-namespace Content.Shared.SecretStation.DarkForces.Saint.Chaplain;
+namespace Content.Shared.SS220.DarkForces.Saint.Chaplain;
 
 public sealed class SharedChaplainBarrierSystem : EntitySystem
 {

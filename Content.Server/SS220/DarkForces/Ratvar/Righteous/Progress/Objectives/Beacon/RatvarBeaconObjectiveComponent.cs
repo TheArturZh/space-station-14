@@ -1,7 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Beacon;
+﻿namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Beacon;
 
 [RegisterComponent]
 public sealed partial class RatvarBeaconObjectiveComponent : Component

@@ -1,11 +1,8 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Events;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Events;
 using Content.Shared.Destructible;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Portal;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Portal;
 
 public sealed class RatvarPortalSystem : EntitySystem
 {

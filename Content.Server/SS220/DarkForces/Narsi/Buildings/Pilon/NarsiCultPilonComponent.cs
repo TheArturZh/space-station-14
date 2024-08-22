@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.SecretStationServer.GameRules.Cult.Narsi.Buildings.Pilon;
+namespace Content.Server.SS220.GameRules.Cult.Narsi.Buildings.Pilon;
 
 [RegisterComponent]
 public sealed partial class NarsiCultPilonComponent : Component

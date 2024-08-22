@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Narsi.Buildings.CreatureEgg;
+namespace Content.Shared.SS220.DarkForces.Narsi.Buildings.CreatureEgg;
 
 [RegisterComponent]
 public sealed partial class NarsiCreatureEggComponent : Component

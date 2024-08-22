@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using Content.Server.Warps;
+﻿using Content.Server.Warps;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Objectives.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Summon;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Summon;
 
 public sealed class RatvarSummonObjectiveSystem : EntitySystem
 {

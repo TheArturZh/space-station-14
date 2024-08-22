@@ -1,7 +1,6 @@
 using Content.Shared.Polymorph;
-using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
 
 public sealed class NarsiRequestPolymorphEvent : CancellableEntityEventArgs
 {

@@ -1,10 +1,7 @@
-﻿using System;
-using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Content.Shared.Damage;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.FireArms;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.FireArms;
 
 [RegisterComponent]
 public sealed partial class NarsiCultistFireArmsComponent : Component

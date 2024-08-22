@@ -1,8 +1,8 @@
 ﻿using System;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar.Rituals;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Buildings.Altar.Rituals;
+namespace Content.Client.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
 public sealed class NarsiRitualsBoundInterface : BoundUserInterface
 {

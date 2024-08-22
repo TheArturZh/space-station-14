@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings;
 using Robust.Shared.Prototypes;
-using NarsiCultCraftReceiptCategoryPrototype = Content.Shared.SecretStation.DarkForces.Narsi.Craft.NarsiCultCraftReceiptCategoryPrototype;
+using NarsiCultCraftReceiptCategoryPrototype = Content.Shared.SS220.DarkForces.Narsi.Craft.NarsiCultCraftReceiptCategoryPrototype;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Buildings.Forge;
+namespace Content.Client.SS220.DarkForces.Narsi.Buildings.Forge;
 
 public sealed class NarsiForgeBoundInterface : BoundUserInterface
 {

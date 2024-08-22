@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress;
 
 public sealed partial class NarsiCultProgressSystem
 {

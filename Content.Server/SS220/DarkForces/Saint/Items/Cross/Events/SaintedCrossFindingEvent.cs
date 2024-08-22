@@ -1,7 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-
-namespace Content.SecretStationServer.DarkForces.Saint.Items.Cross.Events;
+﻿namespace Content.Server.SS220.DarkForces.Saint.Items.Cross.Events;
 
 public sealed class SaintedCrossFindingEvent : HandledEntityEventArgs
 {

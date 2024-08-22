@@ -1,6 +1,4 @@
-using Robust.Shared.GameObjects;
-
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Gear;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Gear;
 
 [RegisterComponent]
 public sealed partial class NarsiCultistGearComponent : Component

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress;
+﻿namespace Content.Server.SS220.DarkForces.Narsi.Progress;
 
 [RegisterComponent]
 public sealed partial class NarsiCultProgressComponent : Component

@@ -1,9 +1,8 @@
-using Content.Client.SecretStation.DarkForces.Narsi;
+using Content.Client.SS220.DarkForces.Narsi;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using static Content.Shared.SecretStation.Cult.Runes.SharedNarsiRuneComponent;
+using static Content.Shared.SS220.DarkForces.Runes.SharedNarsiRuneComponent;
 
-namespace Content.SecretStationClient.DarkForces.Narsi;
+namespace Content.Client.SS220.DarkForces.Narsi;
 
 public sealed class NarsiReviveRuneVisualizerSystem : VisualizerSystem<NarsiRuneVisualsComponent>
 {

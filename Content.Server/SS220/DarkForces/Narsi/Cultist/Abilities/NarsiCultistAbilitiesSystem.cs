@@ -1,17 +1,15 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.Prototype;
-using Content.SecretStationServer.DarkForces.Narsi.Progress;
+﻿using Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Prototype;
+using Content.Server.SS220.DarkForces.Narsi.Progress;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.SecretStation.DarkForces.Narsi.Abilities.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Abilities.Events;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities;
 
 public sealed partial class NarsiCultistAbilitiesSystem : EntitySystem
 {

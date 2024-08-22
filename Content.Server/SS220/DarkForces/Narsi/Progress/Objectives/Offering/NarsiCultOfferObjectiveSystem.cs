@@ -1,16 +1,13 @@
 ﻿using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Progress.Components;
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
+using Content.Server.SS220.DarkForces.Narsi.Progress.Components;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
 using Content.Server.Mind;
-using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.SecretStation.DarkForces.Narsi.Progress.Objectives;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Offering;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Offering;
 
 public sealed class NarsiCultOfferObjectiveSystem : EntitySystem
 {

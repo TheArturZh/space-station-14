@@ -1,7 +1,6 @@
 using System.Numerics;
-using Robust.Shared.Maths;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain.Abilities;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
 
 public struct Box2EdgeEnumerator
 {

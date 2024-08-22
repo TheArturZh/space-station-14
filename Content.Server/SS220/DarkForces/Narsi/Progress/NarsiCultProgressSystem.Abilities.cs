@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.Prototype;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar.Abilities;
-using Robust.Shared.GameObjects;
+﻿using System.Linq;
+using Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Prototype;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Abilities;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress;
 
 public sealed partial class NarsiCultProgressSystem
 {

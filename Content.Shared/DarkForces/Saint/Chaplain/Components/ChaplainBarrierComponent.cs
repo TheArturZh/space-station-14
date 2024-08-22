@@ -1,4 +1,4 @@
-namespace Content.Shared.SecretStation.DarkForces.Saint.Chaplain.Components;
+namespace Content.Shared.SS220.DarkForces.Saint.Chaplain.Components;
 
 [RegisterComponent]
 public sealed partial class ChaplainBarrierComponent : Component

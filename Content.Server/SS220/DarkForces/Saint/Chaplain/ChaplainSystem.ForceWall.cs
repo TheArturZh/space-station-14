@@ -1,13 +1,10 @@
 ﻿using System.Numerics;
 using System.Threading.Tasks;
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Abilities;
-using Robust.Shared.GameObjects;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain;
 
 public sealed partial class ChaplainSystem
 {

@@ -1,6 +1,4 @@
-using Robust.Shared.GameObjects;
-
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes.Events;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes.Events;
 
 public sealed class NarsiSummoningStartEvent : CancellableEntityEventArgs
 {

@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar.Abilities;
+namespace Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Abilities;
 
 [Serializable, NetSerializable]
 public enum NarsiAltarAbilitiesInterfaceKey

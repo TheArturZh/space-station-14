@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
-using Content.SecretStationServer.GameRules.Cult.Narsi.Buildings.Pilon;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
+using Content.Server.SS220.GameRules.Cult.Narsi.Buildings.Pilon;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Pilon;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Pilon;
 
 public sealed class NarsiCultPilonSystem : EntitySystem
 {

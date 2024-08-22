@@ -1,14 +1,11 @@
 using Content.Shared.GameTicking;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Overlay;
+namespace Content.Client.SS220.DarkForces.Narsi.Overlay;
 
 public sealed class NarsiCultistIconsSystem : EntitySystem
 {

@@ -2,14 +2,11 @@
 using Content.Server.Objectives;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Radio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress;
 
 public sealed partial class NarsiCultProgressSystem : EntitySystem
 {

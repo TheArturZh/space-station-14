@@ -2,7 +2,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.DoAfterEvents;
+namespace Content.Shared.SS220.DarkForces.Ratvar.DoAfterEvents;
 
 [Serializable, NetSerializable]
 public sealed partial class RatvarWorkshopDoAfter : DoAfterEvent

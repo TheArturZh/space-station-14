@@ -1,3 +1,5 @@
+using Content.Server.SS220.DarkForces.Narsi.Cultist.Roles;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Roles;
 using Content.Shared.Roles;
 using Content.Shared.SS220.MindSlave;
 
@@ -21,6 +23,10 @@ public sealed class RoleSystem : SharedRoleSystem
         SubscribeAntagEvents<ThiefRoleComponent>();
         //SS220-mindslave
         SubscribeAntagEvents<MindSlaveRoleComponent>();
+        //SS220-Dark-Forces begin
+        SubscribeAntagEvents<NarsiCultRoleComponent>();
+        SubscribeAntagEvents<RatvarRoleComponent>();
+        //SS220-Dark-Forces end
     }
 
     public string? MindGetBriefing(EntityUid? mindId)

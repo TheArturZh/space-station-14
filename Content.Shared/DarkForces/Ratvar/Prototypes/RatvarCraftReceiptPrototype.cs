@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Prototypes;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Prototypes;
 
 [Serializable, Prototype("ratvarCraft")]
 public sealed partial class RatvarCraftReceiptPrototype : IPrototype

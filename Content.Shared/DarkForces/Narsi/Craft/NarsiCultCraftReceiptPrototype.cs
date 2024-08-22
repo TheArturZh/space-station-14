@@ -2,7 +2,7 @@ using Content.Shared.Materials;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Narsi.Craft;
+namespace Content.Shared.SS220.DarkForces.Narsi.Craft;
 
 [Prototype("narsiCultReceiptCategory")]
 [Serializable, NetSerializable]

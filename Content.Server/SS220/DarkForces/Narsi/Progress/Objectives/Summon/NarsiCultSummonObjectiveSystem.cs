@@ -1,9 +1,7 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Progress.Components;
-using Content.SecretStationServer.DarkForces.Narsi.Runes.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+﻿using Content.Server.SS220.DarkForces.Narsi.Progress.Components;
+using Content.Server.SS220.DarkForces.Narsi.Runes.Events;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Summon;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Summon;
 
 public sealed class NarsiCultSummonObjectiveSystem : EntitySystem
 {

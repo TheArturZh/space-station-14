@@ -1,8 +1,6 @@
-﻿using System;
-using Content.Shared.SecretStation.DarkForces.Ratvar.UI;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.SS220.DarkForces.Ratvar.UI;
 
-namespace Content.SecretStationClient.DarkForces.Ratvar.Structures;
+namespace Content.Client.SS220.DarkForces.Ratvar.Structures;
 
 public sealed class RatvarWorkshopBUI : BoundUserInterface
 {

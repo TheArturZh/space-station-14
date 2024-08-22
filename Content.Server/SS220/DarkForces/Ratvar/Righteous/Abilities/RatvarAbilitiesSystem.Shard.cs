@@ -1,26 +1,21 @@
-﻿using System;
-using System.Numerics;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Items;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Altar;
+﻿using System.Numerics;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Items;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Altar;
 using Content.Server.Mind;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Items;
-using Content.Shared.SecretStation.DarkForces.Ratvar.UI;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Items;
+using Content.Shared.SS220.DarkForces.Ratvar.UI;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public sealed partial class RatvarAbilitiesSystem
 {

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
-using Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Rituals;
+﻿using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
+using Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Rituals;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar.Rituals;
-using Robust.Shared.GameObjects;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar;
 
 public sealed partial class NarsiAltarSystem
 {

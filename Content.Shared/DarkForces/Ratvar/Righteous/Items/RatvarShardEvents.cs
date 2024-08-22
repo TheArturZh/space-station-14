@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Actions;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Items;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Items;
 
 public sealed partial class RatvarShardReconstructEvent : InstantActionEvent
 {

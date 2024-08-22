@@ -1,16 +1,14 @@
 ﻿using System.Linq;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Slab;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Slab;
 
 public sealed class RatvarHidingSystem : EntitySystem
 {
@@ -163,7 +161,7 @@ public sealed class RatvarHidingSystem : EntitySystem
     {
         hidingSlab = default;
 
-        if (!TryComp<RatvarHidingStructureComponent>(structure, out var hiding) || hiding.OriginalStructure is not {Valid: true} target)
+        if (!TryComp<RatvarHidingStructureComponent>(structure, out var hiding) || hiding.OriginalStructure is not { Valid: true } target)
             return false;
 
         var transform = Transform(structure);
@@ -203,7 +201,7 @@ public sealed class RatvarHidingSystem : EntitySystem
     public bool BackItem(EntityUid user, EntityUid item)
     {
         if (!TryComp<RatvarHidingItemComponent>(item, out var hiding) ||
-            hiding.OriginalItem is not {Valid: true} target)
+            hiding.OriginalItem is not { Valid: true } target)
             return false;
 
         var transform = Transform(item);

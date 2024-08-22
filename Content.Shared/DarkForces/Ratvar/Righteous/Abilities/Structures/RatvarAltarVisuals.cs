@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Structures;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Structures;
 
 [Serializable, NetSerializable]
 public enum RatvarAltarVisuals : byte

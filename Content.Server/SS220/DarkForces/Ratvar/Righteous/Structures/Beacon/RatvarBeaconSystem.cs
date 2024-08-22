@@ -1,14 +1,11 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Structures;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Structures;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Beacon;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Beacon;
 
 public sealed class RatvarBeaconSystem : EntitySystem
 {

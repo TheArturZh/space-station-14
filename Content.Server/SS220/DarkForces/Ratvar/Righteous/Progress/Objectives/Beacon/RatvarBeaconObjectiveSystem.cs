@@ -1,12 +1,10 @@
 ﻿using System.Linq;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Convert;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Beacon;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Convert;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Beacon;
 using Content.Shared.Objectives.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Beacon;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Beacon;
 
 public sealed class RatvarBeaconObjectiveSystem : EntitySystem
 {

@@ -1,14 +1,12 @@
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Buildings;
+namespace Content.Client.SS220.DarkForces.Narsi.Buildings;
 
 public sealed class ClientFakeNarsiDoorSystem : EntitySystem
 {

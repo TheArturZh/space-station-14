@@ -1,13 +1,10 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures;
 using Content.Server.Stunnable;
 using Content.Shared.Item;
 using Content.Shared.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 
 public sealed partial class RatvarProgressSystem
 {

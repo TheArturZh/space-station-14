@@ -1,6 +1,4 @@
-using Robust.Shared.GameObjects;
-
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes.Components;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 
 [RegisterComponent]
 public sealed partial class NarsiSpawnRuneComponent : Component

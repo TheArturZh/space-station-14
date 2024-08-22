@@ -1,22 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Runes.Components;
+using Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using static Content.Shared.SecretStation.Cult.Runes.SharedNarsiRuneComponent;
+using static Content.Shared.SS220.Cult.Runes.SharedNarsiRuneComponent;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 
 public sealed partial class NarsiRuneSystem : EntitySystem
 {

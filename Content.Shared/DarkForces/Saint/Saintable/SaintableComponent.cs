@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Damage;
 
-namespace Content.Shared.SecretStation.DarkForces.Saint.Saintable;
+namespace Content.Shared.SS220.DarkForces.Saint.Saintable;
 
 /**
  * Метка для освященных предметов/структур

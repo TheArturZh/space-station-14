@@ -1,13 +1,13 @@
 ﻿using System;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Server.Power.Components;
-using Content.Server.SecretStation.DarkForces.Ratvar.Righteous.Gear;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Gear;
 using Content.Server.Wires;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Events;
+using Content.Shared.SS220.DarkForces.Ratvar.Events;
 using Content.Shared.Wires;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Gear;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Gear;
 
 public sealed class RatvarGearSystem : EntitySystem
 {

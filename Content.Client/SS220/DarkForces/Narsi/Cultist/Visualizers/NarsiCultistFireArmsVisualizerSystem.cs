@@ -1,10 +1,9 @@
-﻿using Content.Shared.SecretStation.DarkForces.Narsi.Cultist.FireArms;
+﻿using Content.Shared.SS220.DarkForces.Narsi.Cultist.FireArms;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
-using NarsiCultistFireArmsVisualizerComponent = Content.Shared.SecretStation.DarkForces.Narsi.Cultist.FireArms.NarsiCultistFireArmsVisualizerComponent;
+using NarsiCultistFireArmsVisualizerComponent = Content.Shared.SS220.DarkForces.Narsi.Cultist.FireArms.NarsiCultistFireArmsVisualizerComponent;
 
-namespace Content.SecretStationClient.DarkForces.Narsi.Cultist.Visualizers;
+namespace Content.Client.SS220.DarkForces.Narsi.Cultist.Visualizers;
 
 public sealed class NarsiCultistFireArmsVisualizerSystem : VisualizerSystem<NarsiCultistFireArmsVisualizerComponent>
 {

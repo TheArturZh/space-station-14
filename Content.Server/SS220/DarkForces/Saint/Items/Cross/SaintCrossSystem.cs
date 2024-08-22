@@ -1,14 +1,10 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Saint.Items.Cross.Events;
-using Content.SecretStationServer.DarkForces.Saint.Items.Events;
+﻿using Content.Server.SS220.DarkForces.Saint.Items.Cross.Events;
+using Content.Server.SS220.DarkForces.Saint.Items.Events;
 using Content.Server.Popups;
-using Content.Server.SecretStation.DarkForces.Saint.Items.Cross;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Items.Cross;
+namespace Content.Server.SS220.DarkForces.Saint.Items.Cross;
 
 public sealed partial class SaintCrossSystem : EntitySystem
 {
@@ -23,7 +19,7 @@ public sealed partial class SaintCrossSystem : EntitySystem
         SubscribeLocalEvent<SaintCrossComponent, ComponentInit>(OnSaintCrossInit);
         SubscribeLocalEvent<SaintCrossComponent, OnItemSainted>(OnItemSainted);
 
-        InitializeVampire();
+        // InitializeVampire();
         InitializeDamage();
     }
 

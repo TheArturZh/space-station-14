@@ -1,19 +1,17 @@
-using Content.SecretStationServer.DarkForces.Narsi.Cultist.Gear;
+using Content.Server.SS220.DarkForces.Narsi.Cultist.Gear;
 using Content.Server.Materials;
 using Content.Shared.DoAfter;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
-using Content.Shared.SecretStation.Cult;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings;
+using Content.Shared.SS220.Cult;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Forge;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Forge;
 
 public sealed class NarsiCultForgeSystem : EntitySystem
 {

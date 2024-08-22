@@ -1,10 +1,6 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Summon;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Summon;
 
 [RegisterComponent]
 public sealed partial class RatvarSummonObjectiveComponent : Component

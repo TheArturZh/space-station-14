@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
 
 [RegisterComponent]
 public sealed partial class ChaplainComponent : Component

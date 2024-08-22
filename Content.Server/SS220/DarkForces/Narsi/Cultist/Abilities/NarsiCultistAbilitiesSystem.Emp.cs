@@ -1,10 +1,8 @@
 ﻿using Content.Server.Emp;
-using Content.Shared.SecretStation.DarkForces.Narsi.Abilities.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Abilities.Events;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities;
 
 public sealed partial class NarsiCultistAbilitiesSystem
 {

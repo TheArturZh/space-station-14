@@ -1,8 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Robust.Shared.Prototypes;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 [RegisterComponent]
 public sealed partial class RatvarAbilitiesComponent : Component

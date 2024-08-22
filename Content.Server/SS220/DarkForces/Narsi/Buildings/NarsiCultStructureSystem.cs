@@ -1,7 +1,6 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Building;
-using Robust.Shared.GameObjects;
+﻿using Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Building;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings;
 
 public sealed class NarsiCultStructureSystem : EntitySystem
 {

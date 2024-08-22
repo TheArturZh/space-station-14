@@ -1,19 +1,16 @@
-﻿using System;
-using Content.Server.Mind;
+﻿using Content.Server.Mind;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Events;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Items;
+using Content.Shared.SS220.DarkForces.Ratvar.Events;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Items;
 using Content.Shared.Silicons.Borgs.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using RatvarSoulVesselDoAfterEvent = Content.Shared.SecretStation.DarkForces.Ratvar.DoAfterEvents.RatvarSoulVesselDoAfterEvent;
+using RatvarSoulVesselDoAfterEvent = Content.Shared.SS220.DarkForces.Ratvar.DoAfterEvents.RatvarSoulVesselDoAfterEvent;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.SoulVessel;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.SoulVessel;
 
 public sealed class RatvarSoulVesselSystem : EntitySystem
 {
@@ -88,7 +85,7 @@ public sealed class RatvarSoulVesselSystem : EntitySystem
             !TryComp<MindComponent>(mindContainer.Mind, out var mind))
             return false;
 
-        return mind is {UserId: not null, Session: not null};
+        return mind is { UserId: not null, Session: not null };
     }
 
     private void OnMindRemoved(EntityUid uid, RatvarSoulVesselComponent component, MindRemovedMessage args)

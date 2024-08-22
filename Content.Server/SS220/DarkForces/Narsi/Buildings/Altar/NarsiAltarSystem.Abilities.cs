@@ -1,11 +1,7 @@
-﻿using Content.Shared.Popups;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar.Abilities;
-using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
+﻿using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Abilities;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar;
 
 public sealed partial class NarsiAltarSystem
 {

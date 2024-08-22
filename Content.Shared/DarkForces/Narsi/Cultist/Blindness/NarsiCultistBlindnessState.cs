@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Narsi.Cultist.Blindness;
+namespace Content.Shared.SS220.DarkForces.Narsi.Cultist.Blindness;
 
 [Serializable, NetSerializable]
 public enum NarsiCultistBlindnessStatus : byte

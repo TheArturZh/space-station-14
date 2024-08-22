@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 [RegisterComponent]
 public sealed partial class RatvarEnchantmentableComponent : Component

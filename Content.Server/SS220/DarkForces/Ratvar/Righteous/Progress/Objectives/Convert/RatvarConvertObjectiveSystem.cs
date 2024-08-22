@@ -1,12 +1,10 @@
 ﻿using System.Linq;
 using Content.Server.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Objectives.Convert;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Objectives.Convert;
 
 public sealed class RatvarConvertObjectiveSystem : EntitySystem
 {

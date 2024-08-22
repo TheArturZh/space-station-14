@@ -1,10 +1,8 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
+﻿using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
 using Content.Shared.Polymorph;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
 [DataDefinition]
 public sealed partial class NarsiPolymorphRitualEffect : NarsiRitualEffect

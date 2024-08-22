@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities;
+﻿namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public interface IRatvarAbilityRelay
 {

@@ -1,12 +1,11 @@
 using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
-using Content.SecretStationServer.DarkForces.Narsi.Progress;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
+using Content.Server.SS220.DarkForces.Narsi.Progress;
 using Content.Server.Medical;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 
 public sealed partial class NarsiVomitRitualEffect : NarsiRitualEffect
 {

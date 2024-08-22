@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress.Events;
+﻿namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress.Events;
 
 [ByRefEvent]
 public record RatvarSpawnStartedEvent(EntityUid Portal);

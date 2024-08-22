@@ -1,28 +1,24 @@
-﻿using System;
-using System.Linq;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Slab;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Altar;
+﻿using System.Linq;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Slab;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Altar;
 using Content.Server.Doors.Systems;
 using Content.Server.Emp;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Weapons;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Weapons;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using RatvarEnchantmentableComponent =
-    Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.RatvarEnchantmentableComponent;
+    Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.RatvarEnchantmentableComponent;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public sealed partial class RatvarAbilitiesSystem
 {

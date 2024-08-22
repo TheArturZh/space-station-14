@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.FireArms;
-using Content.SecretStationServer.DarkForces.Saint.Reagent.Events;
+﻿using Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.FireArms;
+using Content.Server.SS220.DarkForces.Saint.Reagent.Events;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.SecretStation.DarkForces.Narsi.Abilities.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Cultist.FireArms;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Abilities.Events;
+using Content.Shared.SS220.DarkForces.Narsi.Cultist.FireArms;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities;
 
 public sealed partial class NarsiCultistAbilitiesSystem
 {

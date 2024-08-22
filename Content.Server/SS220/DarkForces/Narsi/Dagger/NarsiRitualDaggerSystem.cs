@@ -1,27 +1,24 @@
-using System;
-using Content.SecretStationServer.DarkForces.Narsi.Runes.Components;
-using Content.Server.SecretStation.DarkForces.Narsi.Dagger;
+using Content.Server.SS220.DarkForces.Narsi.Runes.Components;
+using Content.Server.SS220.DarkForces.Narsi.Dagger;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Content.Shared.SecretStation.FastUI;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
+//using Content.Shared.SS220.FastUI;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using CreateNarsiRuneDoAfterEvent = Content.Shared.SecretStation.Cult.Runes.CreateNarsiRuneDoAfterEvent;
+using CreateNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.CreateNarsiRuneDoAfterEvent;
 using NarsiDaggerClearRuneDoAfterEvent =
-    Content.Shared.SecretStation.DarkForces.Narsi.Dagger.NarsiDaggerClearRuneDoAfterEvent;
+    Content.Shared.SS220.DarkForces.Narsi.Dagger.NarsiDaggerClearRuneDoAfterEvent;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Dagger;
+namespace Content.Server.SS220.DarkForces.Narsi.Dagger;
 
 public sealed class NarsiRitualDaggerSystem : EntitySystem
 {

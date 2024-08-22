@@ -1,12 +1,10 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Armor;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Armor;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Armor;
-using Robust.Shared.GameObjects;
-using RatvarEnchantmentableComponent = Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.RatvarEnchantmentableComponent;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Armor;
+using RatvarEnchantmentableComponent = Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.RatvarEnchantmentableComponent;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public sealed partial class RatvarAbilitiesSystem
 {
@@ -35,7 +33,7 @@ public sealed partial class RatvarAbilitiesSystem
             }
         }
 
-        if (component is {IsAbsorb: true, AbsorbCount: < MaxAbsorbCount})
+        if (component is { IsAbsorb: true, AbsorbCount: < MaxAbsorbCount })
         {
             args.Args.Damage *= 0;
             component.AbsorbCount++;

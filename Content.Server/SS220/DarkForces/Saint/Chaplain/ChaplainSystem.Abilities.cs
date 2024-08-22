@@ -1,19 +1,19 @@
 ﻿using System;
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Abilities;
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
-using Content.SecretStationServer.Utils;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
+using Content.Server.SS220.Utils;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
-using Content.Shared.SecretStation.DarkForces.Saint.Chaplain.Events;
-using Content.Shared.SecretStation.DarkForces.Saint.Chaplain.Events.Narsi;
+using Content.Shared.SS220.DarkForces.Saint.Chaplain.Events;
+using Content.Shared.SS220.DarkForces.Saint.Chaplain.Events.Narsi;
 using Robust.Server.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain;
 
 public sealed partial class ChaplainSystem
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.Blindness;
+﻿namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Blindness;
 
 [RegisterComponent]
 public sealed partial class NarsiBlindnessComponent : Component

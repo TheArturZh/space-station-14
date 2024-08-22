@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Items;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Items;
 
 [Serializable, NetSerializable]
 public enum RatvarShardOverlays : byte

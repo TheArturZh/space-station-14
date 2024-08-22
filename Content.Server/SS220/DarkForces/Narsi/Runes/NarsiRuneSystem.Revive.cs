@@ -1,15 +1,13 @@
-using System;
 using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Offering;
+using Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Offering;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Rejuvenate;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
-using NarsiReviveRuneComponent = Content.SecretStationServer.DarkForces.Narsi.Runes.Components.NarsiReviveRuneComponent;
-using ReviveNarsiRuneDoAfterEvent = Content.Shared.SecretStation.Cult.Runes.ReviveNarsiRuneDoAfterEvent;
+using NarsiReviveRuneComponent = Content.Server.SS220.DarkForces.Narsi.Runes.Components.NarsiReviveRuneComponent;
+using ReviveNarsiRuneDoAfterEvent = Content.Shared.SS220.Cult.Runes.ReviveNarsiRuneDoAfterEvent;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 
 public sealed partial class NarsiRuneSystem
 {

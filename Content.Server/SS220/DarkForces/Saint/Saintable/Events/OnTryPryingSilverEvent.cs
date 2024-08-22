@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Saintable.Events;
+namespace Content.Server.SS220.DarkForces.Saint.Saintable.Events;
 
 public sealed class OnTryPryingSilverEvent : HandledEntityEventArgs, ISaintEntityEvent
 {

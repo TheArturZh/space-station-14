@@ -1,19 +1,15 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.Prototypes;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Egg;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Egg;
 
 [RegisterComponent]
 public sealed partial class NarsiCultCreatureEggObjectiveComponent : Component
 {
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<EntityPrototype>? CreatureId;
+    public EntProtoId? CreatureId;
 
     [DataField(required: true)]
     [ViewVariables(VVAccess.ReadOnly)]
-    public List<ProtoId<EntityPrototype>> AvailableCreatures;
+    public List<EntProtoId> AvailableCreatures;
 }

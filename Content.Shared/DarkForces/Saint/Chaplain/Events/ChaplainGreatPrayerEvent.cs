@@ -2,7 +2,7 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.SecretStation.DarkForces.Saint.Chaplain.Events;
+namespace Content.Shared.SS220.DarkForces.Saint.Chaplain.Events;
 
 public sealed partial class ChaplainGreatPrayerEvent : InstantActionEvent
 {

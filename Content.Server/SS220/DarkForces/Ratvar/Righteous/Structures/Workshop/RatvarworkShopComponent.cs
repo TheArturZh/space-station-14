@@ -1,10 +1,7 @@
 ﻿using Content.Shared.Materials;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Workshop;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Workshop;
 
 [RegisterComponent]
 public sealed partial class RatvarworkShopComponent : Component

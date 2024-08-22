@@ -1,12 +1,12 @@
 ﻿using System;
-using Content.SecretStationServer.DarkForces.Saint.Items.Events;
-using Content.SecretStationServer.DarkForces.Saint.Saintable.Events;
+using Content.Server.SS220.DarkForces.Saint.Items.Events;
+using Content.Server.SS220.DarkForces.Saint.Saintable.Events;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Prying.Components;
-using Content.Shared.SecretStation.DarkForces.Saint.Saintable;
+using Content.Shared.SS220.DarkForces.Saint.Saintable;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Robust.Server.GameObjects;
@@ -14,7 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics.Events;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Saintable;
+namespace Content.Server.SS220.DarkForces.Saint.Saintable;
 
 public sealed class SaintedSystem : EntitySystem
 {

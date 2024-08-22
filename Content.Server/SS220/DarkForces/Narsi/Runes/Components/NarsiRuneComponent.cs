@@ -1,9 +1,6 @@
-using Content.Shared.SecretStation.Cult.Runes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Content.Shared.SS220.Cult.Runes;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes.Components;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes.Components;
 
 [RegisterComponent]
 public sealed partial class NarsiRuneComponent : SharedNarsiRuneComponent

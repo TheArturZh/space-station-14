@@ -1,6 +1,4 @@
-using Robust.Shared.GameObjects;
-
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain.Abilities;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
 
 public sealed partial class ChaplainNarsiExileEnableEvent : CancellableEntityEventArgs
 {

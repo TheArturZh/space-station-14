@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Actions;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Weapons;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Weapons;
 
 public sealed partial class RatvarSwordSwordsmanEvent : InstantActionEvent, IRatvarAbilityRelay
 {

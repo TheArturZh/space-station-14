@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
-using Content.Shared.Hands.EntitySystems;
+﻿using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.SecretStation.DarkForces.Narsi.Abilities.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
-using Content.Shared.Weapons.Melee;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.SS220.DarkForces.Narsi.Abilities.Events;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Shared.Spawners;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities;
 
 public sealed partial class NarsiCultistAbilitiesSystem
 {
@@ -35,7 +29,7 @@ public sealed partial class NarsiCultistAbilitiesSystem
 
         var userCoords = Transform(uid).Coordinates;
         var ghostedAxe = Spawn("NarsiCultGhostAxe", userCoords);
-        if (! _handsSystem.TryPickupAnyHand(uid, ghostedAxe))
+        if (!_handsSystem.TryPickupAnyHand(uid, ghostedAxe))
         {
             _popupSystem.PopupClient("Ваши руки заняты...", uid, uid, PopupType.Medium);
             QueueDel(ghostedAxe);

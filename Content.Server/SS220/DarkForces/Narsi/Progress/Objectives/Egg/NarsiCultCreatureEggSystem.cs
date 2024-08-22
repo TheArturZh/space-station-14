@@ -1,13 +1,10 @@
 ﻿using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.CreatureEgg;
-using Content.Shared.Objectives.Components;
-using Content.Shared.SecretStation.DarkForces.Narsi.Progress.Objectives;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.CreatureEgg;
+using Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Progress.Objectives.Egg;
+namespace Content.Server.SS220.DarkForces.Narsi.Progress.Objectives.Egg;
 
 public sealed class NarsiCultCreatureEggSystem : EntitySystem
 {

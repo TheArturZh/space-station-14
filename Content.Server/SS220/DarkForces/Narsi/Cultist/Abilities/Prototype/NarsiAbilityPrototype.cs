@@ -1,9 +1,7 @@
-﻿using Content.Shared.Actions;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.Prototype;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Prototype;
 
 [Prototype("narsiAbilityPrototype")]
 public sealed class NarsiAbilityPrototype : IPrototype

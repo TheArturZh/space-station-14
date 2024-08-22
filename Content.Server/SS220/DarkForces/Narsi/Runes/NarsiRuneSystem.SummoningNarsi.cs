@@ -1,14 +1,11 @@
-using System;
-using Content.SecretStationServer.DarkForces.Narsi.Progress;
-using Content.SecretStationServer.DarkForces.Narsi.Runes.Components;
-using Content.SecretStationServer.DarkForces.Narsi.Runes.Events;
-using Content.SecretStationServer.Utils;
+using Content.Server.SS220.DarkForces.Narsi.Progress;
+using Content.Server.SS220.DarkForces.Narsi.Runes.Components;
+using Content.Server.SS220.DarkForces.Narsi.Runes.Events;
+//using Content.Server.SS220.Utils;
 using Content.Shared.DoAfter;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using SpawnNarsiDoAfterEvent = Content.Shared.SecretStation.Cult.Runes.SpawnNarsiDoAfterEvent;
+using SpawnNarsiDoAfterEvent = Content.Shared.SS220.Cult.Runes.SpawnNarsiDoAfterEvent;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 
 public sealed partial class NarsiRuneSystem
 {

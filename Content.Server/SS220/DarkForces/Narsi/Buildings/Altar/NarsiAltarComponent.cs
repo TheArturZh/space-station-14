@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
 using Content.Shared.DoAfter;
-using Content.Shared.SecretStation.DarkForces.Narsi.Buildings.Altar.Rituals;
-using Robust.Shared.GameObjects;
+using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar;
 
 [RegisterComponent]
 public sealed partial class NarsiAltarComponent : Component

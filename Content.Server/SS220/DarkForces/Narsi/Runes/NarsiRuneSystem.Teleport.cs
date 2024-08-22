@@ -1,12 +1,9 @@
 using System.Linq;
 using Content.Server.Administration;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using NarsiTeleportRuneComponent = Content.SecretStationServer.DarkForces.Narsi.Runes.Components.NarsiTeleportRuneComponent;
+using NarsiTeleportRuneComponent = Content.Server.SS220.DarkForces.Narsi.Runes.Components.NarsiTeleportRuneComponent;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes;
 
 public sealed partial class NarsiRuneSystem
 {

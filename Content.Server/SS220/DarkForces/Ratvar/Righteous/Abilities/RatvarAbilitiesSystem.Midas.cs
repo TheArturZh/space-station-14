@@ -1,17 +1,14 @@
 ﻿using System.Linq;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Midas;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Midas;
 using Content.Server.Stack;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Prototypes;
-using Content.Shared.SecretStation.DarkForces.Ratvar.Righteous.Abilities;
-using Content.Shared.SecretStation.DarkForces.Ratvar.UI;
+using Content.Shared.SS220.DarkForces.Ratvar.Prototypes;
+using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
+using Content.Shared.SS220.DarkForces.Ratvar.UI;
 using Content.Shared.Stacks;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
-using MidasMaterialComponent = Content.Server.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Midas.MidasMaterialComponent;
-using MidasTargetComponent = Content.Server.SecretStation.DarkForces.Ratvar.Righteous.Abilities.Midas.MidasTargetComponent;
+using MidasMaterialComponent = Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Midas.MidasMaterialComponent;
+using MidasTargetComponent = Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Midas.MidasTargetComponent;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
 public sealed partial class RatvarAbilitiesSystem
 {

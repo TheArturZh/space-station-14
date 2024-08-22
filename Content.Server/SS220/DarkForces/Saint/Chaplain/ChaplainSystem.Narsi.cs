@@ -1,13 +1,11 @@
-﻿using Content.SecretStationServer.DarkForces.Narsi.Runes.Events;
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Abilities;
-using Content.SecretStationServer.DarkForces.Saint.Chaplain.Components;
+﻿using Content.Server.SS220.DarkForces.Narsi.Runes.Events;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
 using Content.Server.Afk;
 using Content.Shared.Mobs.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Chaplain;
+namespace Content.Server.SS220.DarkForces.Saint.Chaplain;
 
 public sealed partial class ChaplainSystem
 {

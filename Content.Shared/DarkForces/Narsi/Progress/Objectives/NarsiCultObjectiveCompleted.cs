@@ -1,3 +1,3 @@
-﻿namespace Content.Shared.SecretStation.DarkForces.Narsi.Progress.Objectives;
+﻿namespace Content.Shared.SS220.DarkForces.Narsi.Progress.Objectives;
 
 public record NarsiCultObjectiveCompleted(EntityUid Objective);

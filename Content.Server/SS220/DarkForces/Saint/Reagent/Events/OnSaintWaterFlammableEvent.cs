@@ -1,8 +1,7 @@
 ﻿using Content.Shared.Chemistry;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationServer.DarkForces.Saint.Reagent.Events;
+namespace Content.Server.SS220.DarkForces.Saint.Reagent.Events;
 
 /**
  * Вызывается, если у сущности есть Flammable в Reactive компоненте

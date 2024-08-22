@@ -1,9 +1,8 @@
 using Content.Shared.Actions;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Runes.Events;
+namespace Content.Server.SS220.DarkForces.Narsi.Runes.Events;
 
 public sealed partial class NarsiRuneInstantSpawnEvent : InstantActionEvent
 {

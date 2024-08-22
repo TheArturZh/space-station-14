@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
 
 [RegisterComponent]
 public sealed partial class RatvarSlabComponent : Component

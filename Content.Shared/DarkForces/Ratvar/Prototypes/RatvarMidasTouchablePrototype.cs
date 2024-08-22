@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.SecretStation.DarkForces.Ratvar.Prototypes;
+namespace Content.Shared.SS220.DarkForces.Ratvar.Prototypes;
 
 [Serializable, Prototype("ratvarMidasTouch")]
 public sealed partial class RatvarMidasTouchablePrototype : IPrototype

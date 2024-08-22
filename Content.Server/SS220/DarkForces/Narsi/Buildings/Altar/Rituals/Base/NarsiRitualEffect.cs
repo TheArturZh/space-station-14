@@ -1,20 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
-using Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
-using Content.SecretStationServer.DarkForces.Narsi.Progress.Components;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
+using Content.Server.SS220.DarkForces.Narsi.Progress.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
+namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
 
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class NarsiRitualEffect

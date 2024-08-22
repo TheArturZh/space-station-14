@@ -1,16 +1,12 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Ratvar.Righteous.Progress;
+﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Server.Materials;
 using Content.Shared.DoAfter;
-using Content.Shared.SecretStation.DarkForces.Ratvar.UI;
+using Content.Shared.SS220.DarkForces.Ratvar.UI;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
-using RatvarWorkshopDoAfter = Content.Shared.SecretStation.DarkForces.Ratvar.DoAfterEvents.RatvarWorkshopDoAfter;
+using RatvarWorkshopDoAfter = Content.Shared.SS220.DarkForces.Ratvar.DoAfterEvents.RatvarWorkshopDoAfter;
 
-namespace Content.SecretStationServer.DarkForces.Ratvar.Righteous.Structures.Workshop;
+namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Workshop;
 
 public sealed class RatvarWorkshopSystem : EntitySystem
 {

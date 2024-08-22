@@ -1,14 +1,12 @@
-﻿using System;
-using Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities.Silence;
-using Content.SecretStationServer.DarkForces.Saint.Reagent.Events;
-using Content.SecretStationServer.DarkForces.Saint.Saintable.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Abilities.Events;
-using Content.Shared.SecretStation.DarkForces.Narsi.Cultist.Muzzle;
-using Content.Shared.SecretStation.DarkForces.Narsi.Roles;
+﻿using Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Silence;
+using Content.Server.SS220.DarkForces.Saint.Reagent.Events;
+using Content.Server.SS220.DarkForces.Saint.Saintable.Events;
+using Content.Shared.SS220.DarkForces.Narsi.Abilities.Events;
+using Content.Shared.SS220.DarkForces.Narsi.Cultist.Muzzle;
+using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Content.Shared.Speech.Muting;
-using Robust.Shared.GameObjects;
 
-namespace Content.SecretStationServer.DarkForces.Narsi.Cultist.Abilities;
+namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities;
 
 public sealed partial class NarsiCultistAbilitiesSystem
 {
