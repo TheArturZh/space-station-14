@@ -4,7 +4,7 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.SS220.DarkForces.Narsi.Roles;
-//using Content.Shared.SS220.FastUI;
+using Content.Shared.SS220.FastUI;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Shared.SS220.DarkForces.Narsi.Runes;

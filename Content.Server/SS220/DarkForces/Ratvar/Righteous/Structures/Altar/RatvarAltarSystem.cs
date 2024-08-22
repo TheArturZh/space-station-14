@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Server.Mind;
-//using Content.Server.SS220.Bridges;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mindshield.Components;
@@ -24,7 +23,6 @@ public sealed class RatvarAltarSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly RatvarProgressSystem _progressSystem = default!;
-    [Dependency] private readonly RatvarProgressSystem _ratvarRolesSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearance = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
