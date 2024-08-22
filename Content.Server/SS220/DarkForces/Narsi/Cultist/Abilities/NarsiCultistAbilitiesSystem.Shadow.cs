@@ -28,14 +28,15 @@ public sealed partial class NarsiCultistAbilitiesSystem
             _ => 3
         };
 
-        SharedUtils.Repeat(shadowsCount, () =>
+        for (int i = 0; i < shadowsCount; i++)
         {
             var shadow = Spawn("MobCultistShadow", transform.Coordinates);
 
             SetupTimedDespawn(shadow, level);
             SetupShadowComponent(uid, shadow, level);
             CopyData(uid, shadow);
-        });
+        }
+
         OnCultistAbility(uid, args);
         args.Handled = true;
     }
