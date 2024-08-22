@@ -11,6 +11,9 @@ using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Server.Antag;
+using Robust.Shared.Player;
+using Content.Shared.SS220.CCVars;
 
 namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Altar;
 
@@ -24,10 +27,13 @@ public sealed class RatvarAltarSystem : EntitySystem
     [Dependency] private readonly RatvarProgressSystem _ratvarRolesSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearance = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    //[Dependency] private readonly IAntagBridge _antagBridge = default!;
+    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string AltarGlow = "RatvarAltarActivateEffect";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string DefaultRatvarRule = "Ratvar";
 
     private readonly TimeSpan _timeToConvert = TimeSpan.FromSeconds(8);
     private readonly TimeSpan _timeToDie = TimeSpan.FromSeconds(16);
@@ -45,8 +51,8 @@ public sealed class RatvarAltarSystem : EntitySystem
         SubscribeLocalEvent<RatvarAltarComponent, UnstrappedEvent>(OnUnStrapped);
         SubscribeLocalEvent<RatvarAltarComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
-        _cfg.OnValueChanged(SecretCCVars.RatvarMaxRighteousCount, OnMaxRighteousCountChanged);
-        _maxRighteousCount = _cfg.GetCVar(SecretCCVars.RatvarMaxRighteousCount);
+        _cfg.OnValueChanged(CCVars220.RatvarMaxRighteousCount, OnMaxRighteousCountChanged);
+        _maxRighteousCount = _cfg.GetCVar(CCVars220.RatvarMaxRighteousCount);
     }
 
     private void OnMaxRighteousCountChanged(int count)
@@ -64,6 +70,20 @@ public sealed class RatvarAltarSystem : EntitySystem
             _sharedAppearance.SetData(uid, RatvarAltarVisuals.State, RatvarAltarState.UnAnchored);
             _lightningSystem.SetEnabled(uid, false);
         }
+    }
+
+    public void ForceMakeRatvarRighteous(ICommonSession session)
+    {
+        // TODO: Switch to MakeAntag
+        _antagSelection.ForceMakeAntag<RatvarRuleComponent>(session, DefaultRatvarRule);
+    }
+
+    public void ForceMakeRatvarRighteous(EntityUid uid)
+    {
+        if (!TryComp<ActorComponent>(uid, out var actor))
+            return;
+
+        ForceMakeRatvarRighteous(actor.PlayerSession);
     }
 
     public override void Update(float frameTime)
@@ -84,7 +104,7 @@ public sealed class RatvarAltarSystem : EntitySystem
             switch (component.Type)
             {
                 case AltarActiveType.Convert:
-                    _antagBridge.ForceMakeRatvarRighteous(target);
+                    ForceMakeRatvarRighteous(target);
                     _progressSystem.TryRequestChangePower(PowerForConvert);
                     ToIdleState((uid, component));
                     break;
