@@ -2,7 +2,7 @@
   id: NarsiCult
   name: "Культ Нар-Си"
   description: "Остановите культ, который пытается призвать злое божество"
-  showInVote: true
+  showInVote: false
   rules:
   - NarsiCult
   - BasicStationEventScheduler
@@ -11,7 +11,7 @@
   id: Ratvar
   name: "Праведники Ратвара"
   description: "Праведники Ратвара нашли способ, как можно освободить Ратвара из заточения..."
-  showInVote: true
+  showInVote: false
   rules:
   - Ratvar
   - BasicStationEventScheduler
