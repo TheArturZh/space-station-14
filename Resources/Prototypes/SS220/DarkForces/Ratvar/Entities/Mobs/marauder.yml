@@ -116,11 +116,11 @@
   - type: Reflect
     reflectProb: 0.40
   - type: Pullable
-  #- type: LanguageSpeaker
-    understands:
-    - GalacticCommon
-    - Ratvar
-    - RobotTalk
+  # - type: LanguageSpeaker
+  #   understands:
+  #   - GalacticCommon
+  #   - Ratvar
+  #   - RobotTalk
 
 - type: damageModifierSet
   id: RatvarMarauderModifierSet
