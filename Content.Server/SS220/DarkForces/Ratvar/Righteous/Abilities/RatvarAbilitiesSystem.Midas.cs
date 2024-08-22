@@ -5,8 +5,6 @@ using Content.Shared.SS220.DarkForces.Ratvar.Prototypes;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities;
 using Content.Shared.SS220.DarkForces.Ratvar.UI;
 using Content.Shared.Stacks;
-using MidasMaterialComponent = Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Midas.MidasMaterialComponent;
-using MidasTargetComponent = Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Midas.MidasTargetComponent;
 
 namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities;
 
@@ -74,7 +72,7 @@ public sealed partial class RatvarAbilitiesSystem
         var ids = material.Targets.Select(ent => ent.Id).ToList();
 
         _ui.SetUiState(target, RatvarMidasTouchUIKey.Key, new RatvarMidasTouchBUIState(ids));
-        _ui.OpenUi(target,  RatvarMidasTouchUIKey.Key, uid);
+        _ui.OpenUi(target, RatvarMidasTouchUIKey.Key, uid);
     }
 
     private void SpawnItem(string item, EntityUid target)
