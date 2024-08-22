@@ -1,22 +1,19 @@
-﻿using Content.Server.ExternalSources.Frontier.Language;
-using Content.Shared.ExternalSources.Frontier.Language;
+﻿// using Content.Server.ExternalSources.Frontier.Language;
+// using Content.Shared.ExternalSources.Frontier.Language;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 
 public sealed partial class RatvarProgressSystem
 {
-    [ValidatePrototypeId<LanguagePrototype>]
-    private const string LanguagePrototype = "Ratvar";
+    // [ValidatePrototypeId<LanguagePrototype>]
+    // private const string LanguagePrototype = "Ratvar";
 
-    [Dependency] private readonly LanguageSystem _languageSystem = default!;
+    // [Dependency] private readonly LanguageSystem _languageSystem = default!;
 
     public void SetupRighteous(EntityUid uid)
     {
-        _languageSystem.AddLanguage(uid, LanguagePrototype, true, true);
+        // _languageSystem.AddLanguage(uid, LanguagePrototype, true, true);
         if (_progressEntity?.Comp is not { } comp)
             return;
 
