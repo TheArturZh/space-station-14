@@ -52,12 +52,13 @@ public sealed partial class NarsiForgeWindow : FancyWindow
 
     private void PublishReceipts(List<NarsiCultCraftReceiptCategoryPrototype> prototypes, bool isStateIdle, int runicPlasteelCount, int plasteelCount, int steelCount)
     {
-        foreach (var (prototype, index) in prototypes.WithIndex())
+        for (var i = 0; i < prototypes.Count; i++)
         {
-            var category = new NarsiReceiptCategory(prototype, _bui, isStateIdle, runicPlasteelCount, plasteelCount, steelCount);
+            var prototype = prototypes[i];
 
+            var category = new NarsiReceiptCategory(prototype, _bui, isStateIdle, runicPlasteelCount, plasteelCount, steelCount);
             CTabContainer.AddChild(category);
-            CTabContainer.SetTabTitle(index, prototype.Title);
+            CTabContainer.SetTabTitle(i, prototype.Title);
         }
     }
 }

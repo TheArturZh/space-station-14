@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Text;
-//using Content.Server.SS220.Utils;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.SS220.DarkForces.Narsi.Buildings.CreatureEgg;
@@ -38,10 +37,11 @@ public sealed class NarsiCreatureEggSystem : EntitySystem
             var builder = new StringBuilder();
             builder.AppendLine(Loc.GetString("narsi-creature-egg-add-parts"));
 
-            foreach (var (slot, index) in emptySlots.WithIndex())
+            for (int i = 0; i < emptySlots.Count; i++)
             {
+                var slot = emptySlots[i];
                 builder.Append("[color=red]" + Loc.GetString(slot) + "[/color]");
-                builder.Append(index + 1 == emptySlots.Count ? "." : ", ");
+                builder.Append(i + 1 == emptySlots.Count ? "." : ", ");
             }
 
             args.PushMarkup(builder.ToString());
