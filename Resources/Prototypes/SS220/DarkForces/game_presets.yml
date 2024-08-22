@@ -1,0 +1,17 @@
+- type: gamePreset
+  id: NarsiCult
+  name: "Культ Нар-Си"
+  description: "Остановите культ, который пытается призвать злое божество"
+  showInVote: true
+  rules:
+  - NarsiCult
+  - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Ratvar
+  name: "Праведники Ратвара"
+  description: "Праведники Ратвара нашли способ, как можно освободить Ратвара из заточения..."
+  showInVote: true
+  rules:
+  - Ratvar
+  - BasicStationEventScheduler
