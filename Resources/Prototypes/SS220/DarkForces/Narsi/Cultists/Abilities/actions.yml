@@ -3,7 +3,6 @@
   id: NarsiCultistLeaderAction
   name: "Общий сбор"
   description: "Призовите всех живых культистов к себе"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -21,7 +20,6 @@
   id: NarsiCultistEmpAction
   name: "Перегрузка"
   description: "Используйте темную магию, чтобы вызвать перегрузку ближайших электрических приборов"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -38,7 +36,6 @@
   id: NarsiCultistFireArmsAction
   name: "Огненные руки"
   description: "Ваши руки наполняются пламенем"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -55,7 +52,6 @@
   id: NarsiCultistStealthAction
   name: "Покров тьмы"
   description: "Станьте невидимым"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -72,7 +68,6 @@
   id: NarsiCultistShadowAction
   name: "Теневое клонирование"
   description: "Создает ваших клонов. Они ничего не делают, но запутывают противника"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -89,7 +84,6 @@
   id: NarsiCultistTeleportAction
   name: "Телепорт"
   description: "Телепорт на случайную руну телепорта"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -106,7 +100,6 @@
   id: NarsiCultistGhostAxeAction
   name: "Призрачный топор"
   description: "Призывает призрачный топор, который может помочь вам в критической ситуации"
-  noSpawn: true
   components:
     - type: InstantAction
       icon:
@@ -124,7 +117,6 @@
   id: NarsiCultistSilenceAction
   name: "Безмолвие"
   description: "Заставьте жертву замолчать"
-  noSpawn: true
   components:
     - type: EntityTargetAction
       whitelist:
@@ -148,7 +140,6 @@
   id: NarsiCultistBlindnessAction
   name: "Слепота"
   description: "Ослепите вашу жертву"
-  noSpawn: true
   components:
     - type: EntityTargetAction
       whitelist:
@@ -172,7 +163,6 @@
   id: NarsiCultistStunAction
   name: "Ошеломление"
   description: "Сбейте вашу жертву с ног"
-  noSpawn: true
   components:
     - type: EntityTargetAction
       whitelist:
@@ -196,7 +186,6 @@
   id: NarsiCultistCuffAction
   name: "Теневые оковы"
   description: "Свяжите жертве руки"
-  noSpawn: true
   components:
     - type: EntityTargetAction
       whitelist:
