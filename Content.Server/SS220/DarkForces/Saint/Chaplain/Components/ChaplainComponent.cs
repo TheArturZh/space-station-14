@@ -33,7 +33,7 @@ public sealed partial class ChaplainComponent : Component
     public EntityUid? ExorcismActionEntity;
 
     [DataField]
-    public SoundSpecifier GreatPrayerSound = new SoundPathSpecifier("/Audio/DarkStation/DarkForces/Chaplain/great_prayer.ogg");
+    public SoundSpecifier GreatPrayerSound = new SoundPathSpecifier("/Audio/SS220/DarkForces/Chaplain/great_prayer.ogg");
 
     [DataField]
     public EntityUid? GreatPrayerSoundEntity;

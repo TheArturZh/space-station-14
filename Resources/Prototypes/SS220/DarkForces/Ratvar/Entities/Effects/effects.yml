@@ -19,7 +19,7 @@
     drawdepth: FloorObjects
   - type: EmitSoundOnSpawn
     sound:
-      path: /Audio/DarkStation/DarkForces/Ratvar/curse.ogg
+      path: /Audio/SS220/DarkForces/Ratvar/curse.ogg
       volume: -5
 
 - type: entity
@@ -42,7 +42,7 @@
     drawdepth: WallMountedItems
   - type: EmitSoundOnSpawn
     sound:
-      path: /Audio/DarkStation/DarkForces/Ratvar/curse.ogg
+      path: /Audio/SS220/DarkForces/Ratvar/curse.ogg
       volume: -5
 
 - type: entity
@@ -66,6 +66,6 @@
     drawdepth: WallMountedItems
   - type: EmitSoundOnSpawn
     sound:
-      path: /Audio/DarkStation/DarkForces/Ratvar/curse.ogg
+      path: /Audio/SS220/DarkForces/Ratvar/curse.ogg
       volume: -5
   - type: RatvarAltarGlow

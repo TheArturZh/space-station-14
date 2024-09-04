@@ -32,7 +32,7 @@ public sealed partial class NarsiCultForgeComponent : Component
     public TimeSpan DoAfterDelay = TimeSpan.FromSeconds(7);
 
     [DataField]
-    public SoundSpecifier ForgeSound = new SoundPathSpecifier("/Audio/DarkStation/DarkForces/Cult/forge_work.ogg");
+    public SoundSpecifier ForgeSound = new SoundPathSpecifier("/Audio/SS220/DarkForces/Cult/forge_work.ogg");
 
     [DataField]
     public AudioParams ForgeSoundParams = AudioParams.Default.WithVariation(0.05f).WithVolume(0.5f);
