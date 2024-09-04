@@ -28,13 +28,13 @@
     stackType: RunicPlasteel
     baseLayer: base
     layerStates:
-    - runicplasteel
-    - runicplasteel2
-    - runicplasteel3
+    - runic_1
+    - runic_2
+    - runic_3
   - type: Sprite
-    state: runicplasteel3
+    state: runic_3
     layers:
-    - state: runicplasteel3
+    - state: runic_3
       map: ["base"]
   - type: Item
     heldPrefix: Рунический металл
