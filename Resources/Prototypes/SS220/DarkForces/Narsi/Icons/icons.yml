@@ -1,4 +1,4 @@
-- type: statusIcon
+- type: factionIcon
   id: NarsiCultistIcon
   priority: 11
   showTo:
@@ -11,7 +11,7 @@
     sprite: /Textures/SS220/DarkForces/Cult/Icons/cultist.rsi
     state: cultist
 
-- type: statusIcon
+- type: factionIcon
   id: NarsiCultistLeaderIcon
   priority: 11
   showTo:
