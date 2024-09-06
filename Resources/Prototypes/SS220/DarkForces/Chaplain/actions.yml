@@ -4,7 +4,7 @@
   description: "Uses hunger to lay an egg."
   components:
   - type: InstantAction
-    icon: { sprite: SS220/DarkForces/Chaplain/actions.rsi, state: great-prayer }
+    icon: { sprite: Objects/Specific/Chapel/bible.rsi, state: icon }
     useDelay: 120
     event: !type:ChaplainGreatPrayerEvent
 
@@ -14,7 +14,7 @@
   description: "Создайте временный барьер от тёмных сил. Это даст вам время для перегруппировки или побега"
   components:
   - type: InstantAction
-    icon: { sprite: SS220/DarkForces/Chaplain/actions.rsi, state: barrier }
+    icon: { sprite: SS220/DarkForces/Chaplain/barrier.rsi, state: barrier }
     useDelay: 180
     event: !type:ChaplainDefenceBarrierEvent
 
@@ -32,7 +32,7 @@
       components:
       - MobState
     itemIconStyle: BigAction
-    icon: { sprite: SS220/DarkForces/Chaplain/actions.rsi, state: exorcism }
+    icon: { sprite: Objects/Specific/Chapel/bible.rsi, state: icon }
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
     event: !type:ChaplainStartExorcismEvent
