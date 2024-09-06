@@ -24,7 +24,7 @@ public sealed partial class NarsiRuneSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     private static readonly VerbCategory NarsiCult = new("Культ-Нар'Си", "/Textures/Interface/VerbIcons/antag-e_sword-temp.192dpi.png");
-    private static readonly SoundSpecifier RuneSound = new SoundPathSpecifier("/Audio/DarkStation/Narsi/summon_karp.ogg");
+    private static readonly SoundSpecifier RuneSound = new SoundPathSpecifier("/Audio/SS220/DarkForces/Cult/summon_karp.ogg");
 
     public override void Initialize()
     {

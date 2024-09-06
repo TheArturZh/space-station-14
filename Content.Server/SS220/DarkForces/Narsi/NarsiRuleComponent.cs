@@ -12,11 +12,12 @@ public sealed partial class NarsiRuleComponent : Component
     [DataField]
     public EntityUid RuneSource = EntityUid.Invalid;
 
-    [DataField]
-    public SoundSpecifier NarsiExileSound = new SoundPathSpecifier("/Audio/DarkStation/Narsi/narsi_destroy.ogg");
+    // Welp, it isn't used anywhere for some reason
+    //[DataField]
+    //public SoundSpecifier NarsiExileSound = new SoundPathSpecifier("/Audio/SS220/DarkForces/Cult/narsi_destroy.ogg");
 
-    [DataField]
-    public SoundSpecifier NarsiSummonSound = new SoundPathSpecifier("/Audio/DarkStation/Narsi/narsi_summon.ogg");
+    // [DataField]
+    // public SoundSpecifier NarsiSummonSound = new SoundPathSpecifier("/Audio/SS220/DarkForces/Cult/narsi_summon.ogg");
 
     public TimeSpan NarsiRepeatSoundAt = TimeSpan.Zero;
     public TimeSpan RoundEndAt = TimeSpan.Zero;

@@ -28,7 +28,7 @@ public sealed class NarsiRitualDaggerSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     private static readonly SoundSpecifier BloodSound =
-        new SoundPathSpecifier("/Audio/DarkStation/Narsi/enter_blood.ogg");
+        new SoundPathSpecifier("/Audio/SS220/DarkForces/Cult/enter_blood.ogg");
 
     public override void Initialize()
     {
