@@ -21,7 +21,8 @@ public sealed class SaintWaterSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReactiveComponent, OnSaintWaterDrinkEvent>(OnSaintWaterDrinkEvent);
+        // Fel damage is unused in our build
+        //SubscribeLocalEvent<ReactiveComponent, OnSaintWaterDrinkEvent>(OnSaintWaterDrinkEvent);
         SubscribeLocalEvent<ReactiveComponent, OnSaintWaterFlammableEvent>(OnSaintWaterFlammableEvent);
     }
 

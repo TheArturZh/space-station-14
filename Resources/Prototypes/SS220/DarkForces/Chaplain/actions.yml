@@ -1,12 +1,13 @@
-﻿- type: entity
-  id: ActionChaplainGreatPrayer
-  name: "Великая молитва"
-  description: "Uses hunger to lay an egg."
-  components:
-  - type: InstantAction
-    icon: { sprite: Objects/Specific/Chapel/bible.rsi, state: icon }
-    useDelay: 120
-    event: !type:ChaplainGreatPrayerEvent
+﻿# Fel damage is unused in our build
+# - type: entity
+#   id: ActionChaplainGreatPrayer
+#   name: "Великая молитва"
+#   description: "Uses hunger to lay an egg."
+#   components:
+#   - type: InstantAction
+#     icon: { sprite: Objects/Specific/Chapel/bible.rsi, state: icon }
+#     useDelay: 120
+#     event: !type:ChaplainGreatPrayerEvent
 
 - type: entity
   id: ActionChaplainDefenceBarrier

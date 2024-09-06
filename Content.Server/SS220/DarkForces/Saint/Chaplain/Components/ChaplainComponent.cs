@@ -14,11 +14,12 @@ public sealed partial class ChaplainComponent : Component
     [DataField]
     public EntityUid? NarsiExileActionEntity;
 
-    [DataField]
-    public EntProtoId GreatPrayerAction = "ActionChaplainGreatPrayer";
+    // Fel damage is unused in our build
+    // [DataField]
+    // public EntProtoId GreatPrayerAction = "ActionChaplainGreatPrayer";
 
-    [DataField]
-    public EntityUid? GreatPrayerActionEntity;
+    // [DataField]
+    // public EntityUid? GreatPrayerActionEntity;
 
     [DataField]
     public EntProtoId DefenceBarrierAction = "ActionChaplainDefenceBarrier";

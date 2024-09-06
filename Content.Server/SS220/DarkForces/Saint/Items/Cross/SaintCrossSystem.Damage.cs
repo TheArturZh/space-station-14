@@ -16,7 +16,8 @@ public sealed partial class SaintCrossSystem
 
     private void InitializeDamage()
     {
-        SubscribeLocalEvent<SaintCrossComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+        // Fel damage is unused in our build
+        //SubscribeLocalEvent<SaintCrossComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
     }
 
     private void OnDamageModify(EntityUid uid,
