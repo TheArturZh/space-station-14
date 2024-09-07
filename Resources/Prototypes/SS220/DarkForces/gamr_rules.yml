@@ -1,0 +1,11 @@
+- type: entity
+  id: NarsiCult
+  parent: BaseGameRule
+  components:
+  - type: Narsi
+
+- type: entity
+  id: Ratvar
+  parent: BaseGameRule
+  components:
+  - type: Ratvar

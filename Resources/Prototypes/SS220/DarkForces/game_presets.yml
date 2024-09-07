@@ -5,7 +5,11 @@
   showInVote: false
   rules:
   - NarsiCult
+  - SubGamemodesRule
   - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  # - SpaceTrafficControlEventScheduler # SS220-NoUnknownShuttles
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Ratvar
@@ -14,4 +18,8 @@
   showInVote: false
   rules:
   - Ratvar
+  - SubGamemodesRule
   - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  # - SpaceTrafficControlEventScheduler # SS220-NoUnknownShuttles
+  - BasicRoundstartVariation
