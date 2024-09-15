@@ -3,6 +3,11 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/SS220/Effects/Drop/laser.ogg ##new sound_drop effect, add MIXnikita
+      params:
+        volume: 2
   - type: Sprite
   - type: Item
     size: Huge
@@ -37,6 +42,11 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/SS220/Effects/Drop/laser.ogg ##new sound_drop effect, add MIXnikita
+      params:
+        volume: 2
   - type: Sprite
   - type: Item
     size: Huge
@@ -793,30 +803,29 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserSpread
-    fireCost: 150
+    fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpread
-      fireCost: 150
-    - proto: BulletLaserHeavySpread
-      fireCost: 150
+      fireCost: 100
+    - proto: BulletLaserSpreadNarrow
+      fireCost: 100
     - proto: BulletDisablerSmgSpread
-      fireCost: 150
+      fireCost: 100
   - type: Item
     size: Large
     shape:
     - 0,0,3,1
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
-  - type: Tag
-    tags:
-    - HighRiskItem
-  - type: StealTarget
-    stealGroup: WeaponEnergyShotgun
+  #- type: Tag
+    #SS220 HOS shotgun removal begin
+    #tags:
+    #- HighRiskItem
+  #- type: StealTarget
+    #stealGroup: WeaponEnergyShotgun
+    #SS220 HOS shotgun removal end
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
-    maxCharge: 1050
-    startingCharge: 1050
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 25 #takes 42 seconds to fully recharge, the answer to life, the universe and everything
+    maxCharge: 800
+    startingCharge: 800

@@ -671,8 +671,28 @@ public sealed partial class ShuttleSystem
     /// Tries to dock with the target grid, otherwise falls back to proximity.
     /// This bypasses FTL travel time.
     /// </summary>
-    public bool TryFTLDock(EntityUid shuttleUid, ShuttleComponent component, EntityUid targetUid, string? priorityTag = null)
+    public bool TryFTLDock(
+        EntityUid shuttleUid,
+        ShuttleComponent component,
+        EntityUid targetUid,
+        string? priorityTag = null)
     {
+        return TryFTLDock(shuttleUid, component, targetUid, out _, priorityTag);
+    }
+
+    /// <summary>
+    /// Tries to dock with the target grid, otherwise falls back to proximity.
+    /// This bypasses FTL travel time.
+    /// </summary>
+    public bool TryFTLDock(
+        EntityUid shuttleUid,
+        ShuttleComponent component,
+        EntityUid targetUid,
+        [NotNullWhen(true)] out DockingConfig? config,
+        string? priorityTag = null)
+    {
+        config = null;
+
         if (!_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform) ||
             !_xformQuery.TryGetComponent(targetUid, out var targetXform) ||
             targetXform.MapUid == null ||
@@ -681,7 +701,7 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        var config = _dockSystem.GetDockingConfig(shuttleUid, targetUid, priorityTag);
+        config = _dockSystem.GetDockingConfig(shuttleUid, targetUid, priorityTag);
 
         if (config != null)
         {
@@ -963,4 +983,55 @@ public sealed partial class ShuttleSystem
         var ev = new ShuttleFlattenEvent(xform.MapUid.Value, aabbs);
         RaiseLocalEvent(ref ev);
     }
+
+    //SS220 EscapePod dockind to CentComm begin
+    /// <summary>
+    /// Moves a shuttle from its current position to docked on the target one by index of DockingConfig.
+    /// If no docks are free when FTLing it will arrive in proximity.
+    /// </summary>
+    public void FTLToDockByIndex(
+        EntityUid shuttleUid,
+        ShuttleComponent component,
+        EntityUid target,
+        int index,
+        float? startupTime = null,
+        float? hyperspaceTime = null,
+        string? priorityTag = null)
+    {
+        if (!TrySetupFTL(shuttleUid, component, out var hyperspace))
+            return;
+
+        startupTime ??= DefaultStartupTime;
+        hyperspaceTime ??= DefaultTravelTime;
+
+        var validDockingConfigs = _dockSystem.GetSortedDockingConfigs(shuttleUid, target, priorityTag);
+        hyperspace.StartupTime = startupTime.Value;
+        hyperspace.TravelTime = hyperspaceTime.Value;
+        hyperspace.StateTime = StartEndTime.FromStartDuration(
+            _gameTiming.CurTime,
+            TimeSpan.FromSeconds(hyperspace.StartupTime));
+        hyperspace.PriorityTag = priorityTag;
+
+        _console.RefreshShuttleConsoles(shuttleUid);
+
+        // Valid dock for now time so just use that as the target.
+        if (validDockingConfigs != null && validDockingConfigs.ElementAt(index) is { } config)
+        {
+            config.TargetGrid = target;
+            hyperspace.TargetCoordinates = config.Coordinates;
+            hyperspace.TargetAngle = config.Angle;
+        }
+        else if (TryGetFTLProximity(shuttleUid, new EntityCoordinates(target, Vector2.Zero), out var coords, out var targAngle))
+        {
+            hyperspace.TargetCoordinates = coords;
+            hyperspace.TargetAngle = targAngle;
+        }
+        else
+        {
+            // FTL back to its own position.
+            hyperspace.TargetCoordinates = Transform(shuttleUid).Coordinates;
+            Log.Error($"Unable to FTL grid {ToPrettyString(shuttleUid)} to target properly?");
+        }
+    }
+    //SS220 EscapePod dockind to CentComm end
 }
