@@ -22,7 +22,7 @@ public sealed partial class NarsiCultProgressSystem
 
     private void OnCultistMobStateChanged(EntityUid uid, NarsiCultistComponent component, MobStateChangedEvent args)
     {
-        if (_activeProgress is not {} progress)
+        if (_activeProgress is not { } progress)
             return;
 
         if (args.NewMobState == MobState.Alive && progress.Comp.LeaderState == LeaderState.NoCandidates)
