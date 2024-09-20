@@ -2,14 +2,14 @@
   id: RunicPlasteel
   stackEntity: SheetRunicPlasteel1R
   name: materials-plasteel
-  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: runicplasteel }
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: runic }
   color: "#696969" #Okay, this is epic
   price: 0.28 # 1-1 mix of plasma and steel.
 
 - type: stack
   id: RunicPlasteel
   name: Рунический металл
-  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: runicplasteel }
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: runic }
   spawn: SheetRunicPlasteel1R
   maxCount: 50
   itemSize: 1
@@ -28,7 +28,7 @@
     stackType: RunicPlasteel
     baseLayer: base
     layerStates:
-    - runic_1
+    - runic
     - runic_2
     - runic_3
   - type: Sprite
