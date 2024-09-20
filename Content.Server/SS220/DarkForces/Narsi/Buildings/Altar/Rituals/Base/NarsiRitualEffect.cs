@@ -100,7 +100,7 @@ public abstract partial class NarsiRitualEffect
                 true,
                 ritual.SoundParams
             )
-            .Value.Entity;
+            ?.Entity;
 
         var timing = IoCManager.Resolve<IGameTiming>();
         altar.Comp.VisualsParams.VisualsTick = timing.CurTime;

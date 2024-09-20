@@ -82,8 +82,7 @@ public sealed partial class ChaplainSystem
                 uid: uid,
                 recordReplay: true
             )
-            .Value
-            .Entity;
+            ?.Entity;
 
         var doAfterArgs = GetGreatPrayerDoAfterArgs(uid);
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -180,8 +179,7 @@ public sealed partial class ChaplainSystem
                 uid: uid,
                 recordReplay: true
             )
-            .Value
-            .Entity;
+            ?.Entity;
 
         args.Handled = true;
     }
