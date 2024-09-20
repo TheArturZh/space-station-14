@@ -2,7 +2,6 @@
   id: NarsiRuneListing
   windowName: "Руны крови"
   windowDescription: "Выберите руну, которую хотите начертить. На данный момент руны не стираются, рисуйте их в скрытых местах"
-  selectMode: true
   listings:
     - NarsiOfferingRune
     - NarsiTeleportRune

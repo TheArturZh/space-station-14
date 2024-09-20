@@ -81,7 +81,7 @@ public sealed partial class NarsiRuneSystem
         if (!_ui.HasUi(rune, SecretListingKey.Key))
             return;
 
-        var state = new SecretListingInitDataState("NarsiSummonRune", data, "Выберите культиста", "Если культист связан И его кто-то держит, призыв не получится", true, GetNetEntity(user));
+        var state = new SecretListingInitDataState("NarsiSummonRune", data, "Выберите культиста", "Если культист связан И его кто-то держит, призыв не получится", GetNetEntity(user));
         _ui.SetUiState(rune, SecretListingKey.Key, state);
     }
 

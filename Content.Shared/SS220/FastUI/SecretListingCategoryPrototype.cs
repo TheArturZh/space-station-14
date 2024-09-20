@@ -19,9 +19,6 @@ public sealed partial class SecretListingCategoryPrototype : IPrototype, IClonea
     [DataField("windowDescription", required: true)]
     public string WindowDescription { get; set; } = string.Empty;
 
-    [DataField("selectMode")]
-    public bool SelectMode = default!;
-
     [DataField("listings", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<SecretListingPrototype>))]
     public HashSet<string> Listings { get; set; } = new();
 
@@ -31,7 +28,6 @@ public sealed partial class SecretListingCategoryPrototype : IPrototype, IClonea
         {
             WindowName = WindowName,
             WindowDescription = WindowDescription,
-            SelectMode = SelectMode,
             Listings = Listings
         };
     }

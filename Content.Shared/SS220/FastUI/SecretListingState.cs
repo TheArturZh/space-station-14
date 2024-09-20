@@ -15,15 +15,13 @@ public sealed class SecretListingInitDataState : BoundUserInterfaceState
     public List<ListingData> Data;
     public string WindowName;
     public string WindowDescription;
-    public bool SelectMode;
     public NetEntity UserEntity;
-    public SecretListingInitDataState(string key, List<ListingData> data, string windowName, string windowDescription, bool selectMode, NetEntity userEntity)
+    public SecretListingInitDataState(string key, List<ListingData> data, string windowName, string windowDescription, NetEntity userEntity)
     {
         Key = key;
         Data = data;
         WindowName = windowName;
         WindowDescription = windowDescription;
-        SelectMode = selectMode;
         UserEntity = userEntity;
     }
 }
