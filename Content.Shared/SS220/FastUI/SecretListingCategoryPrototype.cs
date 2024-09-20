@@ -13,14 +13,14 @@ public sealed partial class SecretListingCategoryPrototype : IPrototype, IClonea
     [IdDataField]
     public string ID { get; set; } = default!;
 
-    [DataField("windowName", required: true)]
+    [DataField(required: true)]
     public string WindowName { get; set; } = string.Empty;
 
-    [DataField("windowDescription", required: true)]
+    [DataField(required: true)]
     public string WindowDescription { get; set; } = string.Empty;
 
-    [DataField("listings", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<SecretListingPrototype>))]
-    public HashSet<string> Listings { get; set; } = new();
+    [DataField]
+    public HashSet<ProtoId<SecretListingPrototype>> Listings { get; set; } = new();
 
     public object Clone()
     {

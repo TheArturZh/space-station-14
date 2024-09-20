@@ -27,6 +27,10 @@
     - back
   - type: DisarmMalus
   - type: NarsiRitualDagger # SS220 Dark-Forces
+  - type: UserInterface
+    interfaces:
+      enum.SecretListingKey.Key:
+        type: SecretListingBoundUserInterface
 
 - type: entity
   name: eldritch blade

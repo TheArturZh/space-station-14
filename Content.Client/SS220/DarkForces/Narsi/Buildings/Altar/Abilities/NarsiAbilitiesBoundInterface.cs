@@ -1,9 +1,11 @@
 ﻿using System;
 using Content.Shared.SS220.DarkForces.Narsi.Buildings.Altar.Abilities;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.SS220.DarkForces.Narsi.Buildings.Altar.Abilities;
 
+[UsedImplicitly]
 public sealed class NarsiAbilitiesBoundInterface : BoundUserInterface
 {
     private NarsiAbilitiesWindow? _window;
