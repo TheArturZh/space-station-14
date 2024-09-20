@@ -13,6 +13,8 @@
   - AllAccess
   access:
   - CentralCommand
+  departmentsToIgnoreInTitles: # SS220 Round End Titles
+  - Command                    # SS220 Round End Titles
 
 - type: startingGear
   id: ERTLeaderGear
@@ -108,6 +110,8 @@
     components:
     - type: BibleUser #Lets them heal with bibles
     - type: Chaplain # SS220 DarkForces
+  departmentsToIgnoreInTitles: # SS220 Round End Titles
+  - Command                    # SS220 Round End Titles
 
 - type: startingGear
   id: ERTChaplainGear
@@ -186,6 +190,8 @@
   - AllAccess
   access:
   - CentralCommand
+  departmentsToIgnoreInTitles: # SS220 Round End Titles
+  - Command                    # SS220 Round End Titles
 
 - type: startingGear
   id: ERTEngineerGear
@@ -258,6 +264,8 @@
   - AllAccess
   access:
   - CentralCommand
+  departmentsToIgnoreInTitles: # SS220 Round End Titles
+  - Command                    # SS220 Round End Titles
 
 - type: startingGear
   id: ERTSecurityGear
@@ -348,6 +356,8 @@
   - AllAccess
   access:
   - CentralCommand
+  departmentsToIgnoreInTitles: # SS220 Round End Titles
+  - Command                    # SS220 Round End Titles
 
 - type: startingGear
   id: ERTMedicalGear
@@ -410,6 +420,8 @@
   - AllAccess
   access:
   - CentralCommand
+  departmentsToIgnoreInTitles: # SS220 Round End Titles
+  - Command                    # SS220 Round End Titles
 
 - type: startingGear
   id: ERTJanitorGear
