@@ -18,8 +18,9 @@
         Heat: 0.80
         Radiation: 0.80
         Caustic: 0.95
-      securePartTypes:
-        Head: 0.5
+      # TODO: redo it whenever separate body part protection is implemented
+      # securePartTypes:
+      #   Head: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.75
   - type: RatvarItem

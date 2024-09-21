@@ -10,8 +10,10 @@
     - type: Handcuff
       cuffedRSI: SS220/DarkForces/Cult/Entities/Items/shadow_handcuff.rsi
       bodyIconState: body-overlay
-      state: handcuff
       deleteOnRemove: true
+    - type: Sprite
+      sprite: SS220/DarkForces/Cult/Entities/Items/shadow_handcuff.rsi
+      state: handcuff
     - type: Tag
       tags:
       - Handcuffs

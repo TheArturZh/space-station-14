@@ -229,7 +229,7 @@
       types:
         Blunt: 15
   - type: Tool
-    speed: 1.5
+    speedModifier: 1.5
     qualities:
     - Prying
   - type: Prying
@@ -297,7 +297,7 @@
       types:
         Blunt: 25
   - type: Tool
-    speed: 1.5
+    speedModifier: 1.5
     qualities:
     - Prying
   - type: Prying

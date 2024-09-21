@@ -30,7 +30,6 @@
     building: Forge
   - type: ActivatableUI
     verbText: forge-verb-text
-    allowSpectator: false
     key: enum.SharedNarsiForgeInterfaceKey.Key
   - type: UserInterface
     interfaces:

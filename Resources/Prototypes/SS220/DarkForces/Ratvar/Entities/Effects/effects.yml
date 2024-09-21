@@ -20,7 +20,8 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/SS220/DarkForces/Ratvar/curse.ogg
-      volume: -5
+      params:
+        volume: -5
 
 - type: entity
   id: RatvarWallSpawnEffect
@@ -43,7 +44,8 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/SS220/DarkForces/Ratvar/curse.ogg
-      volume: -5
+      params:
+        volume: -5
 
 - type: entity
   id: RatvarAltarActivateEffect
@@ -67,5 +69,6 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/SS220/DarkForces/Ratvar/curse.ogg
-      volume: -5
+      params:
+        volume: -5
   - type: RatvarAltarGlow

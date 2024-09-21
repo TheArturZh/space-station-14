@@ -19,4 +19,5 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/smoke.ogg
-      volume: -5
+      params:
+        volume: -5

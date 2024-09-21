@@ -16,7 +16,8 @@
         Slash: 0.8
         Piercing: 0.6
         Heat: 0.9
-      securePartTypes:
-        Leg: 0.6
-        Arm: 0.7
+      # TODO: redo it whenever separate body part protection is implemented
+      # securePartTypes:
+      #   Leg: 0.6
+      #   Arm: 0.7
   - type: RatvarItem

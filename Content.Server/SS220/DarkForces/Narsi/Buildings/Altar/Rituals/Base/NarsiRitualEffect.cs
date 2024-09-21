@@ -31,7 +31,7 @@ public abstract partial class NarsiRitualEffect
         if (cultistsNearAltar.Count < requirements.CultistsCount)
             return false;
 
-        if (requirements.BuckedEntityWhitelist != null && altar.Comp.BuckledEntity == null)
+        if (requirements.BuckledEntityWhitelist != null && altar.Comp.BuckledEntity == null)
             return false;
 
         var entitiesInRange = entityLookupSystem.GetEntitiesInRange(altar, requirements.EntitiesFoundingRange);
@@ -142,7 +142,7 @@ public abstract partial class NarsiRitualEffect
 
         var random = IoCManager.Resolve<IRobustRandom>();
         var transform = entityManager.System<TransformSystem>();
-        if (ritual.Requirements.BuckedEntityWhitelist != null && altar.Comp.BuckledEntity == null)
+        if (ritual.Requirements.BuckledEntityWhitelist != null && altar.Comp.BuckledEntity == null)
         {
             var buckledEffectId = random.Pick(visuals.VisualsEntities);
             var buckledEffect = entityManager.SpawnEntity(buckledEffectId, altarTransform.Coordinates);

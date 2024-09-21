@@ -18,7 +18,7 @@ public sealed partial class NarsiRitualRequirements
     public List<NarsiRitualRequirementsEntity>? EntitiesRequirements;
 
     [DataField]
-    public EntityWhitelist? BuckedEntityWhitelist;
+    public EntityWhitelist? BuckledEntityWhitelist;
 }
 
 [DataDefinition]
