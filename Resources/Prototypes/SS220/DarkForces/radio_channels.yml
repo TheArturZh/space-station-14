@@ -8,7 +8,7 @@
 
 - type: radioChannel
   id: NarsiCult
-  name: Культ Нар'Си
+  name: narsie-channel-name
   keycode: 'э'
   frequency: 6666
   color: "#995B98"
@@ -16,7 +16,7 @@
 
 - type: radioChannel
   id: Ratvar
-  name: "Праведники Ратвара"
+  name: ratvar-channel-name
   keycode: 'р'
   frequency: 3636
   color: "#b87333"

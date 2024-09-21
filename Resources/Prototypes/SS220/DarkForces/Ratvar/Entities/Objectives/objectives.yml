@@ -4,7 +4,7 @@
   components:
   - type: Objective
     difficulty: 0.0
-    issuer: "Ратвар"
+    issuer: issuer-ratvar
     unique: false
     icon:
       sprite: SS220/DarkForces/Ratvar/actions.rsi
@@ -17,7 +17,7 @@
   components:
   - type: Objective
     difficulty: 0.0
-    issuer: "Ратвар"
+    issuer: issuer-ratvar
     unique: false
     icon:
       sprite: SS220/DarkForces/Ratvar/actions.rsi
@@ -30,7 +30,7 @@
   components:
   - type: Objective
     difficulty: 0.0
-    issuer: "Ратвар"
+    issuer: issuer-ratvar
     unique: false
     icon:
       sprite: SS220/DarkForces/Ratvar/actions.rsi
@@ -43,7 +43,7 @@
   components:
   - type: Objective
     difficulty: 0.0
-    issuer: "Ратвар"
+    issuer: issuer-ratvar
     unique: false
     icon:
       sprite: SS220/DarkForces/Ratvar/actions.rsi

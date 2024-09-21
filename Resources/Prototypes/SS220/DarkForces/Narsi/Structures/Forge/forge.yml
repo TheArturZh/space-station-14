@@ -29,7 +29,7 @@
   - type: NarsiCultStructure
     building: Forge
   - type: ActivatableUI
-    verbText: "Ковка"
+    verbText: forge-verb-text
     allowSpectator: false
     key: enum.SharedNarsiForgeInterfaceKey.Key
   - type: UserInterface

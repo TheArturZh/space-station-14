@@ -3,7 +3,7 @@
   components:
   - type: Objective
     difficulty: 0.0
-    issuer: "Культ Нар'Си"
+    issuer: issuer-narsie
     unique: false
     icon:
       sprite: SS220/DarkForces/Cult/Icons/task.rsi

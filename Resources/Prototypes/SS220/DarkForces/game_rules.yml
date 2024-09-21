@@ -4,7 +4,7 @@
   components:
   - type: NarsiRule
   - type: AntagSelection
-    agentName: культист Нар'Си
+    agentName: narsi-agent-name
     definitions:
     - max: 8
       #playerRatio: 10
@@ -25,7 +25,7 @@
   components:
   - type: RatvarRule
   - type: AntagSelection
-    agentName: культист Ратвара
+    agentName: ratvar-agent-name
     definitions:
     - max: 8
       #playerRatio: 10
