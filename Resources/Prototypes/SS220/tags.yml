@@ -110,3 +110,19 @@
 # EscapePod
 - type: Tag
   id: EscapePod
+
+# Required for DarkForces port
+- type: Tag
+  id: LLeg
+
+- type: Tag
+  id: RLeg
+
+- type: Tag
+  id: LArm
+
+- type: Tag
+  id: RArm
+
+- type: Tag
+  id: Heart

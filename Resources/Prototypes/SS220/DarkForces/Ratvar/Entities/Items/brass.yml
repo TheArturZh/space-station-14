@@ -12,7 +12,6 @@
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: brass }
   spawn: SheetBrassPlasteel1R
   maxCount: 30
-  itemSize: 1
 
 - type: entity
   parent: SheetMetalBase
