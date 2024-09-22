@@ -6,7 +6,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: allteleport
       useDelay: 300
       itemIconStyle: NoItem
@@ -23,7 +23,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: emp
       useDelay: 120
       itemIconStyle: NoItem
@@ -39,7 +39,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: fire
       useDelay: 90
       itemIconStyle: NoItem
@@ -55,7 +55,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: stealth
       useDelay: 120
       itemIconStyle: NoItem
@@ -71,7 +71,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: shadow
       useDelay: 60
       itemIconStyle: NoItem
@@ -87,7 +87,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: teleport
       useDelay: 120
       itemIconStyle: NoItem
@@ -103,7 +103,7 @@
   components:
     - type: InstantAction
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: ghostaxe
       useDelay: 90
       itemIconStyle: NoItem
@@ -126,7 +126,7 @@
       checkCanInteract: true
       interactOnMiss: false
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: silence
       useDelay: 60
       range: 6
@@ -149,7 +149,7 @@
       checkCanInteract: true
       interactOnMiss: false
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: blindness
       useDelay: 60
       range: 6
@@ -172,7 +172,7 @@
       checkCanInteract: true
       interactOnMiss: false
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: stun
       useDelay: 60
       range: 6
@@ -195,7 +195,7 @@
       checkCanInteract: true
       interactOnMiss: false
       icon:
-        sprite: SS220/DarkForces/Cult/Interface/actions.rsi/
+        sprite: SS220/DarkForces/Cult/Interface/actions.rsi
         state: cuff
       useDelay: 60
       range: 6

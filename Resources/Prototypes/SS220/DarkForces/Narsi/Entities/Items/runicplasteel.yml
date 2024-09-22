@@ -12,7 +12,6 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: runic }
   spawn: SheetRunicPlasteel1R
   maxCount: 50
-  itemSize: 1
 
 - type: entity
   parent: SheetMetalBase
