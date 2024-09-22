@@ -126,3 +126,7 @@
 
 - type: Tag
   id: Heart
+
+# SS220 to put lighter in a cigarette pack
+- type: Tag
+  id: Lighter
