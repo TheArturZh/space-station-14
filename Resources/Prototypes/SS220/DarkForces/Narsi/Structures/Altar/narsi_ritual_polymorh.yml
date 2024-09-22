@@ -36,6 +36,9 @@
   duration: 45
   requirements:
     cultistsCount: 2
+    buckledEntityWhitelist:
+      tags:
+      - Dog
   effect: !type:NarsiPolymorphRitualEffect
     configuration:
       entity: MobCorgiNarsiRitual
@@ -47,9 +50,6 @@
       revertOnCrit: true
       revertOnDeath: true
       duration: 600
-    buckledEntityWhitelist:
-      tags:
-      - Dog
     deleteBuckled: true
 
 - type: narsiRitual
