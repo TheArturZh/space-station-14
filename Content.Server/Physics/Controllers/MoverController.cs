@@ -11,6 +11,8 @@ using Robust.Shared.Player;
 using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 using Robust.Shared.Map.Components;
+using Content.Shared.SS220.CruiseControl;
+using Content.Server.SS220.CruiseControl;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -303,6 +305,17 @@ public sealed class MoverController : SharedMoverController
         // Collate all of the linear / angular velocites for a shuttle
         // then do the movement input once for it.
         var xformQuery = GetEntityQuery<TransformComponent>();
+
+        // SS220 Cruise-Control begin
+        var cruiseQuery = GetEntityQuery<ShuttleCruiseControlComponent>();
+        var cruiseShuttleEnumerator = EntityQueryEnumerator<ShuttleComponent, ShuttleCruiseControlComponent>();
+        while (cruiseShuttleEnumerator.MoveNext(out var uid, out var shuttleComponent, out _))
+        {
+            if (!_shuttlePilots.TryGetValue(uid, out _)) // check first so no unnecessary allocs are made
+                _shuttlePilots[uid] = (shuttleComponent, []);
+        }
+        // SS220 Cruise-Control end
+
         foreach (var (shuttleUid, (shuttle, pilots)) in _shuttlePilots)
         {
             if (Paused(shuttleUid) || CanPilot(shuttleUid) || !TryComp<PhysicsComponent>(shuttleUid, out var body))
@@ -337,9 +350,21 @@ public sealed class MoverController : SharedMoverController
             }
 
             var count = pilots.Count;
-            linearInput /= count;
-            angularInput /= count;
-            brakeInput /= count;
+            if (count > 0) // SS220 Cruise-Control
+            {
+                linearInput /= count;
+                angularInput /= count;
+                brakeInput /= count;
+            }
+
+            // SS220 Cruise-Control begin
+            if (cruiseQuery.TryGetComponent(shuttleUid, out var cruiseComp)
+            && (linearInput * CruiseControlSystem.CruiseAxis).Length() <= 0.01f)
+            {
+                linearInput += cruiseComp.LinearInput;
+                linearInput /= 2f;
+            }
+            // SS220 Cruise-Control end
 
             // Handle shuttle movement
             if (brakeInput > 0f)
