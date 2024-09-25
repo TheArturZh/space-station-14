@@ -94,7 +94,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             EnableCruiseButton.Pressed = true;
             _sliderDebounce = true;
-            CruiseControlSlider.Value = cruiseControl.LinearInput.Y;
+            CruiseControlSlider.Value = cruiseControl.LinearInput.Length();
             _sliderDebounce = false;
         }
         else

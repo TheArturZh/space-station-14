@@ -14,8 +14,6 @@ public sealed class CruiseControlSystem : EntitySystem
         SubscribeLocalEvent<ShuttleConsoleComponent, CruiseControlMessage>(OnCruiseControlMessage);
     }
 
-    public static readonly Vector2 CruiseAxis = new(0, 1);
-
     public void DisableCruiseControlFromConsole(Entity<ShuttleConsoleComponent> console)
     {
         if (!console.Comp.CruiseControlTarget.HasValue)
@@ -35,7 +33,7 @@ public sealed class CruiseControlSystem : EntitySystem
         {
             var cruiseComp = EnsureComp<ShuttleCruiseControlComponent>(shuttleUid.Value);
             console.Comp.CruiseControlTarget = shuttleUid;
-            cruiseComp.LinearInput = CruiseAxis * args.Throttle;
+            cruiseComp.LinearInput = ShuttleCruiseControlComponent.CruiseAxis * Math.Clamp(args.Throttle, -1, 1);
             Dirty(shuttleUid.Value, cruiseComp);
         }
         else

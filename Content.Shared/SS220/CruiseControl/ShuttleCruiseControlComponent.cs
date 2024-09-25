@@ -7,6 +7,8 @@ namespace Content.Shared.SS220.CruiseControl;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShuttleCruiseControlComponent : Component
 {
+    public static readonly Vector2 CruiseAxis = new(0, 1);
+
     [DataField, AutoNetworkedField, ViewVariables]
     public Vector2 LinearInput;
 }

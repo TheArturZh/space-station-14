@@ -358,11 +358,9 @@ public sealed class MoverController : SharedMoverController
             }
 
             // SS220 Cruise-Control begin
-            if (cruiseQuery.TryGetComponent(shuttleUid, out var cruiseComp)
-            && (linearInput * CruiseControlSystem.CruiseAxis).Length() <= 0.01f)
+            if (cruiseQuery.TryGetComponent(shuttleUid, out var cruiseComp))
             {
-                linearInput += cruiseComp.LinearInput;
-                linearInput /= 2f;
+                linearInput = cruiseComp.LinearInput;
             }
             // SS220 Cruise-Control end
 
@@ -530,6 +528,13 @@ public sealed class MoverController : SharedMoverController
                 var localVel = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
                 var maxVelocity = ObtainMaxVel(localVel, shuttle); // max for current travel dir
                 var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
+                // SS220 Cruise-Control begin
+                if (cruiseComp != null && shuttle.CruiseControlVelocityMultiplier.HasValue)
+                {
+                    maxVelocity *= shuttle.CruiseControlVelocityMultiplier.Value;
+                    maxWishVelocity *= shuttle.CruiseControlVelocityMultiplier.Value;
+                }
+                // SS220 Cruise-Control end
                 var properAccel = (maxWishVelocity - localVel) / forceMul;
 
                 var finalForce = Vector2Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
@@ -555,7 +560,7 @@ public sealed class MoverController : SharedMoverController
                 if (brakeInput <= 0f)
                     _thruster.SetAngularThrust(shuttle, false);
             }
-            else
+            else if (!cruiseQuery.HasComp(shuttleUid)) // SS220 Cruise-Control
             {
                 PhysicsSystem.SetSleepingAllowed(shuttleUid, body, false);
                 var torque = shuttle.AngularThrust * -angularInput;
