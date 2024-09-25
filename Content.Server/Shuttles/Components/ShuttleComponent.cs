@@ -67,7 +67,7 @@ namespace Content.Server.Shuttles.Components
 
         // SS220 Cruise-Control begin
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public float? CruiseControlVelocityMultiplier = 2;
+        public float CruiseControlVelocityMultiplier = 1;
         // SS220 Cruise-Control end
     }
 }

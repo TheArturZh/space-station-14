@@ -529,10 +529,10 @@ public sealed class MoverController : SharedMoverController
                 var maxVelocity = ObtainMaxVel(localVel, shuttle); // max for current travel dir
                 var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
                 // SS220 Cruise-Control begin
-                if (cruiseComp != null && shuttle.CruiseControlVelocityMultiplier.HasValue)
+                if (cruiseComp != null)
                 {
-                    maxVelocity *= shuttle.CruiseControlVelocityMultiplier.Value;
-                    maxWishVelocity *= shuttle.CruiseControlVelocityMultiplier.Value;
+                    maxVelocity *= shuttle.CruiseControlVelocityMultiplier;
+                    maxWishVelocity *= shuttle.CruiseControlVelocityMultiplier;
                 }
                 // SS220 Cruise-Control end
                 var properAccel = (maxWishVelocity - localVel) / forceMul;
