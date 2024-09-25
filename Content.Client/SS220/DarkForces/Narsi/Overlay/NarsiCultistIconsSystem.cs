@@ -11,14 +11,14 @@ public sealed class NarsiCultistIconsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    [ValidatePrototypeId<StatusIconPrototype>]
+    [ValidatePrototypeId<FactionIconPrototype>]
     private const string NarsiCultistLeaderIcon = "NarsiCultistLeaderIcon";
 
-    [ValidatePrototypeId<StatusIconPrototype>]
+    [ValidatePrototypeId<FactionIconPrototype>]
     private const string NarsiCultistIcon = "NarsiCultistIcon";
 
 
-    private bool IsIconsRitualFinished;
+    private bool _isIconsRitualFinished;
 
     public override void Initialize()
     {
@@ -34,24 +34,24 @@ public sealed class NarsiCultistIconsSystem : EntitySystem
 
     private void RoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
-        IsIconsRitualFinished = false;
+        _isIconsRitualFinished = false;
     }
 
     private void OnIconsRitualFinished(NarsiIconsRitualFinishedEvent ev)
     {
-        IsIconsRitualFinished = true;
+        _isIconsRitualFinished = true;
     }
 
     private void OnLeaderGetStatusIcon(Entity<NarsiCultistLeaderComponent> ent, ref GetStatusIconsEvent args)
     {
-        if (!IsIconsRitualFinished)
+        if (!_isIconsRitualFinished)
             return;
 
         args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(NarsiCultistLeaderIcon));
     }
     private void OnGetCreatureStatusIcon(Entity<NarsiCultCreatureComponent> ent, ref GetStatusIconsEvent args)
     {
-        if (!IsIconsRitualFinished)
+        if (!_isIconsRitualFinished)
             return;
 
         args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(NarsiCultistIcon));
@@ -59,7 +59,7 @@ public sealed class NarsiCultistIconsSystem : EntitySystem
 
     private void OnGetStatusIcon(Entity<NarsiCultistComponent> ent, ref GetStatusIconsEvent args)
     {
-        if (!IsIconsRitualFinished)
+        if (!_isIconsRitualFinished)
             return;
 
         if (HasComp<NarsiCultistLeaderComponent>(ent))
