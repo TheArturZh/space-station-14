@@ -121,9 +121,11 @@ public sealed class NarsiCultForgeSystem : EntitySystem
 
     private void OnForgeInit(EntityUid uid, NarsiCultForgeComponent component, ComponentInit args)
     {
-        _material.TryChangeMaterialAmount(uid, component.RunicPlasteel, 0);
-        _material.TryChangeMaterialAmount(uid, component.Steel, 0);
-        _material.TryChangeMaterialAmount(uid, component.Plasteel, 0);
+        var storageComp = EnsureComp<MaterialStorageComponent>(uid);
+
+        _material.TryChangeMaterialAmount(uid, component.RunicPlasteel, 0, storageComp);
+        _material.TryChangeMaterialAmount(uid, component.Steel, 0, storageComp);
+        _material.TryChangeMaterialAmount(uid, component.Plasteel, 0, storageComp);
     }
 
     private void OnForgeDoAfter(EntityUid uid, NarsiCultForgeComponent component, NarsiForgeDoAfterEvent args)
