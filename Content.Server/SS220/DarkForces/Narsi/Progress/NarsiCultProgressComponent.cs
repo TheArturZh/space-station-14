@@ -16,7 +16,7 @@ public sealed partial class NarsiCultProgressComponent : Component
     public LeaderState LeaderState = LeaderState.Idle;
 
     [DataField(required: true)]
-    public NarsiObjectivesData NarsiObjectives = default!;
+    public NarsiObjectivesData NarsiObjectives = new();
 }
 
 [DataDefinition]
