@@ -51,6 +51,7 @@ public sealed class NarsiCultRitualObjectiveSystem : EntitySystem
         if (!_prototypeManager.TryIndex(ritualProto, out var ritual))
         {
             args.Cancelled = true;
+            args.Reason = "Не найден прототип для ритуала " + ritualProto.Id;
             return;
         }
 

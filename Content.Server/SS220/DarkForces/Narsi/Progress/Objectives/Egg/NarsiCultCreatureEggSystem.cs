@@ -39,6 +39,7 @@ public sealed class NarsiCultCreatureEggSystem : EntitySystem
         if (!_prototypeManager.TryIndex(targetCreature, out var targetCreaturePrototype))
         {
             args.Cancelled = true;
+            args.Reason = $"Выбранная сущность '{targetCreature.Id}' не найдена";
             return;
         }
 

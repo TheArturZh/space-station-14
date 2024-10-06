@@ -42,6 +42,7 @@ public sealed class NarsiCultOfferObjectiveSystem : EntitySystem
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
+            args.Reason = "Не найдено ни одного человека, кто мог бы быть корректной целью культа";
             return;
         }
 
