@@ -40,6 +40,7 @@ public sealed partial class RatvarProgressSystem : EntitySystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<RatvarProgressComponent, ComponentInit>(OnProgressInit);
+        SubscribeLocalEvent<RatvarProgressComponent, ComponentRemove>(OnProgressRemove);
 
         InitializeStructuresAndItems();
     }
@@ -51,6 +52,21 @@ public sealed partial class RatvarProgressSystem : EntitySystem
         CreateObjective(PowerObjectivePrototype, ref component.RatvarPowerObjective);
 
         component.NextObjectivesCheckTick = _timing.CurTime + component.ObjectivesCheckPeriod;
+    }
+
+    private void OnProgressRemove(EntityUid uid, RatvarProgressComponent component, ComponentRemove args)
+    {
+        if (component.RatvarBeaconsObjective != EntityUid.Invalid)
+            QueueDel(component.RatvarBeaconsObjective);
+
+        if (component.RatvarConvertObjective != EntityUid.Invalid)
+            QueueDel(component.RatvarConvertObjective);
+
+        if (component.RatvarPowerObjective != EntityUid.Invalid)
+            QueueDel(component.RatvarPowerObjective);
+
+        if (component.RatvarSummonObjective != EntityUid.Invalid)
+            QueueDel(component.RatvarSummonObjective);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
