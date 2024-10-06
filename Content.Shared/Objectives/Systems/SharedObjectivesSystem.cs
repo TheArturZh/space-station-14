@@ -181,7 +181,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
 
         if (ev.Cancelled)
         {
-            Log.Error($"Could not assign objective {proto} for someone. Reason: {ev.Reason}");
+            Log.Warning($"Could not assign objective {proto} for someone. Reason: {ev.Reason}");
             Del(uid);
             return null;
         }
