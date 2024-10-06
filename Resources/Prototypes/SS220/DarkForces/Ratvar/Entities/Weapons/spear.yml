@@ -40,6 +40,9 @@
     interfaces:
       enum.RatvarEnchantmentUIKey.Key:
         type: RatvarEnchantmentBUI
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    inHandsMaxFillLevels: 0
 
 - type: entity
   id: RatvarSpearElectricalTouch
