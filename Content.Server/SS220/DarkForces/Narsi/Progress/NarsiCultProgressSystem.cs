@@ -27,6 +27,7 @@ public sealed partial class NarsiCultProgressSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NarsiCultProgressComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<NarsiCultProgressComponent, ComponentRemove>(OnComponentRemove);
 
         InitializeObjectives();
         InitializeCultists();
@@ -50,6 +51,14 @@ public sealed partial class NarsiCultProgressSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, NarsiCultProgressComponent component, ComponentInit args)
     {
         OnObjectivesInit((uid, component));
+    }
+
+    private void OnComponentRemove(EntityUid uid, NarsiCultProgressComponent component, ComponentRemove args)
+    {
+        foreach (var objective in component.NarsiObjectives.Objectives)
+        {
+            QueueDel(objective);
+        }
     }
 
     public int GetBloodScore()
