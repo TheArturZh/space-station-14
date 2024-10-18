@@ -112,8 +112,8 @@
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer
     containers:
+      # microwave_entity_container: !type:Container
       cooking_machine_entity_container: !type:Container #SS220 supa kitchen
-      microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: EmptyOnMachineDeconstruct
@@ -130,12 +130,14 @@
   name: donk co. microwave
   description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
   components:
-  - type: Microwave
-    cookTimeMultiplier: 0.5
-    capacity: 10
-    canMicrowaveIdsSafely: false
-    idCardExplosionChance: 0.1 #SS220 Microwave explosion tweak
-    explosionChance: 0.3
+  #SS220 remove default microwave begin
+  # - type: Microwave
+  #   cookTimeMultiplier: 0.5
+  #   capacity: 10
+  #   canMicrowaveIdsSafely: false
+  #   idCardExplosionChance: 0.1 #SS220 Microwave explosion tweak
+  #   explosionChance: 0.3
+  #SS220 remove default microwave end
   - type: Sprite
     sprite: Structures/Machines/microwave_syndie.rsi
     drawdepth: SmallObjects
