@@ -15,8 +15,8 @@
     key: enum.CookingMachineUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.CookingMachineUiKey.Key
-      type: CookingMachineBoundUserInterface
+      enum.CookingMachineUiKey.Key:
+        type: CookingMachineBoundUserInterface
   #SS220 supa kitchen end
   - type: Appearance
   - type: GenericVisualizer

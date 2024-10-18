@@ -15,8 +15,8 @@
     key: enum.CookingMachineUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.CookingMachineUiKey.Key
-      type: CookingMachineBoundUserInterface
+      enum.CookingMachineUiKey.Key:
+        type: CookingMachineBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:
