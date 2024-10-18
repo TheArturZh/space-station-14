@@ -177,7 +177,7 @@
   solids:
     FoodRiceBoiled: 1
     FoodMeatCutlet: 3
-    FoodChili: 2
+    FoodChiliPepper: 2
 
 - type: cookingRecipe
   id: RecipeEggRice
@@ -408,7 +408,7 @@
   time: 30
   solids:
     FoodBowlBig: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodMeatCutlet: 1
     FoodOnionSlice: 1
     FoodTomato: 1
@@ -437,7 +437,7 @@
   time: 20
   solids:
     FoodBowlBig: 1
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodMeatCutlet: 1
     FoodOnionSlice: 1
     FoodTomato: 1
@@ -464,7 +464,7 @@
   solids:
     FoodDough: 1
     FoodCheeseSlice: 2
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodMeatFish: 2
 
 - type: cookingRecipe
@@ -614,7 +614,7 @@
   reagents:
     Blackpepper: 5
   solids:
-    FoodChili: 1
+    FoodChiliPepper: 1
     FoodCheeseSlice: 2
 
 # SALADS
