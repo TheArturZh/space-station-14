@@ -97,6 +97,13 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       entity_storage: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
+    - entity_storage
   - type: GuideHelp
     guides:
     - Chef
