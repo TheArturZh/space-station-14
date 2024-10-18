@@ -36,7 +36,7 @@ public sealed class CookingMachineSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly CookingInstrumentSystem _cookingInstrument = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
 
     public override void Initialize()
@@ -48,13 +48,13 @@ public sealed class CookingMachineSystem : EntitySystem
         SubscribeLocalEvent<CookingMachineComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<CookingMachineComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CookingMachineComponent, BreakageEventArgs>(OnBreak);
-        SubscribeLocalEvent<CookingMachineComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<CookingMachineComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+        //SubscribeLocalEvent<CookingMachineComponent, RefreshPartsEvent>(OnRefreshParts);
+        //SubscribeLocalEvent<CookingMachineComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<CookingMachineComponent, StorageAfterOpenEvent>(OnStorageOpen);
         SubscribeLocalEvent<CookingMachineComponent, StorageAfterCloseEvent>(OnStorageClosed);
 
         // UI event listeners
-        SubscribeLocalEvent<CookingMachineComponent, CookingMachineStartCookMessage>((u, c, m) => StartCooking(u, c, m.Session.AttachedEntity));
+        SubscribeLocalEvent<CookingMachineComponent, CookingMachineStartCookMessage>((u, c, m) => StartCooking(u, c, m.Actor));
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineEjectMessage>(OnEjectMessage);
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineEjectSolidIndexedMessage>(OnEjectIndex);
         SubscribeLocalEvent<CookingMachineComponent, CookingMachineSelectCookTimeMessage>(OnSelectTime);
@@ -150,16 +150,16 @@ public sealed class CookingMachineSystem : EntitySystem
         UpdateUserInterfaceState(uid, component);
     }
 
-    private void OnRefreshParts(EntityUid uid, CookingMachineComponent component, RefreshPartsEvent args)
-    {
-        var cookRating = args.PartRatings[component.MachinePartCookTimeMultiplier];
-        component.CookTimeMultiplier = MathF.Pow(component.CookTimeScalingConstant, cookRating - 1);
-    }
+    //private void OnRefreshParts(EntityUid uid, CookingMachineComponent component, RefreshPartsEvent args)
+    //{
+    //    var cookRating = args.PartRatings[component.MachinePartCookTimeMultiplier];
+    //    component.CookTimeMultiplier = MathF.Pow(component.CookTimeScalingConstant, cookRating - 1);
+    //}
 
-    private void OnUpgradeExamine(EntityUid uid, CookingMachineComponent component, UpgradeExamineEvent args)
-    {
-        args.AddPercentageUpgrade("cooking-machine-component-upgrade-cook-time", component.CookTimeMultiplier);
-    }
+    //private void OnUpgradeExamine(EntityUid uid, CookingMachineComponent component, UpgradeExamineEvent args)
+    //{
+    //    args.AddPercentageUpgrade("cooking-machine-component-upgrade-cook-time", component.CookTimeMultiplier);
+    //}
 
     #region ui_messages
     private void OnEjectMessage(EntityUid uid, CookingMachineComponent component, CookingMachineEjectMessage args)
@@ -212,11 +212,7 @@ public sealed class CookingMachineSystem : EntitySystem
 
     public void UpdateUserInterfaceState(EntityUid uid, CookingMachineComponent component)
     {
-        var ui = _userInterface.GetUiOrNull(uid, CookingMachineUiKey.Key);
-        if (ui == null)
-            return;
-
-        _userInterface.SetUiState(ui, new CookingMachineUpdateUserInterfaceState(
+        _userInterface.SetUiState(uid, CookingMachineUiKey.Key, new CookingMachineUpdateUserInterfaceState(
             GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
             component.Active,
             component.CurrentCookTimeButtonIndex,
@@ -293,7 +289,7 @@ public sealed class CookingMachineSystem : EntitySystem
         SetAppearance(uid, CookingMachineVisualState.Cooking, component);
 
         var audioStream = _audio.PlayPvs(component.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
-        component.PlayingStream = audioStream.Value.Entity;
+        component.PlayingStream = audioStream?.Entity;
 
         component.Active = true;
     }

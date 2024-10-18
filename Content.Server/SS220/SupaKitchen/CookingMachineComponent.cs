@@ -24,8 +24,8 @@ public sealed partial class CookingMachineComponent : Component
     #region  upgrades
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CookTimeMultiplier = 1;
-    [DataField]
-    public ProtoId<MachinePartPrototype> MachinePartCookTimeMultiplier = "Capacitor";
+    //[DataField]
+    //public ProtoId<MachinePartPrototype> MachinePartCookTimeMultiplier = "Capacitor";
     [DataField]
     public float CookTimeScalingConstant = 0.5f;
     #endregion

@@ -11,7 +11,7 @@ public sealed partial class CookingInstrumentComponent : Component
     public ProtoId<CookingInstrumentTypePrototype> InstrumentType;
 
     [DataField]
-    public ProtoId<EntityPrototype> FailureResult = "FoodBadRecipe";
+    public EntProtoId FailureResult = "FoodBadRecipe";
 
     [ViewVariables]
     [DataField]

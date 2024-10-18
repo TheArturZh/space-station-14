@@ -68,7 +68,8 @@ public sealed class SupaMicrowaveSystem : EntitySystem
         if (!TryComp<CookingMachineComponent>(uid, out var cookingMachine))
             return;
 
-        args.SetHandled(SuicideKind.Heat);
+        //args.SetHandled(SuicideKind.Heat);
+        args.Handled = true;
         var victim = args.Victim;
         var headCount = 0;
 
