@@ -13,3 +13,19 @@
 - type: lobbyBackground
   id: DefaultRNDshift
   background: /Textures/SS220/LobbyScreens/default-RND-shift.png
+
+- type: lobbyBackground
+  id: SpaceFather
+  background: /Textures/SS220/LobbyScreens/SpaceFather.jpeg
+
+- type: lobbyBackground
+  id: Destruction
+  background: /Textures/SS220/LobbyScreens/Destruction.png
+
+- type: lobbyBackground
+  id: RatKing
+  background: /Textures/SS220/LobbyScreens/RatKing.png
+
+- type: lobbyBackground
+  id: SecGraduating
+  background: /Textures/SS220/LobbyScreens/secgraduating.png

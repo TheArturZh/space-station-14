@@ -38,6 +38,7 @@ job-name-cargotech = грузчик
 job-name-chef = шеф-повар
 job-name-clown = клоун
 job-name-ertleader = лидер ОБР
+job-name-ertchaplain = священник ОБР
 job-name-ertengineer = инженер ОБР
 job-name-ertsecurity = офицер безопасности ОБР
 job-name-ertmedic = медик ОБР
@@ -49,6 +50,18 @@ job-name-senior-engineer = ведущий инженер
 job-name-senior-researcher = ведущий учёный
 job-name-senior-physician = ведущий врач
 job-name-senior-officer = инструктор СБ
+job-name-visitor = посетитель
+# unused jobs
+# these are required for the agent ID job icon tooltips
+# I am keeping them for roleplaying opportunities
+job-name-geneticist = генетик
+job-name-no-id = нет ID
+job-name-prisoner = заключённый
+job-name-roboticist = робототехник
+job-name-syndicate = синдикат
+job-name-unknown = неизвестно
+job-name-virologist = вирусолог
+job-name-zombie = зомби
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
 JobBartender = бармен
@@ -67,6 +80,7 @@ JobClown = клоун
 JobDetective = детектив
 JobERTEngineer = инженер ОБР
 JobBrigmedic = бригмедик
+JobERTChaplain = священник ОБР
 JobERTJanitor = уборщик ОБР
 JobERTLeader = лидер ОБР
 JobERTMedical = медик ОБР

@@ -4,6 +4,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -30,7 +31,7 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
-        SubscribeLocalEvent<VocalComponent, HasSpecialSoundsEvent>(HasSpecialSounds);// SS220 Chat-Special-Emote
+        SubscribeLocalEvent<VocalComponent, InitSpecialSoundsEvent>(InitSpecialSounds);// SS220 Chat-Special-Emote
         SubscribeLocalEvent<VocalComponent, UnloadSpecialSoundsEvent>(UnloadSpecialSounds);// SS220 Chat-Special-Emote
     }
 
@@ -142,7 +143,7 @@ public sealed class VocalSystem : EntitySystem
 
         component.SpecialEmoteSounds.Add(itemUid, itemComponent.EmoteSounds);
     }
-    private void HasSpecialSounds(EntityUid uid, VocalComponent component, HasSpecialSoundsEvent args)
+    private void InitSpecialSounds(EntityUid uid, VocalComponent component, InitSpecialSoundsEvent args)
     {
         _entities.TryGetComponent<VocalComponent>(args.Item, out var itemComponent);
 

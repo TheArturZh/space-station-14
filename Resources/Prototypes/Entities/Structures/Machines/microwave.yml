@@ -1,6 +1,6 @@
-﻿- type: entity
+- type: entity
   id: KitchenMicrowave
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: microwave
   description: It's magic.
   components:
@@ -44,6 +44,10 @@
         enum.CookingMachineVisualizerLayers.BaseUnlit:
           True: { visible: true }
           False: { visible: false }
+#SS220 remove default microwave begin
+#  - type: ActivatableUI
+#    key: enum.MicrowaveUiKey.Key
+#SS220 remove default microwave end
   - type: DeviceLinkSink
     ports:
     - On
@@ -53,13 +57,11 @@
   - type: WirelessNetworkConnection
     range: 200
 #SS220 remove default microwave begin
-#  - type: ActivatableUI
-#    key: enum.MicrowaveUiKey.Key
-#  - type: UserInterface
-#    interfaces:
-#    - key: enum.MicrowaveUiKey.Key
-#      type: MicrowaveBoundUserInterface
-##SS220 remove default microwave end
+#   - type: UserInterface
+#     interfaces:
+#       enum.MicrowaveUiKey.Key:
+#         type: MicrowaveBoundUserInterface
+#SS220 remove default microwave end
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -119,3 +121,27 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
+
+- type: entity
+  id: SyndicateMicrowave
+  parent: KitchenMicrowave
+  name: donk co. microwave
+  description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
+  components:
+  - type: Microwave
+    cookTimeMultiplier: 0.5
+    capacity: 10
+    canMicrowaveIdsSafely: false
+    idCardExplosionChance: 0.1 #SS220 Microwave explosion tweak
+    explosionChance: 0.3
+  - type: Sprite
+    sprite: Structures/Machines/microwave_syndie.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: Machine
+    board: SyndicateMicrowaveMachineCircuitboard
+  - type: FoodRecipeProvider
+    providedRecipes:
+    - RecipeBaguetteSword
+    - RecipeThrowingCroissant
