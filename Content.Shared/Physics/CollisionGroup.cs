@@ -48,20 +48,22 @@ public enum CollisionGroup
     LargeMobLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
 
     // Machines, computers
-    MachineMask = Impassable | MidImpassable | LowImpassable,
+    // SS220 Plastic Flaps Collision Fix Again begin
+    //MachineMask = Impassable | MidImpassable | LowImpassable,
+    MachineMask = Impassable | HighImpassable | LowImpassable,
+    // SS220 Plastic Flaps Collision Fix Again end
     MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
     ConveyorMask = Impassable | MidImpassable | LowImpassable | DoorPassable,
 
     // Crates
-    // SS220 Plastic Flaps Collision Fix begin
-    //CrateMask = Impassable | HighImpassable | LowImpassable,
-    // Why: not deleted for compatibility with wizards changes 
-    CrateMask = MachineMask,
-    // SS220 Plastic Flaps Collision Fix end
+    CrateMask = Impassable | HighImpassable | LowImpassable,
 
     // Tables that SmallMobs can go under
     TableMask = Impassable | MidImpassable,
     TableLayer = MidImpassable,
+
+    // Tables that SmallMobs can't go under
+    CounterLayer = MidImpassable | LowImpassable,
 
     // Tabletop machines, windoors, firelocks
     TabletopMachineMask = Impassable | HighImpassable,
@@ -77,15 +79,15 @@ public enum CollisionGroup
 
     // Soap, spills
     SlipLayer = MidImpassable | LowImpassable,
-    // SS220 Plastic Flaps Collision Fix begin
-    //ItemMask = Impassable | HighImpassable,
-    // Why: plastic flaps moved to HighImpassible layer, and items should be able to pass
-    ItemMask = Impassable,
-    // SS220 Plastic Flaps Collision Fix end
+    ItemMask = Impassable | HighImpassable,
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
+    FlimsyLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
+
+    // Allows people to interact past and target players inside of this
+    SpecialWallLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
 
     // Statue, monument, airlock, window
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,

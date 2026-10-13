@@ -31,7 +31,6 @@
         - SurveillanceCamera
         - SurveillanceCameraMonitor
         - RadioSpeaker
-        - BodyCameraBase
   - type: ActiveListener
     range: 10
   - type: DetectiveCameraAttach
@@ -49,3 +48,4 @@
   - type: SurveillanceCamera
     networkSet: true
     id: "Detective camera"
+    active: false

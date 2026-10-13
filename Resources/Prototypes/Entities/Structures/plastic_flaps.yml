@@ -5,6 +5,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Sprite
     sprite: Structures/plastic_flaps.rsi
     state: plasticflaps
@@ -23,10 +27,7 @@
         mask:
         - Impassable
         layer:
-        # SS220 Plastic Flaps Collision Fix begin
-        #- MidImpassable
-        - HighImpassable
-        # SS220 Plastic Flaps Collision Fix end
+        - MidImpassable
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -38,9 +39,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: StaticPrice
     price: 100
 
@@ -73,10 +71,7 @@
         - Impassable
         layer:
         - Opaque
-        # SS220 Plastic Flaps Collision Fix begin
-        #- MidImpassable
-        - HighImpassable
-        # SS220 Plastic Flaps Collision Fix end
+        - MidImpassable
   - type: Occluder
   - type: Construction
     graph: PlasticFlapsGraph

@@ -212,6 +212,8 @@
     - FoodLemon
   mutationPrototypes:
     - lemoon
+    - lime
+    - orange
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -264,6 +266,9 @@
   packetPrototype: LimeSeeds
   productPrototypes:
     - FoodLime
+  mutationPrototypes:
+    - orange
+    - lemon
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -292,6 +297,8 @@
     - FoodOrange
   mutationPrototypes:
     - extradimensionalOrange
+    - lemon
+    - lime
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -617,7 +624,10 @@
   noun: seeds-noun-seeds
   displayName: seeds-killertomato-display-name
   plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
+  plantLogImpact: High
+  harvestLogImpact: High
   packetPrototype: KillerTomatoSeeds
+  autoSpawnMob: true #SS220-Mob-Spawn-Nerf
   productPrototypes:
     - MobTomatoKiller
   harvestRepeat: Repeat
@@ -659,6 +669,7 @@
   production: 6
   yield: 2
   potency: 20
+  growthStages: 3
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -824,6 +835,7 @@
     - FoodOnion
   mutationPrototypes:
     - onionred
+    - bloonion
   lifespan: 25
   maturation: 8
   production: 6
@@ -924,8 +936,8 @@
   idealHeat: 298
   chemicals:
     Egg:
-      Min: 1
-      Max: 10
+      Min: 4
+      Max: 12
       PotencyDivisor: 10
 
 - type: seed
@@ -1058,6 +1070,8 @@
   displayName: seeds-deathnettle-display-name
   plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
   packetPrototype: DeathNettleSeeds
+  plantLogImpact: High
+  harvestLogImpact: High
   productPrototypes:
     - DeathNettle
   lifespan: 25
@@ -1131,7 +1145,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    Frostoil:
+    FrostOil:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -1283,10 +1297,6 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
-    Desoxyephedrine:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
     Vitamin:
       Min: 1
       Max: 2
@@ -1321,10 +1331,6 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
-    Desoxyephedrine:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
 
 - type: seed
   id: galaxythistle
@@ -1371,6 +1377,10 @@
       Min: 1
       Max: 25
       PotencyDivisor: 4
+    Desoxyephedrine: # meff!!
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
 
 - type: seed
   id: flyAmanita
@@ -1392,8 +1402,8 @@
   chemicals:
     Amatoxin:
       Min: 1
-      Max: 25
-      PotencyDivisor: 4
+      Max: 10
+      PotencyDivisor: 12
     Nutriment: ## yumby :)
       Min: 1
       Max: 5
@@ -1622,6 +1632,7 @@
     - FoodWatermelon
   mutationPrototypes:
     - holymelon
+    - watermelondog # SS220-watermelondog
   lifespan: 55
   maturation: 12
   production: 3
@@ -1794,6 +1805,8 @@
   packetPrototype: PeaSeeds
   productPrototypes:
     - FoodWorldPeas
+  mutationPrototypes:
+    - peashooter #SS220 Peashooter update
   lifespan: 25
   growthStages: 3
   maturation: 20
@@ -1953,3 +1966,69 @@
       Min: 1
       Max: 3
       PotencyDivisor: 40
+
+- type: seed
+  id: anomalyBerry
+  name: seeds-anomaly-berry-name
+  noun: seeds-noun-seeds
+  displayName: seeds-anomaly-berry-display-name
+  plantRsi: Objects/Specific/Hydroponics/anomaly_berry.rsi
+  packetPrototype: AnomalyBerrySeeds
+  productPrototypes:
+    - FoodAnomalyBerry
+  lifespan: 25
+  maturation: 12
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 2
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Artifexium:
+      Min: 1
+      Max: 1
+      PotencyDivisor: 4
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 40
+
+- type: seed
+  id: bloonion
+  name: seeds-bloonion-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bloonion-display-name
+  plantRsi: Objects/Specific/Hydroponics/bloonion.rsi
+  packetPrototype: BloonionSeeds
+  productPrototypes:
+  - FoodBloonion
+  lifespan: 25
+  maturation: 15
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 4
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Potassium:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Phosphorus:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sugar:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Allicin:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
