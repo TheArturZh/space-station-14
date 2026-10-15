@@ -1,4 +1,4 @@
-﻿using Content.Server.Warps;
+﻿using Content.Shared.Warps;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Random;
@@ -66,20 +66,6 @@ public sealed class RatvarSummonObjectiveSystem : EntitySystem
         ref GroupObjectiveAssignedEvent args)
     {
         var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent>();
-        while (query.MoveNext(out var warpUid, out _, out _))
-        {
-            warps.Add(warpUid);
-        }
-
-        if (warps.Count > 0)
-        {
-            component.Target = _random.Pick(warps);
-            return;
-        }
-
-        warps.Clear();
-
         var queryWarps = EntityQueryEnumerator<WarpPointComponent>();
         while (queryWarps.MoveNext(out var warpUid, out var warpPoint))
         {

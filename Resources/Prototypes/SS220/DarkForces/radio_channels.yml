@@ -9,7 +9,7 @@
 - type: radioChannel
   id: NarsiCult
   name: narsie-channel-name
-  keycode: 'э'
+  keycode: 'б'
   frequency: 6666
   color: "#995B98"
   longRange: true

@@ -72,7 +72,7 @@ public sealed class RatvarRuleSystem : GameRuleSystem<RatvarRuleComponent>
             Loc.GetString("ratvar-spawn-end"),
             Loc.GetString("ratvar-name"),
             false,
-            Color.FromHex("#b87333")
+            colorOverride: Color.FromHex("#b87333")
         );
         _roundEndSystem.RequestRoundEnd(checkCooldown: false);
         rule.ForceRoundEnd = _timing.CurTime + TimeSpan.FromMinutes(5);
@@ -105,7 +105,7 @@ public sealed class RatvarRuleSystem : GameRuleSystem<RatvarRuleComponent>
             Loc.GetString("ratvar-spawn-start", ("position", position)),
             Loc.GetString("station-helper-name"),
             false,
-            Color.Yellow
+            colorOverride: Color.Yellow
         );
 
         rule.WinState = WinState.Summoning;

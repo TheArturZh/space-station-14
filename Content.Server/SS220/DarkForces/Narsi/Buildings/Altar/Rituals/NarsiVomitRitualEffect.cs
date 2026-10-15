@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Base;
 using Content.Server.SS220.DarkForces.Narsi.Progress;
-using Content.Server.Medical;
-using Content.Server.Nutrition.Components;
+using Content.Shared.Medical;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 
 namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals;
@@ -26,8 +26,8 @@ public sealed partial class NarsiVomitRitualEffect : NarsiRitualEffect
             return;
 
         var entityLookupSystem = entityManager.System<EntityLookupSystem>();
-        var food = entityLookupSystem.GetEntitiesInRange<FoodComponent>(altarTransform.Coordinates, 0.5f);
-        if (food.Count > 0)
+        var food = entityLookupSystem.GetEntitiesInRange<EdibleComponent>(altarTransform.Coordinates, 0.5f);
+        if (food.Count == 0)
         {
             popupSystem.PopupEntity("Рядом с алтарем не найдена еда...", altar, altar, PopupType.Medium);
             return;

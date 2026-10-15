@@ -8,7 +8,7 @@
 
 - type: stack
   id: RunicPlasteel
-  name: Рунический металл
+  name: cult-material-runic-plasteel
   icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: runic }
   spawn: SheetRunicPlasteel1R
   maxCount: 50

@@ -27,7 +27,7 @@ public sealed partial class NarsiCultistAbilitiesSystem
             _ => 15
         };
 
-        _stunSystem.TryParalyze(target, TimeSpan.FromSeconds(duration), true);
+        _stunSystem.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(duration));
         OnCultistAbility(uid, args);
 
         args.Handled = true;

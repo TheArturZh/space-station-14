@@ -29,16 +29,16 @@ public sealed partial class RatvarAbilitiesSystem
     {
         foreach (var entity in entities)
         {
-            if (HasComp<HumanoidAppearanceComponent>(entity))
+            if (HasComp<HumanoidProfileComponent>(entity))
             {
-                var transform = Transform(entity).MapPosition;
-                _empSystem.EmpPulse(transform, 0.1f, 15000, 3);
+                var transform = Transform(entity).Coordinates;
+                _empSystem.EmpPulse(transform, 0.1f, 15000, TimeSpan.FromSeconds(3));
             }
 
             if (HasComp<BorgChassisComponent>(entity))
             {
-                var transform = Transform(entity).MapPosition;
-                _empSystem.EmpPulse(transform, 0.1f, 25000, 7);
+                var transform = Transform(entity).Coordinates;
+                _empSystem.EmpPulse(transform, 0.1f, 25000, TimeSpan.FromSeconds(7));
             }
         }
     }

@@ -67,10 +67,9 @@
       collection: AlienClaw
     animation: WeaponArcPunch
     damage:
-      groups:
-        Brute: 18
+      types:
+        Blunt: 18
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: marauder

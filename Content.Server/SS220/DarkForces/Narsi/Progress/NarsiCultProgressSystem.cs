@@ -37,6 +37,7 @@ public sealed partial class NarsiCultProgressSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        UpdateCultistLeader();
         UpdateObjectives();
     }
 
@@ -46,6 +47,7 @@ public sealed partial class NarsiCultProgressSystem : EntitySystem
         var progressComp = EnsureComp<NarsiCultProgressComponent>(progress);
 
         _activeProgress = (progress, progressComp);
+        _leaderSelectionPending = true;
     }
 
     private void OnComponentInit(EntityUid uid, NarsiCultProgressComponent component, ComponentInit args)
@@ -55,6 +57,12 @@ public sealed partial class NarsiCultProgressSystem : EntitySystem
 
     private void OnComponentRemove(EntityUid uid, NarsiCultProgressComponent component, ComponentRemove args)
     {
+        if (_activeProgress is { } progress && progress.Owner == uid)
+        {
+            _activeProgress = null;
+            _leaderSelectionPending = false;
+        }
+
         foreach (var objective in component.NarsiObjectives.Objectives)
         {
             QueueDel(objective);

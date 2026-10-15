@@ -122,10 +122,10 @@ public sealed partial class NarsiRuneSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
-    private List<Entity<HumanoidAppearanceComponent>> FindHumanoidsNearRune(EntityUid rune, float range = 0.5f)
+    private List<Entity<HumanoidProfileComponent>> FindHumanoidsNearRune(EntityUid rune, float range = 0.5f)
     {
         var coords = Transform(rune).Coordinates;
-        return _entityLookupSystem.GetEntitiesInRange<HumanoidAppearanceComponent>(coords, range)
+        return _entityLookupSystem.GetEntitiesInRange<HumanoidProfileComponent>(coords, range)
             .ToList();
     }
 

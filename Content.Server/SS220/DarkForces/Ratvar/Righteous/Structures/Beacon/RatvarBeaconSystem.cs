@@ -1,4 +1,6 @@
-﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
+﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Progress;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Structures;
@@ -98,7 +100,7 @@ public sealed class RatvarBeaconSystem : EntitySystem
             if (!TryComp<DamageableComponent>(entity, out var damageable) || _mobState.IsDead(entity))
                 continue;
 
-            _damageable.TryChangeDamage(entity, component.HealingDamage, true, false, damageable);
+            _damageable.TryChangeDamage((entity.Owner, damageable), component.HealingDamage, true, false);
         }
     }
 }

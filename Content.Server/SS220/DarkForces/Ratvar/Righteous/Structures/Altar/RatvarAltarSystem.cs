@@ -186,7 +186,7 @@ public sealed class RatvarAltarSystem : EntitySystem
         if (!IsRighteousCountValid())
             return false;
 
-        if (!HasComp<HumanoidAppearanceComponent>(user))
+        if (!HasComp<HumanoidProfileComponent>(user))
             return false;
 
         if (HasComp<MindShieldComponent>(user))
@@ -212,6 +212,6 @@ public sealed class RatvarAltarSystem : EntitySystem
 
     private bool UserValidToDie(EntityUid user)
     {
-        return HasComp<HumanoidAppearanceComponent>(user);
+        return HasComp<HumanoidProfileComponent>(user);
     }
 }

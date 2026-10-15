@@ -17,7 +17,6 @@ public sealed partial class ChaplainSystem : EntitySystem
         InitializeNarsi();
         // InitializeVampire();
         InitializeAbilities();
-        InitializeForceWall();
     }
 
     private void OnChaplainInit(EntityUid uid, ChaplainComponent component, ComponentInit args)

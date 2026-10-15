@@ -31,6 +31,9 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId DefaultNukeOpRule = "LoneOpsSpawn";
     private static readonly EntProtoId DefaultRevsRule = "Revolutionary";
     private static readonly EntProtoId DefaultThiefRule = "Thief";
+    // # SS220 Cult Ratvar and Narsie port
+    private static readonly EntProtoId DefaultNarsieRule = "NarsiCult";
+    private static readonly EntProtoId DefaultRatvarRule = "Ratvar";
     private static readonly EntProtoId DefaultChangelingRule = "Changeling";
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
     private static readonly EntProtoId DefaultWizardRule = "Wizard";

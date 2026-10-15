@@ -15,30 +15,7 @@ public sealed class RoleSystem : SharedRoleSystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    public override void Initialize()
-    {
-        // TODO make roles entities
-        base.Initialize();
-
-        SubscribeAntagEvents<DragonRoleComponent>();
-        SubscribeAntagEvents<InitialInfectedRoleComponent>();
-        SubscribeAntagEvents<NinjaRoleComponent>();
-        SubscribeAntagEvents<NukeopsRoleComponent>();
-        SubscribeAntagEvents<RevolutionaryRoleComponent>();
-        SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
-        SubscribeAntagEvents<TraitorRoleComponent>();
-        SubscribeAntagEvents<ZombieRoleComponent>();
-        SubscribeAntagEvents<ThiefRoleComponent>();
-        //SS220-mindslave
-        SubscribeAntagEvents<MindSlaveRoleComponent>();
-        //SS220-Dark-Forces begin
-        SubscribeAntagEvents<NarsiCultRoleComponent>();
-        SubscribeAntagEvents<RatvarRoleComponent>();
-        //SS220-Dark-Forces end
-        //SS220 DarkReaper
-        SubscribeAntagEvents<DarkReaperRoleComponent>();
-    }
-
+    // # SS220 Cult Ratvar and Narsie port: roles now use mind-role entities, not antag event subscriptions.
     public string? MindGetBriefing(EntityUid? mindId)
     {
         if (mindId == null)

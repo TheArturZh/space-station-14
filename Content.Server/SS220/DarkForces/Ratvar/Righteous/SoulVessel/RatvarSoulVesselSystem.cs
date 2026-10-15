@@ -18,6 +18,7 @@ public sealed class RatvarSoulVesselSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly Robust.Shared.Player.ISharedPlayerManager _players = default!;
 
     public override void Initialize()
     {
@@ -76,7 +77,7 @@ public sealed class RatvarSoulVesselSystem : EntitySystem
 
     private bool IsHumanoidOrBorg(EntityUid uid)
     {
-        return HasComp<HumanoidAppearanceComponent>(uid) || HasComp<BorgChassisComponent>(uid);
+        return HasComp<HumanoidProfileComponent>(uid) || HasComp<BorgChassisComponent>(uid);
     }
 
     private bool IsMindValid(EntityUid uid)
@@ -85,7 +86,7 @@ public sealed class RatvarSoulVesselSystem : EntitySystem
             !TryComp<MindComponent>(mindContainer.Mind, out var mind))
             return false;
 
-        return mind is { UserId: not null, Session: not null };
+        return _players.TryGetSessionById(mind.UserId, out _);
     }
 
     private void OnMindRemoved(EntityUid uid, RatvarSoulVesselComponent component, MindRemovedMessage args)

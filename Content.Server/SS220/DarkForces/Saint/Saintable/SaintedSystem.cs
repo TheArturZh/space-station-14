@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Content.Shared.Damage.Systems;
+using System;
 using Content.Server.SS220.DarkForces.Saint.Items.Events;
 using Content.Server.SS220.DarkForces.Saint.Saintable.Events;
 using Content.Server.Popups;

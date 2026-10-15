@@ -73,16 +73,18 @@
   name: "Оглушение"
   description: "Оглушает цель"
   components:
+  - type: Action
+    checkCanInteract: true
+    useDelay: 10
+    itemIconStyle: BigItem
+  - type: TargetAction
+    interactOnMiss: false
+    range: 6
   - type: EntityTargetAction
     canTargetSelf: false
-    checkCanInteract: true
-    interactOnMiss: false
     whitelist:
       components:
       - Body
-    useDelay: 10
-    range: 6
-    itemIconStyle: BigItem
     event: !type:RatvarSlabStun
 
 - type: entity
@@ -91,16 +93,18 @@
   name: "Создание прохода"
   description: "Открывает двери и шкафы"
   components:
+  - type: Action
+    checkCanInteract: true
+    useDelay: 10
+    itemIconStyle: BigItem
+  - type: TargetAction
+    interactOnMiss: false
+    range: 6
   - type: EntityTargetAction
     canTargetSelf: false
-    checkCanInteract: true
-    interactOnMiss: false
     whitelist:
       components:
       - Door
-    useDelay: 10
-    range: 6
-    itemIconStyle: BigItem
     event: !type:RatvarSlabDoors
 
 - type: entity
@@ -109,16 +113,18 @@
   name: "Терраформ"
   description: "При использовании на ОБЫЧНОЙ стене, делает из неё фальшивую стену"
   components:
+  - type: Action
+    checkCanInteract: true
+    useDelay: 10
+    itemIconStyle: BigItem
+  - type: TargetAction
+    interactOnMiss: false
+    range: 6
   - type: EntityTargetAction
     canTargetSelf: false
-    checkCanInteract: true
-    interactOnMiss: false
     whitelist:
       tags:
       - Wall
-    useDelay: 10
-    range: 6
-    itemIconStyle: BigItem
     event: !type:RatvarSlabWalls
 
 - type: entity
@@ -127,10 +133,12 @@
   name: "Телепортация"
   description: "Телепортация к алтарю или видимой области"
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 10
     itemIconStyle: BigItem
+  - type: TargetAction
     range: 16
+  - type: WorldTargetAction
     event: !type:RatvarSlabTeleport
 
 - type: entity
@@ -139,11 +147,13 @@
   name: "Сокрытие шестерней"
   description: "Маскирует постройки праведников под кусты и шкафы"
   components:
+  - type: Action
+    checkCanInteract: true
+    useDelay: 10
+    itemIconStyle: BigItem
+  - type: TargetAction
+    interactOnMiss: false
+    range: 6
   - type: EntityTargetAction
     canTargetSelf: false
-    checkCanInteract: true
-    interactOnMiss: false
-    useDelay: 10
-    range: 6
-    itemIconStyle: BigItem
     event: !type:RatvarSlabHidings

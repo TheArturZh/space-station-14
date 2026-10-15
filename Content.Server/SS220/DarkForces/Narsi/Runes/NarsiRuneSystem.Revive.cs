@@ -16,10 +16,10 @@ public sealed partial class NarsiRuneSystem
     private void InitReviveRune()
     {
         SubscribeLocalEvent<NarsiReviveRuneComponent, ReviveNarsiRuneDoAfterEvent>(OnNarsiRuneDoAfter);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, NarsiCultOfferingTargetEvent>(OnOfferingEvent);
+        SubscribeLocalEvent<HumanoidProfileComponent, NarsiCultOfferingTargetEvent>(OnOfferingEvent);
     }
 
-    private void OnOfferingEvent(EntityUid uid, HumanoidAppearanceComponent component, NarsiCultOfferingTargetEvent args)
+    private void OnOfferingEvent(EntityUid uid, HumanoidProfileComponent component, NarsiCultOfferingTargetEvent args)
     {
         _runesCharge = 0;
     }

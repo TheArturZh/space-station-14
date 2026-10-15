@@ -1,4 +1,5 @@
-﻿using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
+﻿using Content.Shared.Damage.Systems;
+using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
 using Content.Server.SS220.DarkForces.Narsi.Cultist.Roles.Narsi;
 using Content.Shared.Damage;
 using Content.Shared.SS220.DarkForces.Narsi.Roles;

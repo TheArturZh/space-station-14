@@ -9,10 +9,10 @@ public sealed partial class RatvarSlabComponent : Component
     [DataField]
     public DamageSpecifier HealingHumanoidDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             {"Blunt", -30},
-            {"Burn", -30}
+            {"Heat", -30}
         }
     };
 
@@ -20,7 +20,7 @@ public sealed partial class RatvarSlabComponent : Component
     [DataField]
     public DamageSpecifier HealingMarauderDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             {"Blunt", 50}
         }

@@ -41,10 +41,10 @@ public sealed partial class NarsiCultistAbilitiesSystem
         };
 
         _empSystem.EmpPulse(
-            coordinates: transform.MapPosition,
+            coordinates: transform.Coordinates,
             range: range,
             energyConsumption: energyConsumption,
-            duration: duration
+            duration: TimeSpan.FromSeconds(duration)
         );
         OnCultistAbility(uid, args);
         args.Handled = true;

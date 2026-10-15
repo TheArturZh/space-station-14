@@ -51,7 +51,7 @@ public sealed partial class NarsiRuleSystem
             Loc.GetString("narsi-rule-cultist-start-summoning", ("pos", GetEntityPosString(args.Source))),
             "ИИ-Помощник",
             false,
-            Color.Yellow
+            colorOverride: Color.Yellow
         );
 
         cultistRule.NarsiRepeatSoundAt = _gameTiming.CurTime + TimeSpan.FromSeconds(35f);

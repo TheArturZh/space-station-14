@@ -26,7 +26,7 @@ public sealed partial class SecretListingPrototype : IPrototype
     public string ButtonText = default!;
 
     [DataField("buttonState")]
-    public Enum ButtonState = default!;
+    public ButtonState ButtonState = ButtonState.Enabled;
 
     [DataField("icon")]
     public SpriteSpecifier? Icon = null;

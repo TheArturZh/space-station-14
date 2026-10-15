@@ -56,9 +56,10 @@
   name: "Мечник"
   description: "Ускоряет ваши удары этим мечом на 9 секунд, но меняет урон на 7."
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:RatvarSwordSwordsmanEvent
 
 - type: entity
@@ -67,7 +68,8 @@
   name: "Кровопролитие"
   description: "Увеличивает кровопотерю на 100 единиц после удара мечом."
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:RatvarSwordBloodshedEvent

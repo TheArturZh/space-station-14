@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Content.Shared.Damage.Systems;
+using System.Linq;
 using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment;
 using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Slab;
 using Content.Server.SS220.DarkForces.Ratvar.Righteous.Structures.Altar;
@@ -32,7 +33,6 @@ public sealed partial class RatvarAbilitiesSystem
     private const string SecretDoor = "SolidSecretDoor";
 
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DoorSystem _doorBoltSystem = default!;
     [Dependency] private readonly DoorSystem _doorSystem = default!;
     [Dependency] private readonly EmpSystem _empSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -58,7 +58,7 @@ public sealed partial class RatvarAbilitiesSystem
         if (args.Handled)
             return;
 
-        if (!HasComp<HumanoidAppearanceComponent>(args.Performer))
+        if (!HasComp<HumanoidProfileComponent>(args.Performer))
             return;
 
         _damageable.TryChangeDamage(args.Performer, component.HealingHumanoidDamage);
@@ -173,9 +173,9 @@ public sealed partial class RatvarAbilitiesSystem
             return;
         }
 
-        if (TryComp<DoorBoltComponent>(target, out var doorBolt) && _doorBoltSystem.IsBolted(target))
+        if (TryComp<DoorBoltComponent>(target, out var doorBolt) && _doorSystem.IsBolted(target))
         {
-            _doorBoltSystem.SetBoltsDown((target, doorBolt), false);
+            _doorSystem.SetBoltsDown((target, doorBolt), false);
             args.Handled = true;
             return;
         }
@@ -192,12 +192,12 @@ public sealed partial class RatvarAbilitiesSystem
         var target = args.Target;
         if (HasComp<BorgChassisComponent>(target))
         {
-            _empSystem.TryEmpEffects(target, 30000, 15);
+            _empSystem.TryEmpEffects(target, 30000, TimeSpan.FromSeconds(15));
             args.Handled = true;
             return;
         }
 
-        _stunSystem.TryParalyze(target, TimeSpan.FromSeconds(8), true);
+        _stunSystem.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(8));
         args.Handled = true;
     }
 

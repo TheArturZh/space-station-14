@@ -51,7 +51,7 @@
     entity: RatvarWorkshop
 
 - type: construction
-  name: "Мастерская Ратвара"
+  name: cult-construction-ratvarworkshopconstruction-name
   id: RatvarWorkshopConstruction
   graph: RatvarWorkshopGraph
   startNode: start
@@ -61,10 +61,7 @@
   entityWhitelist:
     components:
     - RatvarRighteous
-  description: "В мастерской праведники благословленными латунными инструментами создают оружие и снаряжение, что поможет им нести просветления Ратвара заблудшим душам."
-  icon:
-    sprite: SS220/DarkForces/Ratvar/Structures/workshop.rsi
-    state: workshop
+  description: cult-construction-ratvarworkshopconstruction-description
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false

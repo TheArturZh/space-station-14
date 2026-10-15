@@ -40,11 +40,5 @@ public sealed partial class ChaplainComponent : Component
     public EntityUid? GreatPrayerSoundEntity;
 
     [DataField]
-    public DamageSpecifier FelHealDamage = new()
-    {
-        DamageDict = new Dictionary<string, FixedPoint2>
-        {
-            {"Fel", -20}
-        }
-    };
+    public DamageSpecifier FelHealDamage = new();
 }

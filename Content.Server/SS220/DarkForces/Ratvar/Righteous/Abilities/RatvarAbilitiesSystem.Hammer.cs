@@ -23,7 +23,7 @@ public sealed partial class RatvarAbilitiesSystem
         {
             foreach (var player in args.HitEntities)
             {
-                if (!HasComp<PhysicsComponent>(player) || !HasComp<HumanoidAppearanceComponent>(player))
+                if (!HasComp<PhysicsComponent>(player) || !HasComp<HumanoidProfileComponent>(player))
                     return;
 
                 var fieldDir = _transformSystem.GetWorldPosition(uid);

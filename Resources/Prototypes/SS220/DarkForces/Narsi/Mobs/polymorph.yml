@@ -25,9 +25,9 @@
   - type: NarsiCultCreature
 
 - type: entity
-  name: Наблюдатель
+  name: РќР°Р±Р»СЋРґР°С‚РµР»СЊ
   id: MobNarsiObserverEye
-  description: Культисты используют эту оболочку, для проведения разведки
+  description: РљСѓР»СЊС‚РёСЃС‚С‹ РёСЃРїРѕР»СЊР·СѓСЋС‚ СЌС‚Сѓ РѕР±РѕР»РѕС‡РєСѓ, РґР»СЏ РїСЂРѕРІРµРґРµРЅРёСЏ СЂР°Р·РІРµРґРєРё
   suffix: "Ghost"
   parent: BaseNarsiMob
   components:
@@ -112,18 +112,22 @@
     attributes:
       gender: epicene
   - type: Bloodstream
-    bloodReagent: DemonsBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: DemonsBlood
+        Quantity: 100
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Infernal
   - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
     heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
-    currentTemperature: 310.15
     coldDamage:
       types:
         Cold: 1 #per second, scales with temperature & other constants
-    specificHeat: 42
     heatDamage:
       types:
         Heat: 1 #per second, scales with temperature & other constants
@@ -135,8 +139,8 @@
   - BaseSimpleMob
   - MobCombat
   - MobFlammable
-  name: Скелет
-  description: Мечта собак
+  name: РЎРєРµР»РµС‚
+  description: РњРµС‡С‚Р° СЃРѕР±Р°Рє
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -181,9 +185,9 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: Скелет
-    description: Вас вырастил культ Нар'Cи, слушайте указания культистов
-    rules: Слушайтесь культистов!
+    name: РЎРєРµР»РµС‚
+    description: Р’Р°СЃ РІС‹СЂР°СЃС‚РёР» РєСѓР»СЊС‚ РќР°СЂ'CРё, СЃР»СѓС€Р°Р№С‚Рµ СѓРєР°Р·Р°РЅРёСЏ РєСѓР»СЊС‚РёСЃС‚РѕРІ
+    rules: РЎР»СѓС€Р°Р№С‚РµСЃСЊ РєСѓР»СЊС‚РёСЃС‚РѕРІ!
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -191,8 +195,8 @@
   parent:
   - BaseNarsiMob
   - SimpleMobBase
-  name: Гниющая плоть
-  description: Как же она воняет!
+  name: Р“РЅРёСЋС‰Р°СЏ РїР»РѕС‚СЊ
+  description: РљР°Рє Р¶Рµ РѕРЅР° РІРѕРЅСЏРµС‚!
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -248,9 +252,9 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: Гниющая плоть
-    description: Вас вырастил культ Нар'Cи, слушайте указания культистов
-    rules: Слушайтесь культистов!
+    name: Р“РЅРёСЋС‰Р°СЏ РїР»РѕС‚СЊ
+    description: Р’Р°СЃ РІС‹СЂР°СЃС‚РёР» РєСѓР»СЊС‚ РќР°СЂ'CРё, СЃР»СѓС€Р°Р№С‚Рµ СѓРєР°Р·Р°РЅРёСЏ РєСѓР»СЊС‚РёСЃС‚РѕРІ
+    rules: РЎР»СѓС€Р°Р№С‚РµСЃСЊ РєСѓР»СЊС‚РёСЃС‚РѕРІ!
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -258,8 +262,8 @@
   parent:
   - BaseNarsiMob
   - SimpleMobBase
-  name: Мясной громила
-  description: Кажется мне нужно бежать...
+  name: РњСЏСЃРЅРѕР№ РіСЂРѕРјРёР»Р°
+  description: РљР°Р¶РµС‚СЃСЏ РјРЅРµ РЅСѓР¶РЅРѕ Р±РµР¶Р°С‚СЊ...
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -316,7 +320,7 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: Мясной громила
-    description: Вас вырастил культ Нар'Cи, слушайте указания культистов
-    rules: Слушайтесь культистов!
+    name: РњСЏСЃРЅРѕР№ РіСЂРѕРјРёР»Р°
+    description: Р’Р°СЃ РІС‹СЂР°СЃС‚РёР» РєСѓР»СЊС‚ РќР°СЂ'CРё, СЃР»СѓС€Р°Р№С‚Рµ СѓРєР°Р·Р°РЅРёСЏ РєСѓР»СЊС‚РёСЃС‚РѕРІ
+    rules: РЎР»СѓС€Р°Р№С‚РµСЃСЊ РєСѓР»СЊС‚РёСЃС‚РѕРІ!
   - type: GhostTakeoverAvailable

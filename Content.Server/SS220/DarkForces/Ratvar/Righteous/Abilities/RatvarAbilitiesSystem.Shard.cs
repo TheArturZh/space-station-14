@@ -24,6 +24,7 @@ public sealed partial class RatvarAbilitiesSystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinition = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly RatvarProgressSystem _progressSystem = default!;
 
@@ -49,7 +50,7 @@ public sealed partial class RatvarAbilitiesSystem
 
     private void OnShardAfterInteract(EntityUid uid, RatvarShardComponent component, AfterInteractEvent args)
     {
-        if (!HasComp<RatvarAltarComponent>(args.Target) || !HasComp<HumanoidAppearanceComponent>(args.User))
+        if (!HasComp<RatvarAltarComponent>(args.Target) || !HasComp<HumanoidProfileComponent>(args.User))
             return;
 
         if (!_progressSystem.IsEntityAtSummonPoint(args.Used) || _progressSystem.IsPortalInProgress())
@@ -108,7 +109,7 @@ public sealed partial class RatvarAbilitiesSystem
             return;
 
         var range = component.ConvertRange;
-        var tilesRefs = grid.GetLocalTilesIntersecting(new Box2(pos.Position + new Vector2(-range, -range),
+        var tilesRefs = _map.GetLocalTilesIntersecting(gridUid.Value, grid, new Box2(pos.Position + new Vector2(-range, -range),
             pos.Position + new Vector2(range, range)));
 
         var cultTileDef = (ContentTileDefinition) _tileDefinition[component.TileId];
@@ -157,7 +158,7 @@ public sealed partial class RatvarAbilitiesSystem
 
         var mapCoordinates = _transformSystem.GetMapCoordinates(uid);
 
-        _empSystem.EmpPulse(mapCoordinates, 5f, 20000, 10);
+        _empSystem.EmpPulse(mapCoordinates, 5f, 20000, TimeSpan.FromSeconds(10));
         QueueDel(uid);
         args.Handled = true;
     }

@@ -1,4 +1,5 @@
-﻿using Content.Server.SS220.DarkForces.Saint.Items.Cross;
+﻿using Content.Shared.Damage.Systems;
+using Content.Server.SS220.DarkForces.Saint.Items.Cross;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
 

@@ -5,25 +5,25 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Prototypes;
 
 [Prototype]
-public sealed class NarsiRitualPrototype : IPrototype
+public sealed partial class NarsiRitualPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField(required: true, serverOnly: true)]
-    public readonly string Description = default!;
+    public string Description = default!;
 
     [DataField(required: true, serverOnly: true)]
-    public readonly int Duration;
+    public int Duration;
 
     [DataField(required: true, serverOnly: true)]
-    public readonly NarsiRitualEffect Effect = default!;
+    public NarsiRitualEffect Effect = default!;
 
     [DataField(required: true, serverOnly: true)]
-    public readonly string Name = default!;
+    public string Name = default!;
 
     [DataField(required: true, serverOnly: true)]
-    public readonly string RequirementsDesc = default!;
+    public string RequirementsDesc = default!;
 
     [DataField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Rituals");
@@ -32,5 +32,5 @@ public sealed class NarsiRitualPrototype : IPrototype
     public AudioParams SoundParams = AudioParams.Default.WithVolume(0.25f);
 
     [DataField(required: true)]
-    public readonly NarsiRitualRequirements Requirements = default!;
+    public NarsiRitualRequirements Requirements = default!;
 }

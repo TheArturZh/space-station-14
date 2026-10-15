@@ -45,7 +45,7 @@
     entity: RatvarBeacon
 
 - type: construction
-  name: "Маяк Вестника"
+  name: cult-construction-ratvarbeaconconstruction-name
   id: RatvarBeaconConstruction
   graph: RatvarBeaconGraph
   startNode: start
@@ -55,10 +55,7 @@
   entityWhitelist:
     components:
     - RatvarRighteous
-  description: "Маяк — часть задания и малый добытчик энергий и восстановления здоровья вокруг."
-  icon:
-    sprite: SS220/DarkForces/Ratvar/Structures/heralds_beacon.rsi
-    state: beacon
+  description: cult-construction-ratvarbeaconconstruction-description
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false

@@ -37,7 +37,7 @@ public sealed partial class NarsiCultistAbilitiesSystem
                 continue;
 
             _transformSystem.SetCoordinates(cultist, cultistTransform, leaderTransform.Coordinates);
-            _transformSystem.AttachToGridOrMap(uid);
+            _transformSystem.AttachToGridOrMap(cultist);
         }
 
         OnCultistAbility(uid, args);

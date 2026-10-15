@@ -93,7 +93,7 @@ public sealed partial class NarsiRuleSystem
             Loc.GetString("narsi-rule-chaplain-exile-available", ("chaplainName", chaplainName)),
             "ИИ-Помощник",
             true,
-            Color.Yellow
+            colorOverride: Color.Yellow
         );
     }
 
@@ -104,7 +104,7 @@ public sealed partial class NarsiRuleSystem
             message,
             "Нар'Си",
             true,
-            Color.FromHex("#4D004B")
+            colorOverride: Color.FromHex("#4D004B")
         );
     }
 }

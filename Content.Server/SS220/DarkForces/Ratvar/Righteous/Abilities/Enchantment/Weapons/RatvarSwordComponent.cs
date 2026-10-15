@@ -9,7 +9,7 @@ public sealed partial class RatvarSwordComponent : Component
     [DataField]
     public DamageSpecifier SwordsmanDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             {"Piercing", -13}
         }

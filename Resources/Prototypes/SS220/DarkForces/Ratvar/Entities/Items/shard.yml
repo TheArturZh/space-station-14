@@ -45,9 +45,10 @@
   name: "Реконструкция"
   description: "В радиусе 4 плиток превращает всех киборгов в латунников, меняя стены и полы на латунные версии."
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:RatvarShardReconstructEvent
 
 - type: entity
@@ -56,7 +57,8 @@
   name: "Электромагнитный импульс"
   description: "В радиусе 4 плиток испускает сильный ЭМИ. В радиусе 6 плиток — слабый ЭМИ."
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:RatvarShardEmpEvent

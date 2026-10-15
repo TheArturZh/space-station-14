@@ -1,4 +1,5 @@
-﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Weapons;
+﻿using Content.Shared.Body.Components;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Weapons;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 //using Content.Shared.SS220.DarkForces.Ratvar.UI;

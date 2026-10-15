@@ -34,7 +34,7 @@ public sealed partial class RatvarMidasTouchMenu : RadialMenu
             if (!_prototypeManager.TryIndex<RatvarMidasTouchablePrototype>(id, out var prototype))
                 continue;
 
-            var button = new RadialMenuTextureButton
+            var button = new RadialMenuButton
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),

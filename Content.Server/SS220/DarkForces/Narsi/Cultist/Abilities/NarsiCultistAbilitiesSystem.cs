@@ -3,6 +3,8 @@ using Content.Server.SS220.DarkForces.Narsi.Progress;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Chat;
 using Content.Shared.SS220.DarkForces.Narsi.Abilities.Events;
 using Content.Shared.SS220.DarkForces.Narsi.Roles;
 using Robust.Server.GameObjects;
@@ -66,15 +68,15 @@ public sealed partial class NarsiCultistAbilitiesSystem : EntitySystem
             if (!component.Abilities.TryGetValue(id, out var ability))
                 continue;
 
-            if (!_actionsSystem.TryGetActionData(ability, out var action))
+            if (!TryComp<ActionComponent>(ability, out var action))
                 continue;
 
-            action.UseDelay = level switch
+            _actionsSystem.SetUseDelay(ability, level switch
             {
                 1 => action.UseDelay,
                 2 => action.UseDelay * 0.9,
                 _ => action.UseDelay * 0.8
-            };
+            });
         }
     }
 

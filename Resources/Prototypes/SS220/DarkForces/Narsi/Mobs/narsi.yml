@@ -4,6 +4,12 @@
   id: Narsie
   suffix: Narsi
   components:
+    - type: AnnounceOnSpawn
+      message: narsie-has-risen
+      sender: narsie-has-risen-sender
+      sound:
+        path: /Audio/Misc/narsie_rises.ogg
+      color: red
     - type: Sprite
       drawdepth: Mobs
       sprite: SS220/DarkForces/Cult/Mobs/narsi.rsi
@@ -20,7 +26,7 @@
         0: Alive
         8000000: Dead
     - type: Stamina
-      critThreshold: 8000000 # Basically no stamina crit
+      baseCritThreshold: 8000000 # Basically no stamina crit
     - type: Physics
       bodyType: KinematicController
     - type: Fixtures
@@ -39,8 +45,8 @@
         collection: AlienClaw
       animation: WeaponArcBite
       damage:
-        groups:
-          Brute: 1000
+        types:
+          Blunt: 1000
       range: 8
     - type: MovementIgnoreGravity
     - type: GhostRole

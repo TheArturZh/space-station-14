@@ -58,7 +58,7 @@
     entity: RatvarAltar
 
 - type: construction
-  name: "Алтарь Ратвара"
+  name: cult-construction-ratvaraltarconstruction-name
   id: RatvarAltarConstruction
   graph: RatvarAltarGraph
   startNode: start
@@ -68,10 +68,7 @@
   entityWhitelist:
     components:
     - RatvarRighteous
-  description: Алтарь необходим для провеления ритуалов
-  icon:
-    sprite: SS220/DarkForces/Ratvar/Structures/altar.rsi
-    state: altar
+  description: cult-construction-ratvaraltarconstruction-description
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false

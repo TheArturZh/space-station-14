@@ -18,7 +18,7 @@ public sealed partial class NarsiDarknessBlowoutRitualEffect : NarsiRitualEffect
             return;
 
         var polymorphSystem = entityManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
-        var query = entityManager.EntityQueryEnumerator<HumanoidAppearanceComponent, RottingComponent, TransformComponent>();
+        var query = entityManager.EntityQueryEnumerator<HumanoidProfileComponent, RottingComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out _, out _, out var entTransform))
         {
             if (entTransform.MapID != altarTransform.MapID)

@@ -103,7 +103,7 @@ public sealed partial class RatvarWorkshopWindow : FancyWindow
                 var requirementsLabel = new Label
                 {
                     Text = $"Латунь: {receipt.BrassCost}, Мощность: {receipt.PowerCost}",
-                    StyleClasses = {StyleBase.StyleClassLabelSubText},
+                    StyleClasses = {StyleNano.StyleClassLabelSubText},
                     Align = Label.AlignMode.Right,
                     Margin = _defaultMargin,
                     HorizontalExpand = true

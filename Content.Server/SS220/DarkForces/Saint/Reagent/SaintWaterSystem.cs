@@ -1,4 +1,5 @@
-﻿using Content.Server.SS220.DarkForces.Saint.Reagent.Events;
+﻿using Content.Shared.Damage.Systems;
+using Content.Server.SS220.DarkForces.Saint.Reagent.Events;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -11,7 +12,7 @@ public sealed class SaintWaterSystem : EntitySystem
 
     private readonly DamageSpecifier _defaultDarkDamageHeal = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             {"Fel", -10}
         }

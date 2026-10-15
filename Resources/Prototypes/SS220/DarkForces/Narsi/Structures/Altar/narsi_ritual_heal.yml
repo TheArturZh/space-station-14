@@ -14,7 +14,7 @@
     cultistsCount: 2
     buckledEntityWhitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
     bloodPuddleRequirements:
       count: 4
       reagentsWhitelist:

@@ -1,4 +1,5 @@
-﻿using Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
+﻿using Content.Shared.Damage.Systems;
+using Content.Server.SS220.DarkForces.Saint.Chaplain.Abilities;
 using Content.Server.SS220.DarkForces.Saint.Chaplain.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
@@ -54,19 +55,19 @@ public sealed partial class ChaplainSystem
         var query = _entityLookup.GetEntitiesInRange<MobStateComponent>(chaplainPos, 5f);
         foreach (var entity in query)
         {
-            _damageable.TryChangeDamage(entity, component.FelHealDamage);
+            _damageable.TryChangeDamage(entity.Owner, component.FelHealDamage);
         }
 
         args.Handled = true;
     }
 
-    private async void OnDefenceBarrierEvent(EntityUid uid, ChaplainComponent component,
+    private void OnDefenceBarrierEvent(EntityUid uid, ChaplainComponent component,
         ChaplainDefenceBarrierEvent args)
     {
         if (args.Handled)
             return;
 
-        await SpawnBarriers(uid, DefaultChaplainBarrier, ChaplainForceWallDefault);
+        SpawnBarriers(uid, DefaultChaplainBarrier, ChaplainForceWallDefault);
 
         args.Handled = true;
     }
@@ -124,7 +125,7 @@ public sealed partial class ChaplainSystem
         args.Handled = true;
     }
 
-    private async void OnChaplainNarsiExileRitual(EntityUid uid, ChaplainComponent component,
+    private void OnChaplainNarsiExileRitual(EntityUid uid, ChaplainComponent component,
         ChaplainNarsiExileEvent args)
     {
         if (args.Handled)
@@ -136,7 +137,7 @@ public sealed partial class ChaplainSystem
             return;
         }
 
-        await SpawnBarriers(args.Performer, NarsiExileChaplainBarrier, ChaplainForceWallNarsi);
+        SpawnBarriers(args.Performer, NarsiExileChaplainBarrier, ChaplainForceWallNarsi);
 
         var doAfterEventArgs = GetNarsiExileDoAfterArgs(args.Performer);
         _doAfterSystem.TryStartDoAfter(doAfterEventArgs);

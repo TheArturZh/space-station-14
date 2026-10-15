@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.SS220.DarkForces.Narsi.Cultist.Abilities.Prototype;
 
 [Prototype("narsiAbilityPrototype")]
-public sealed class NarsiAbilityPrototype : IPrototype
+public sealed partial class NarsiAbilityPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

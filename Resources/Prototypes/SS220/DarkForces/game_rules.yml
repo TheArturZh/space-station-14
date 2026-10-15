@@ -15,9 +15,8 @@
       components:
         - type: NarsiCultist
       startingGear: NarsiCultistGear
-      mindComponents:
-      - type: NarsiCultRole
-        prototype: NarsiCultist
+      mindRoles:
+      - MindRoleNarsiCultist
 
 - type: entity
   id: Ratvar
@@ -35,6 +34,5 @@
         - AntagImmune
       components:
       - type: RatvarRighteous
-      mindComponents:
-      - type: RatvarRole
-        prototype: RatvarRighteous
+      mindRoles:
+      - MindRoleRatvar

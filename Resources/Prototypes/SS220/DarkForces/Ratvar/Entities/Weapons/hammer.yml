@@ -48,7 +48,8 @@
   name: "Отбрасывание"
   description: "После удара (необходимо держать молот в обеих руках) отбросит противника на очень большое расстояние."
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:RatvarHammerKnockOffEvent

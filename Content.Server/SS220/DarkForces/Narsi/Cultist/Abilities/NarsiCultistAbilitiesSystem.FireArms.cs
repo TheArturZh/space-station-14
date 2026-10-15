@@ -72,7 +72,7 @@ public sealed partial class NarsiCultistAbilitiesSystem
         fireArmsComponent.CanFireTargets = canFireTargets;
         fireArmsComponent.DamageSpecifier = new DamageSpecifier
         {
-            DamageDict = new Dictionary<string, FixedPoint2>
+            DamageDict = new()
             {
                 {"Heat", burnDamage}
             }

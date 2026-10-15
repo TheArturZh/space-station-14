@@ -13,7 +13,7 @@ public sealed partial class RatvarBeaconComponent : Component
     [DataField]
     public DamageSpecifier HealingDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             {"Blunt", -7},
             {"Slash", -7},
@@ -21,7 +21,6 @@ public sealed partial class RatvarBeaconComponent : Component
             {"Heat", -7},
             {"Cold", -7},
             {"Shock", -7},
-            {"Burn", -7}
         }
     };
 

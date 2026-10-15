@@ -10,7 +10,7 @@ public sealed partial class NarsiCultPilonComponent : Component
     [DataField("healingDamage")]
     public DamageSpecifier HealingDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
+        DamageDict = new()
         {
             {"Blunt", -7},
             {"Slash", -7},

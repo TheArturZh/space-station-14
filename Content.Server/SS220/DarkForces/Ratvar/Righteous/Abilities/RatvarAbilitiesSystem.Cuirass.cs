@@ -1,4 +1,5 @@
-﻿using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Armor;
+﻿using Content.Shared.Damage.Systems;
+using Content.Server.SS220.DarkForces.Ratvar.Righteous.Abilities.Enchantment.Armor;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Content.Shared.SS220.DarkForces.Ratvar.Righteous.Abilities.Armor;

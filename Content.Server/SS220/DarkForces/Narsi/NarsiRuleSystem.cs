@@ -28,15 +28,8 @@ public sealed partial class NarsiRuleSystem : GameRuleSystem<NarsiRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NarsiRuleComponent, AntagSelectionEnd>(OnAntagSelectionEnd);
-
         InitChaplain();
         InitSummoning();
-    }
-
-    private void OnAntagSelectionEnd(EntityUid uid, NarsiRuleComponent component, ref AntagSelectionEnd args)
-    {
-        _progressSystem.FindNewCultistLeader();
     }
 
     protected override void Started(EntityUid uid, NarsiRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)

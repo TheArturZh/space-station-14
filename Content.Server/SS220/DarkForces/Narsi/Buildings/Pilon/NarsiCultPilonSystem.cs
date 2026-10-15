@@ -1,3 +1,5 @@
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using System.Linq;
 using Content.Server.SS220.DarkForces.Narsi.Buildings.Altar.Rituals.Polymorth;
 using Content.Server.SS220.GameRules.Cult.Narsi.Buildings.Pilon;
@@ -72,6 +74,6 @@ public sealed class NarsiCultPilonSystem : EntitySystem
         if (!TryComp<DamageableComponent>(uid, out var damageable) || _mobStateSystem.IsDead(uid))
             return;
 
-        _damageable.TryChangeDamage(uid, pilonComponent.HealingDamage, true, false, damageable);
+        _damageable.TryChangeDamage((uid, damageable), pilonComponent.HealingDamage, true, false);
     }
 }

@@ -24,7 +24,7 @@ public sealed partial class RatvarProgressSystem
 
         if (!CanUseRatvarItems(args.User))
         {
-            _stunSystem.TryParalyze(args.User, TimeSpan.FromSeconds(4), true);
+            _stunSystem.TryUpdateParalyzeDuration(args.User, TimeSpan.FromSeconds(4));
             args.Cancel();
         }
     }

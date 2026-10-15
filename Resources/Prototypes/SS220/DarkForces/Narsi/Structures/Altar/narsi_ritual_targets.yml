@@ -30,11 +30,11 @@
   requirements:
     cultistsCount: 2
     entitiesRequirements:
-    - name: Food
+    - name: Edible
       count: 1
       whitelist:
         components:
-        - Food
+        - Edible
   effect: !type:NarsiVomitRitualEffect
 
 - type: narsiRitual

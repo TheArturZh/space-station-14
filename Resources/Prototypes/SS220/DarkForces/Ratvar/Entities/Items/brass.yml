@@ -8,7 +8,7 @@
 
 - type: stack
   id: BrassPlasteel
-  name: Латунь
+  name: cult-material-brass
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: brass }
   spawn: SheetBrassPlasteel1R
   maxCount: 30
@@ -65,5 +65,4 @@
   suffix: Lingering, 10
   components:
   - type: Stack
-    lingering: true
-    count: 0
+    count: 10
